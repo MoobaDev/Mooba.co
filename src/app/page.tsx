@@ -3,7 +3,7 @@ export default function ComingSoonPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="text-center">
         <h1 className="text-6xl md:text-8xl font-bold text-white animate-pulse">
-          Coming Soon
+          Coming Soooon
         </h1>
         <div className="mt-8">
           <div className="flex justify-center space-x-1">
