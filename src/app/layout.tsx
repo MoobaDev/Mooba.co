@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Mooba - Coming Soon",
-  description: "Algo increíble está por llegar. Mantente atento para el lanzamiento de Mooba.",
+  title: 'Mooba',
+  description: 'Sitio web de Mooba',
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className="antialiased">
+      <body>
         {children}
       </body>
     </html>
