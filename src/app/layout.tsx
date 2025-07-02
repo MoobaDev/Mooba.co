@@ -1,19 +1,27 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import { DM_Sans } from "next/font/google";
+import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+});
 
 export const metadata: Metadata = {
-  title: 'Mooba',
-  description: 'Sitio web de Mooba',
+  title: "Mooba - Gestión de Proyectos",
+  description: "Plataforma de gestión de proyectos desarrollada con Next.js y Builder.io",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="es">
-      <body>
+    <html lang="en">
+      <body
+        className={`${dmSans.variable} antialiased bg-black text-white`}
+      >
         {children}
       </body>
     </html>

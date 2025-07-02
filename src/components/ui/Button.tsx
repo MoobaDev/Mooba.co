@@ -3,7 +3,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export default function Button({ children, onClick }: ButtonProps) {
+export  function Button({ children, onClick }: ButtonProps) {
   return (
     <button onClick={onClick}>
       {children}
