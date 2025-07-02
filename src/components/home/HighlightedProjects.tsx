@@ -107,7 +107,7 @@ export default function HighlightedProjects() {
                           loaded && currentSlide % mockProjects.length === idx
                             ? "min(70vw, 630px)"
                             : "min(68vw, 615px)", // Aumento de altura para reducir espacios
-                        aspectRatio: "4/3"
+                        aspectRatio: "4/3",
                       }}
                     >
                       <Image
@@ -120,7 +120,10 @@ export default function HighlightedProjects() {
                             : "brightness-70" // Menos oscurecimiento
                         }`}
                         style={{
-                          transform: loaded && currentSlide % mockProjects.length !== idx ? "scale(0.98)" : ""
+                          transform:
+                            loaded && currentSlide % mockProjects.length !== idx
+                              ? "scale(0.98)"
+                              : "",
                         }}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
                       />
@@ -147,12 +150,11 @@ export default function HighlightedProjects() {
                             <span
                               key={tagIdx}
                               className="text-sm text-white border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap"
-                              style={{ 
+                              style={{
                                 paddingLeft: "12px",
                                 paddingRight: "12px",
                                 paddingTop: "2px",
                                 paddingBottom: "2px",
-                          
                               }}
                             >
                               {tag}
@@ -165,9 +167,7 @@ export default function HighlightedProjects() {
                 </div>
               ))}
             </div>
-          </div>
-
-    
+          </div>  
         </div>
       </div>
     </section>
