@@ -46,9 +46,9 @@ export default function HighlightedProjects() {
     loop: true,
     mode: "snap",
     slides: {
-      origin: 0.2,
-      perView: 1.6,
-      spacing: 0, // Eliminado el espacio entre slides
+      origin: 0.1,
+      perView: 1.2,
+      spacing: 8, // Espacio reducido entre slides en móvil
     },
     breakpoints: {
       "(min-width: 768px)": {
@@ -65,6 +65,13 @@ export default function HighlightedProjects() {
           spacing: 20, // Aumentado el espacio entre slides para resolución de laptop
         },
       },
+      "(min-width: 1440px)": {
+        slides: {
+          origin: 0.3,
+          perView: 1.8, // Mantener igual que en laptop
+          spacing: 20, // Mantener igual que en laptop
+        },
+      },
     },
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
@@ -75,9 +82,9 @@ export default function HighlightedProjects() {
   });
 
   return (
-    <section className="mt-16 md:mt-[120px]">
-      <div className="w-full">
-        <div className="max-w-7xl px-6 md:px-8 mb-8">
+    <section className="max-w-[1440px] mx-auto px-6 md:px-8 overflow-hidde¿ mt-16 md:mt-[120px]">
+
+        <div className="w-full  mb-10 flex justify-between items-center">
           {/* Title */}
           <h1 className="text-white text-2xl md:text-3xl font-light">
             Proyectos destacados
@@ -85,7 +92,7 @@ export default function HighlightedProjects() {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden mx-auto">
           {/* Project Carousel */}
           <div className="w-full">
             <div ref={sliderRef} className="keen-slider">
@@ -97,18 +104,11 @@ export default function HighlightedProjects() {
                   <div className="flex flex-col transition-all duration-300">
                     {/* Image Container - Different sizes for active vs inactive slides */}
                     <div
-                      className="relative mb-5 overflow-hidden mx-auto transition-all duration-300 rounded-md"
-                      style={{
-                        width:
-                          loaded && currentSlide % mockProjects.length === idx
-                            ? "min(100%, 840px)"
-                            : "min(98%, 820px)", // Aumento del ancho para reducir espacios
-                        height:
-                          loaded && currentSlide % mockProjects.length === idx
-                            ? "min(70vw, 630px)"
-                            : "min(68vw, 615px)", // Aumento de altura para reducir espacios
-                        aspectRatio: "4/3",
-                      }}
+                      className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 rounded-md max-w-[840px] aspect-[4/3] ${
+                        loaded && currentSlide % mockProjects.length === idx
+                          ? "w-full h-[min(60vw,630px)]" 
+                          : "w-[98%] h-[min(58vw,615px)]"
+                      }`}
                     >
                       <Image
                         src={project.image || "/placeholder.svg"}
@@ -117,14 +117,8 @@ export default function HighlightedProjects() {
                         className={`object-cover transition-all duration-300 ${
                           loaded && currentSlide % mockProjects.length === idx
                             ? "brightness-100 scale-100"
-                            : "brightness-70" // Menos oscurecimiento
+                            : "brightness-70 scale-[0.98]" // Menos oscurecimiento y escala reducida
                         }`}
-                        style={{
-                          transform:
-                            loaded && currentSlide % mockProjects.length !== idx
-                              ? "scale(0.98)"
-                              : "",
-                        }}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
                       />
                     </div>
@@ -132,14 +126,13 @@ export default function HighlightedProjects() {
                     {/* Only show text for the active slide */}
                     {loaded && currentSlide % mockProjects.length === idx && (
                       <div
-                        style={{ maxWidth: "840px" }}
-                        className="mx-auto w-full"
+                        className="mx-auto px-2 md:px-0 max-w-[840px] w-full"
                       >
-                        <div className="mb-3">
-                          <h3 className="text-white text-xl font-light">
+                        <div className="mb-2 md:mb-3">
+                          <h3 className="text-white text-lg md:text-xl font-light">
                             {project.title}
                           </h3>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-gray-400 text-xs md:text-sm">
                             {project.category}
                           </p>
                         </div>
@@ -149,13 +142,7 @@ export default function HighlightedProjects() {
                           {project.tags.map((tag, tagIdx) => (
                             <span
                               key={tagIdx}
-                              className="text-sm text-white border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap"
-                              style={{
-                                paddingLeft: "12px",
-                                paddingRight: "12px",
-                                paddingTop: "2px",
-                                paddingBottom: "2px",
-                              }}
+                              className="text-xs md:text-sm text-white border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px]"
                             >
                               {tag}
                             </span>
@@ -169,7 +156,6 @@ export default function HighlightedProjects() {
             </div>
           </div>  
         </div>
-      </div>
     </section>
   );
 }
