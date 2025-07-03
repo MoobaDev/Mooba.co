@@ -1,7 +1,8 @@
-import DOMPurify from 'dompurify';
+//import DOMPurify from 'dompurify';
 //import { JSDOM } from 'jsdom';
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import "../../globals.css";
 
 interface StrapiImage {
   id: number;
@@ -12,36 +13,41 @@ interface StrapiImage {
   height: number;
 }
 
-interface Post {
-  documentId: string;
+interface Project {
   title: string;
   slug: string;
-  description: string;
-  contentHTML: string;
-  contentMarkdown: string;
-  image: StrapiImage[];
+  shortDescription: string;
+  mobileImage: StrapiImage[];
+  desktopImage: StrapiImage[];
+  desktopContent: string;
+  mobileContent: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 }
 
-interface StrapiResponse {
-  data: Post;
-}
+/* interface StrapiResponse {
+  data: Project;
+} */
 
-async function getPost(slug: string): Promise<Post | null> {
+async function getProject(slug: string): Promise<Project | null> {
   try {
     const res = await fetch(
-      `${process.env.STRAPI_API_URL}/api/posts?filters[slug][$eq]=${slug}&populate=*`,
-      { cache: "no-store" }
+      `${process.env.STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate=*`,
+      { 
+        cache: "no-store", 
+        headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+      }, },
+      
     );
     if (!res.ok) {
       return null;
     }
-    const response: { data: Post[] } = await res.json();
+    const response: { data: Project[] } = await res.json();
     return response.data[0] || null;
   } catch (error) {
-    console.error("Error fetching post:", error);
+    console.error("Error fetching project:", error);
     return null;
   }
 }
@@ -81,71 +87,61 @@ function addAutoplayToVideos(html: string) {
   return result;
 }
 
-function sanitizeHTML(dirty: string) {
+/* function sanitizeHTML(dirty: string) {
   if (typeof window !== "undefined") {
     return DOMPurify.sanitize(dirty);
   }
   // En SSR, devuelve el HTML tal cual (o solo texto plano si quieres máxima seguridad)
   return dirty;
-}
+} */
 
 /* DERKEN HTML: 
   const cleanHtml = product ? DOMPurify.sanitize(product.description) : "";
 */
 
-export default async function PostPage({ params }: { params: { slug: string }}) {
+export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const project = await getProject(slug);
 
-  if (!post) {
+  if (!project) {
     notFound();
   }
 
   return (
-    <div className="w-full px-8 py-8 bg-black text-white" style={{ maxWidth: "100vw", boxSizing: "border-box" }}>
+    <div className="w-full px-8 py-12 text-white" >
       {/* Navigation */}
       <div className="mb-8">
         <Link href="/proyectos" className="inline-flex items-center text-white-600 hover:underline mb-4">
           <span className="mr-2">&#8592;</span>
-          Volver a posts
+          Volver a proyectos
         </Link>
       </div>
 
       {/* Header */}
       <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
         <div className="flex flex-wrap items-center gap-4 mb-6">
           <span className="inline-block bg-gray-500 text-xs px-2 py-1 rounded">
-            {new Date(post.publishedAt).toLocaleDateString("es-ES", {
+            {new Date(project.publishedAt).toLocaleDateString("es-ES", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </span>
         </div>
-        {post.description && (
-          <p className="text-lg text-gray-500 leading-relaxed">{post.description}</p>
+        {project.shortDescription && (
+          <p className="text-lg text-gray-500 leading-relaxed">{project.shortDescription}</p>
         )}
       </header>
 
       <hr className="mb-8" />
 
-      {/* HTML Content from Figma */}
-      {/* {post.contentHTML && (
-        <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold mb-4">Contenido HTML</h2>
-          <div
-            className="w-full"
-            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(post.contentHTML) }}
-          />
-        </div>
-      )} */}
-      {post.contentHTML && (
+      {project.desktopContent && (
         <div className="w-full">
           <h2 className="text-2xl font-semibold mb-4">Contenido HTML CKEditor</h2>
           <div
             className="max-w-none w-full"
-            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(post.contentHTML) }}
+            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
           />
         </div>
       )}
@@ -156,7 +152,7 @@ export default async function PostPage({ params }: { params: { slug: string }}) 
           Ver información de debug
         </summary>
         <pre className="text-xs p-3 rounded border overflow-auto">
-          {JSON.stringify(post, null, 2)}
+          {JSON.stringify(project, null, 2)}
         </pre>
       </details>
     </div>
