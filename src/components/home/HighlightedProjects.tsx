@@ -53,23 +53,23 @@ export default function HighlightedProjects() {
     breakpoints: {
       "(min-width: 768px)": {
         slides: {
-          origin: 0.25,
-          perView: 1.8,
-          spacing: 0, // Eliminado el espacio entre slides
+          origin: 0.2,
+          perView: 1.6,
+          spacing: 15, // Ajustado para mantener proporción en tablets
         },
       },
       "(min-width: 1024px)": {
         slides: {
-          origin: 0.3,
-          perView: 1.8, // Reducido ligeramente para dar más espacio entre slides
-          spacing: 20, // Aumentado el espacio entre slides para resolución de laptop
+          origin: 0.2,
+          perView: 1.5, // Ajustado para mantener la proporción rectangular en laptop
+          spacing: 20,
         },
       },
       "(min-width: 1440px)": {
         slides: {
-          origin: 0.3,
-          perView: 1.8, // Mantener igual que en laptop
-          spacing: 20, // Mantener igual que en laptop
+          origin: 0.2,
+          perView: 1.5, // Mantener proporción rectangular en pantallas grandes
+          spacing: 30, // Aumentado el espacio para pantallas grandes
         },
       },
     },
@@ -82,80 +82,90 @@ export default function HighlightedProjects() {
   });
 
   return (
-    <section className="max-w-[1440px] mx-auto px-6 md:px-8 overflow-hidde¿ mt-16 md:mt-[120px]">
-
-        <div className="w-full  mb-10 flex justify-between items-center">
+    <section className="mt-[120px] overflow-hidden">
+      {/* Contenedor para el título con ancho máximo */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
+        <div className="w-full flex justify-between items-center">
           {/* Title */}
           <h1 className="text-white text-2xl md:text-3xl font-light">
             Proyectos destacados
           </h1>
         </div>
+      </div>
 
-        {/* Carousel Container */}
-        <div className="relative overflow-hidden mx-auto">
-          {/* Project Carousel */}
-          <div className="w-full">
-            <div ref={sliderRef} className="keen-slider">
-              {mockProjects.map((project, idx) => (
-                <div
-                  key={project.id}
-                  className="keen-slider__slide cursor-pointer" // Eliminado margen negativo para dar más espacio entre slides
-                >
-                  <div className="flex flex-col transition-all duration-300">
-                    {/* Image Container - Different sizes for active vs inactive slides */}
-                    <div
-                      className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 rounded-md max-w-[840px] aspect-[4/3] ${
+      {/* Carousel Container - Ahora sin max-width y tomando todo el ancho */}
+      <div className="relative overflow-hidden w-full">
+        {/* Project Carousel */}
+        <div className="w-full">
+          <div ref={sliderRef} className="keen-slider">
+            {mockProjects.map((project, idx) => (
+              <div
+                key={project.id}
+                className="keen-slider__slide  "
+              >
+                <div className="flex flex-col transition-all duration-300">
+                  {/* Image Container - Different sizes for active vs inactive slides */}
+                  <div
+                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[16/9] ${
+                      loaded && currentSlide % mockProjects.length === idx
+                        ? "w-full h-auto"
+                        : "w-[98%] h-auto"
+                    }`}
+                  >
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className={`object-cover transition-all duration-300 ${
                         loaded && currentSlide % mockProjects.length === idx
-                          ? "w-full h-[min(60vw,630px)]" 
-                          : "w-[98%] h-[min(58vw,615px)]"
+                          ? "brightness-100 scale-100"
+                          : "brightness-50 scale-[0.98]" // Menos oscurecimiento y escala reducida
                       }`}
-                    >
-                      <Image
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        fill
-                        className={`object-cover transition-all duration-300 ${
-                          loaded && currentSlide % mockProjects.length === idx
-                            ? "brightness-100 scale-100"
-                            : "brightness-70 scale-[0.98]" // Menos oscurecimiento y escala reducida
-                        }`}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
-                      />
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
+                    />
+                  </div>
+
+                  {/* Show text for all slides, with different opacity */}
+                  <div className="max-w-[1440px] mx-auto w-full">
+                    <div className="mb-2 md:mb-3 max-w-[840px]">
+                      <h3 className={`text-lg md:text-xl font-light transition-opacity duration-300 ${
+                        loaded && currentSlide % mockProjects.length === idx
+                          ? "text-white opacity-100"
+                          : "text-white opacity-50"
+                      }`}>
+                        {project.title}
+                      </h3>
+                      <p className={`text-xs md:text-sm transition-opacity duration-300 ${
+                        loaded && currentSlide % mockProjects.length === idx
+                          ? "text-gray-400 opacity-100"
+                          : "text-gray-400 opacity-50"
+                      }`}>
+                        {project.category}
+                      </p>
                     </div>
 
-                    {/* Only show text for the active slide */}
-                    {loaded && currentSlide % mockProjects.length === idx && (
-                      <div
-                        className="mx-auto px-2 md:px-0 max-w-[840px] w-full"
-                      >
-                        <div className="mb-2 md:mb-3">
-                          <h3 className="text-white text-lg md:text-xl font-light">
-                            {project.title}
-                          </h3>
-                          <p className="text-gray-400 text-xs md:text-sm">
-                            {project.category}
-                          </p>
-                        </div>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-0">
-                          {project.tags.map((tag, tagIdx) => (
-                            <span
-                              key={tagIdx}
-                              className="text-xs md:text-sm text-white border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px]"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    {/* Tags - shown for all slides */}
+                    <div className="flex flex-wrap gap-1">
+                      {project.tags.map((tag, tagIdx) => (
+                        <span
+                          key={tagIdx}
+                          className={`text-xs md:text-sm border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
+                            loaded && currentSlide % mockProjects.length === idx
+                              ? "text-white border-white opacity-100"
+                              : "text-white border-white opacity-50"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>  
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
     </section>
   );
 }

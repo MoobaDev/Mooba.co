@@ -47,7 +47,7 @@ const mockProjects: Project[] = [
 
 export default function PortafolioHome() {
   return (
-    <section className="max-w-[1440px] mx-auto px-6 md:px-8 overflow-hidden">
+    <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       <div className="w-full mb-10 flex justify-between items-center">
         {/* Title */}
         <h1 className="text-white text-2xl md:text-3xl font-light">
@@ -70,7 +70,7 @@ export default function PortafolioHome() {
             >
               <div className="flex flex-col h-full">
                 {/* Image Container */}
-                <div className="relative mb-4 overflow-hidden rounded-md w-full h-[320px]">
+                <div className="relative mb-4 overflow-hidden  w-full h-[320px]">
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
@@ -89,7 +89,7 @@ export default function PortafolioHome() {
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap">
                   {project.tags.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}

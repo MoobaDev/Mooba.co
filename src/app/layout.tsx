@@ -4,12 +4,13 @@ import "./globals.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-});
+  weight: ["400", "500", "700"], // escoge los pesos que necesitas
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Mooba - Gestión de Proyectos",
-  description: "Plataforma de gestión de proyectos desarrollada con Next.js y Builder.io",
+  title: "Mooba",
+  description: "Agencia de diseño y desarrollo web",
 };
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} antialiased bg-black text-white`}
+        className={`${dmSans.className} antialiased bg-black text-white`}
       >
         {children}
       </body>
