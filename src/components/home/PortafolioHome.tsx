@@ -176,7 +176,11 @@ export default function PortafolioHome() {
         <h1 className="text-white text-2xl md:text-3xl font-light">
           Ideas que se volvieron realidad
         </h1>
-        <Link href="/portafolio" className="text-white hover:underline">
+        {/* Desktop: Link with underline */}
+        <Link 
+          href="/portafolio" 
+          className="hidden md:block text-white underline"
+        >
           Ver todos los proyectos
         </Link>
       </div>
@@ -225,6 +229,16 @@ export default function PortafolioHome() {
               </div>
             </Link>
           ))}
+        </div>
+        
+        {/* Mobile: Button at the bottom */}
+        <div className="flex mt-8 md:hidden">
+          <Link
+            href="/portafolio"
+            className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
+          >
+            Ver más proyectos
+          </Link>
         </div>
       </div>
     </section>
