@@ -26,10 +26,9 @@ export default function Header() {
             </button>
 
             <nav className="hidden md:flex gap-10 text-[14px]">
-            <span>Proyectos</span>
             <div className="relative group flex flex-col gap-2">
                 <span className="">Servicios</span>
-                <ul className="absolute top-full mt-1 hidden bg-black/30 backdrop-blur-md group-hover:flex flex-col gap-1 text-[14px]  text-white p-4 rounded">
+                <ul className="absolute top-full mt-1 hidden bg-black/30 backdrop-blur-md group-hover:flex flex-col gap-1 text-[14px] text-white p-4 rounded whitespace-nowrap">
                 <li>Branding</li>
                 <li>Diseño web & Desarrollo</li>
                 <li>Marketing Digital</li>
@@ -37,6 +36,7 @@ export default function Header() {
                 <li>Campañas Publicitarias</li>
                 </ul>
             </div>
+            <span>Proyectos</span>
             <span>Nuestra esencia</span>
             <span>Contáctanos</span>
             </nav>
