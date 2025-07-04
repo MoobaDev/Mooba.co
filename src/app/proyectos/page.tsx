@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "../globals.css";
 import Image from "next/image";
+//import { useState } from "react";
 
 interface StrapiImageFormat {
   url: string;
@@ -33,7 +34,17 @@ interface Project {
   publishedAt: string;
 }
 
-interface StrapiResponse {
+interface Categorie {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface StrapiProjectsResponse {
   data: Project[];
   meta: {
     pagination: {
@@ -44,8 +55,19 @@ interface StrapiResponse {
     };
   };
 }
+interface StrapiCategoriesResponse {
+  data: Categorie[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
 
-async function getProjects(): Promise<StrapiResponse> {
+async function getProjects(): Promise<StrapiProjectsResponse> {
   try {
     const res = await fetch(`${process.env.STRAPI_API_URL}/api/proyectos?populate=*`, {
       cache: "no-store",
@@ -69,19 +91,100 @@ async function getProjects(): Promise<StrapiResponse> {
     };
   }
 }
+async function getCategories(): Promise<StrapiCategoriesResponse> {
+  try {
+    const res = await fetch(`${process.env.STRAPI_API_URL}/api/categorias`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error("Failed to fetch categories");
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return {
+      data: [],
+      meta: {
+        pagination: { page: 1, pageSize: 25, pageCount: 0, total: 0 },
+      },
+    };
+  }
+}
 
 export default async function PortafolioPage() {
 
   const { data: projects } = await getProjects();
+  const { data: categories } = await getCategories();
+
+  //const [categorieSelected, iscategorieSelected] = useState();
 
   return (
     <div className="w-full px-8 py-12">
 
       <div className="mb-6">
-        <h1 className="text-[28px] font-[250]">Proyectos</h1>
+        <h1 className="text-[28px] font-extralight">Proyectos</h1>
       </div>
 
-      <hr className="mb-8 bg-[#D0D5DD]" />
+      <div className="mb-7 w-screen border-[0.2px] border-[#D0D5DD] relative left-1/2 -translate-x-1/2"></div>
+
+      {categories.length === 0 ? (
+        <p className="mb-16">No hay categorias</p>
+      ) : (
+        <div className="mb-16 flex flex-wrap gap-2">
+          {categories.map((categorie) => (
+            <div key={categorie.slug} className="border-1 border-[#D0D5DD] rounded-[100px] px-3 py-[2px]">
+              <Link href={`/proyectos/${categorie.slug}`} className="text-sm text-[#7A7F89]">{categorie.name}</Link>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {projects.length === 0 ? (
+        <div className="text-center py-12">
+          <h2 className="text-2xl font-semibold mb-4">No hay proyectos disponibles</h2>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <div
+              key={project.slug}
+              className="bg-gray-500 rounded-lg shadow-lg hover:shadow-xl transition-shadow flex flex-col p-4"
+            >
+              {project.mobileImage && (
+                <div className="mb-4">
+                  <Image
+                    src={`${process.env.STRAPI_API_URL}${project.mobileImage.formats?.medium?.url || project.mobileImage.url}`}
+                    alt={project.mobileImage.alternativeText || project.title}
+                    width={`${project.mobileImage.width}`}
+                    height={`${project.mobileImage.height}`}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                </div>
+              )}
+              <div className="p-4 flex flex-col flex-1">
+                <h2 className="text-xl font-semibold mb-2 line-clamp-2">{project.title}</h2>
+                <p className="text-gray-200 mb-4 line-clamp-3">
+                  {project.shortDescription}
+                </p>
+                <div className="flex justify-between items-center mt-auto">
+                  <span className="inline-block bg-gray-600 text-xs px-2 py-1 rounded">
+                    {new Date(project.publishedAt).toLocaleDateString("es-ES")}
+                  </span>
+                  <Link
+                    href={`/proyectos/${project.slug}`}
+                    className="text-white hover:underline font-medium"
+                  >
+                    Ver projecto →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4">Proyectos desde Strapi CMS</h1>
