@@ -101,7 +101,7 @@ export default function HighlightedProjects() {
             {mockProjects.map((project, idx) => (
               <div
                 key={project.id}
-                className="keen-slider__slide  "
+                className="keen-slider__slide"
               >
                 <div className="flex flex-col transition-all duration-300">
                   {/* Image Container - Different sizes for active vs inactive slides */}

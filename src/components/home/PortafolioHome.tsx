@@ -1,5 +1,7 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 interface Project {
   id: number;
@@ -10,6 +12,19 @@ interface Project {
   slug: string;
 }
 
+// Animation configuration constants
+const ANIMATION_CONFIG = {
+  SECTION_START_THRESHOLD: 1.2, // Start animation before section is visible
+  SECTION_END_THRESHOLD: 0.5,   // Continue animation longer
+  PROJECT_SPACING: 0.12,         // Slightly more spacing between project animations
+  TRANSFORM_DURATION: 0.3,       // Duration of transform animation
+  OPACITY_DURATION: 0.2,         // Duration of opacity animation
+  INITIAL_TRANSLATE_Y: 200,      // Starting position (200% below)
+  FADE_MULTIPLIER: 1.5,          // Opacity animation speed
+  ANIMATION_DELAY: 0.08,         // Small delay before starting animations
+} as const;
+
+// Mock data - in a real app, this would come from an API or CMS
 const mockProjects: Project[] = [
   {
     id: 1,
@@ -45,11 +60,119 @@ const mockProjects: Project[] = [
   },
 ];
 
+/**
+ * Custom hook for managing scroll-based animations
+ */
+const useScrollAnimation = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const calculateScrollProgress = () => {
+    if (!sectionRef.current) return;
+
+    const rect = sectionRef.current.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const sectionHeight = rect.height;
+    
+    const sectionTop = rect.top;
+    const sectionBottom = rect.bottom;
+    
+    const startPoint = windowHeight * ANIMATION_CONFIG.SECTION_START_THRESHOLD;
+    const endPoint = -sectionHeight * ANIMATION_CONFIG.SECTION_END_THRESHOLD;
+    
+    if (sectionTop <= startPoint && sectionBottom >= 0) {
+      const progress = Math.min(1, Math.max(0, (startPoint - sectionTop) / (startPoint - endPoint)));
+      setScrollProgress(progress);
+    } else if (sectionTop > startPoint) {
+      setScrollProgress(0);
+    } else {
+      setScrollProgress(1);
+    }
+  };
+
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          calculateScrollProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    calculateScrollProgress();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return { sectionRef, scrollProgress };
+};
+
 export default function PortafolioHome() {
+  const { sectionRef, scrollProgress } = useScrollAnimation();
+
+  const getProjectTransform = (index: number): string => {
+    // First project is always visible
+    if (index === 0) {
+      return 'translateY(0%)';
+    }
+    
+    const adjustedIndex = index - 1; // Adjust index so second project starts at 0
+    const startProgress = ANIMATION_CONFIG.ANIMATION_DELAY + (adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING);
+    const endProgress = startProgress + ANIMATION_CONFIG.TRANSFORM_DURATION;
+    
+    if (scrollProgress <= startProgress) {
+      return `translateY(${ANIMATION_CONFIG.INITIAL_TRANSLATE_Y}%)`;
+    } else if (scrollProgress >= endProgress) {
+      return 'translateY(0%)';
+    } else {
+      // Smooth easing animation
+      const progress = (scrollProgress - startProgress) / (endProgress - startProgress);
+      const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+      return `translateY(${ANIMATION_CONFIG.INITIAL_TRANSLATE_Y * (1 - easeProgress)}%)`;
+    }
+  };
+
+
+  const getProjectOpacity = (index: number): number => {
+    // First project is always visible
+    if (index === 0) {
+      return 1;
+    }
+    
+    const adjustedIndex = index - 1;
+    const startProgress = ANIMATION_CONFIG.ANIMATION_DELAY + (adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING);
+    const endProgress = startProgress + ANIMATION_CONFIG.OPACITY_DURATION;
+    
+    if (scrollProgress <= startProgress) {
+      return 0;
+    } else if (scrollProgress >= endProgress) {
+      return 1;
+    } else {
+      const progress = (scrollProgress - startProgress) / (endProgress - startProgress);
+      return Math.min(1, progress * ANIMATION_CONFIG.FADE_MULTIPLIER);
+    }
+  };
+
+
+  const getProjectAnimationStyles = (index: number) => ({
+    transform: getProjectTransform(index),
+    opacity: getProjectOpacity(index),
+    transition: 'transform 0.1s ease-out, opacity 0.2s ease-out',
+    willChange: 'transform, opacity'
+  });
+
   return (
-    <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden pb-[100px]"
+    >
+      {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
-        {/* Title */}
         <h1 className="text-white text-2xl md:text-3xl font-light">
           Ideas que se volvieron realidad
         </h1>
@@ -59,18 +182,18 @@ export default function PortafolioHome() {
       </div>
 
       {/* Projects Grid */}
-      <div className="w-full overflow-x-auto">
-        <div className="flex gap-8 pb-6 justify-start">
-          {mockProjects.map((project) => (
+      <div className="w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {mockProjects.map((project, index) => (
             <Link
               href={`/portafolio/${project.slug}`}
               key={project.id}
-              className="block group cursor-pointer flex-shrink-0"
-              style={{ width: "320px", height: "424px", maxHeight: "424px" }}
+              className="block group cursor-pointer w-full"
+              style={getProjectAnimationStyles(index)}
             >
               <div className="flex flex-col h-full">
                 {/* Image Container */}
-                <div className="relative mb-4 overflow-hidden  w-full h-[320px]">
+                <div className="relative mb-4 overflow-hidden w-full h-[220px] sm:h-[320px]">
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
