@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HamburgerIcon, ArrowIcon, CloseIcon } from "../../../Icons";
@@ -15,30 +15,56 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
   
+    const [showDropdown, setShowDropdown] = useState(false);
+    const serviciosRef = useRef<HTMLDivElement>(null);
+    const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
+    const handleMouseEnter = () => {
+        if (serviciosRef.current) {
+            const rect = serviciosRef.current.getBoundingClientRect();
+            setDropdownPosition({
+            left: rect.left,
+            top: rect.bottom + window.scrollY,
+            });
+            setShowDropdown(true);
+        }
+    }
+    const handleMouseLeave = () => {
+        setShowDropdown(false);
+    }
 
   return (
     <>
-    <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${scrolled ? "bg-black/30 backdrop-blur-md shadow-md px-4 py-3 my-10 rounded-full mx-4 md:mx-50 md:my-15" : "bg-transparent py-6"}`}>
+    {showDropdown && (
+    <ul
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="fixed z-[9999] bg-black/30 backdrop-blur-md text-white p-4 rounded flex flex-col gap-2 whitespace-nowrap shadow-xl text-[14px]"
+        style={{ top: `${dropdownPosition.top}px`, left: `${dropdownPosition.left}px`}}>
+        <li>Branding</li>
+        <li>Diseño web & Desarrollo</li>
+        <li>Marketing Digital</li>
+        <li>Contenido Audiovisual</li>
+        <li>Campañas Publicitarias</li>
+    </ul>
+    )}
+
+    <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${ scrolled  ? "bg-black/30 backdrop-blur-md shadow-md px-4 py-3 my-10 rounded-full mx-4 md:mx-50 md:my-15" : "bg-transparent py-6"}`}>
         <div id="navbar-desktop" className="flex justify-between items-center">
-            <Link href="/"> <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]"/></Link>
+            <Link href="/">
+            <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
+            </Link>
+
             <button onClick={() => setMobileOpen(true)} className="md:hidden" aria-label="Abrir menú">
             <HamburgerIcon />
             </button>
 
             <nav className="hidden md:flex gap-10 text-[14px]">
-            <div className="relative group flex flex-col gap-2">
-                <span className="">Servicios</span>
-                <ul className="absolute top-full mt-1 hidden bg-black/30 backdrop-blur-md group-hover:flex flex-col gap-1 text-[14px] text-white p-4 rounded whitespace-nowrap">
-                <li>Branding</li>
-                <li>Diseño web & Desarrollo</li>
-                <li>Marketing Digital</li>
-                <li>Contenido Audiovisual</li>
-                <li>Campañas Publicitarias</li>
-                </ul>
-            </div>
-            <span>Proyectos</span>
-            <span>Nuestra esencia</span>
-            <span>Contáctanos</span>
+                <div className="relative flex flex-col gap-2" ref={serviciosRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    <span className="">Servicios</span>
+                </div>
+                <span>Proyectos</span>
+                <span>Nuestra esencia</span>
+                <span>Contáctanos</span>
             </nav>
         </div>
     </header>
