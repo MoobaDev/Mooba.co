@@ -20,17 +20,17 @@ export default function Footer() {
             <p>Habla con nosotros</p>
             <p>o pregúntanos lo</p>
             <p>que quieras</p>
-            <p className="flex flex-row font-thin mt-2">Contáctanos <ArrowIcon/> </p>
+            <p className="flex flex-row font-thin mt-2  hover:underline">Contáctanos <ArrowIcon/> </p>
           </div>
         </div>
         
         <div className="items-start">
           <p className="font-base text-[16px] mb-2">Síguenos</p>
           <div className="flex flex-col gap-1">
-            <p className="flex flex-row font-thin items-center gap-1">LinkedIn <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">Instagram <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">TikTok <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">Behance <ArrowIcon /></p>
+            <p className="flex flex-row font-thin items-center gap-1 hover:underline">LinkedIn <ArrowIcon /></p>
+            <p className="flex flex-row font-thin items-center gap-1  hover:underline">Instagram <ArrowIcon /></p>
+            <p className="flex flex-row font-thin items-center gap-1  hover:underline">TikTok <ArrowIcon /></p>
+            <p className="flex flex-row font-thin items-center gap-1  hover:underline">Behance <ArrowIcon /></p>
           </div>
         </div>
         
@@ -59,16 +59,16 @@ export default function Footer() {
         
         <div className="flex flex-col text-[16px]">
           <p className="text-[16px] font-base">Habla con nosotros o pregúntanos lo que quieras</p>
-          <p className="flex flex-row font-thin items-center gap-1">Contáctanos <ArrowIcon /></p>
+          <p className="flex flex-row font-thin items-center gap-1 hover:underline">Contáctanos <ArrowIcon /></p>
         </div>
         
         <div className="flex flex-col text-[16px]">
           <p className="font-base mb-2">Síguenos</p>
           <div className="flex flex-col gap-1">
-            <p className="flex flex-row font-thin items-center gap-1">LinkedIn <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">Instagram <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">TikTok <ArrowIcon /></p>
-            <p className="flex flex-row font-thin items-center gap-1">Behance <ArrowIcon /></p>
+            <Link href="https://www.linkedin.com/company/mooba-agencia/" target="_blank" rel="noopener noreferrer"><a className="flex flex-row font-thin items-center gap-1 hover:underline">LinkedIn <ArrowIcon /></a></Link>
+            <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><a className="flex flex-row font-thin items-center gap-1 hover:underline">Instagram <ArrowIcon /></a></Link>
+            <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><a className="flex flex-row font-thin items-center gap-1 hover:underline">TikTok <ArrowIcon /></a></Link>
+            <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"><a className="flex flex-row font-thin items-center gap-1 hover:underline">Behance <ArrowIcon /></a></Link>
           </div>
         </div>
         
