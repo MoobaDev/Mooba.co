@@ -61,13 +61,13 @@ export default function Header() {
             <li className="hover:underline hover:cursor-pointer">Contenido Audiovisual</li>
             <li className="hover:underline hover:cursor-pointer">Campañas Publicitarias</li>
         </ul>
-        )}
+        )} 
 
         <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${ scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6"}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
                 <Link href="/" className="cursor-pointer">
                 <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
-                </Link>
+                </Link>   
 
                 <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
                 <HamburgerIcon />
@@ -79,7 +79,7 @@ export default function Header() {
                     </div>
                     <Link href="#" className="hover:underline cursor-pointer">Proyectos</Link>
                     <Link href="#" className="hover:underline cursor-pointer">Nuestra esencia</Link>
-                    <Link href="#" className="hover:underline cursor-pointer">Contáctanos</Link>
+                    <Link href="/contacto" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>
             </div>
         </header>
@@ -119,7 +119,7 @@ export default function Header() {
                             </li>
 
                         <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Nuestra esencia</Link>
-                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Contáctanos</Link>
+                        <Link href="/contacto" className="text-[32px] font-normal hover:cursor-pointer">Contáctanos</Link>
                     </ul>
                 </nav>
 
