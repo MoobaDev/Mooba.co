@@ -1,5 +1,5 @@
 import "../globals.css";
-import { getProjects } from "@/lib/getProyects";
+import { getAllProjects } from "@/lib/getAllProyects";
 import { getCategories } from "@/lib/getCategories";
 import Categories from "@/components/proyectos/Categories";
 import Projects from "@/components/proyectos/Projects";
@@ -8,7 +8,7 @@ import Image from "next/image";
  */
 export default async function PortafolioPage() {
 
-  const { data: projects } = await getProjects();
+  const { data: projects } = await getAllProjects();
   const { data: categories } = await getCategories();
 
   //const [categorieSelected, iscategorieSelected] = useState();

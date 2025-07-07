@@ -1,56 +1,13 @@
 //import DOMPurify from 'dompurify';
 //import { JSDOM } from 'jsdom';
 import { notFound } from "next/navigation";
-import Link from "next/link";
+/* import Link from "next/link"; */
 import "../../globals.css";
-
-interface StrapiImage {
-  id: number;
-  url: string;
-  alternativeText?: string;
-  caption?: string;
-  width: number;
-  height: number;
-}
-
-interface Project {
-  title: string;
-  slug: string;
-  shortDescription: string;
-  mobileImage: StrapiImage[];
-  desktopImage: StrapiImage[];
-  desktopContent: string;
-  mobileContent: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-}
+import { getProject } from "@/lib/getProject";
 
 /* interface StrapiResponse {
   data: Project;
 } */
-
-async function getProject(slug: string): Promise<Project | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate=*`,
-      { 
-        cache: "no-store", 
-        headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      }, },
-      
-    );
-    if (!res.ok) {
-      return null;
-    }
-    const response: { data: Project[] } = await res.json();
-    return response.data[0] || null;
-  } catch (error) {
-    console.error("Error fetching project:", error);
-    return null;
-  }
-}
 
 function addAutoplayToVideos(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -108,16 +65,37 @@ export default async function projectPage({ params }: { params: { slug: string }
   }
 
   return (
-    <div className="w-full px-8 py-12 text-white" >
-      {/* Navigation */}
-      <div className="mb-8">
+    <div className="w-full px-6 py-8" >
+
+      <div className="mb-16">
+        <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
+        <div className="flex flex-wrap gap-y-2">
+          {Array.isArray(project.categorias) && project.categorias.map((cat) => (
+              <div
+                  key={cat.slug}
+                  className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
+              >
+                  {cat.name}
+              </div>
+          ))}
+        </div>
+      </div>
+
+      {project.desktopContent && (
+        <div className="w-full">
+          <div
+            className="max-w-none w-full"
+            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
+          />
+        </div>
+      )}
+
+      {/* <div className="mb-8">
         <Link href="/proyectos" className="inline-flex items-center text-white-600 hover:underline mb-4">
           <span className="mr-2">&#8592;</span>
           Volver a proyectos
         </Link>
       </div>
-
-      {/* Header */}
       <header className="mb-8">
         <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
         <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -133,9 +111,7 @@ export default async function projectPage({ params }: { params: { slug: string }
           <p className="text-lg text-gray-500 leading-relaxed">{project.shortDescription}</p>
         )}
       </header>
-
       <hr className="mb-8" />
-
       {project.desktopContent && (
         <div className="w-full">
           <h2 className="text-2xl font-semibold mb-4">Contenido HTML CKEditor</h2>
@@ -144,7 +120,7 @@ export default async function projectPage({ params }: { params: { slug: string }
             dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
           />
         </div>
-      )}
+      )} */}
 
       {/* Debug Info */}
       <details className="mt-12 p-4rounded-lg">

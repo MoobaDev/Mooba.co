@@ -62,3 +62,14 @@ export interface StrapiCategoriesResponse {
     };
   };
 }
+export interface StrapiProjectResponse {
+  data: Project[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
