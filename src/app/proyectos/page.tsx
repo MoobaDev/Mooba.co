@@ -3,9 +3,9 @@ import { getProjects } from "@/lib/getProyects";
 import { getCategories } from "@/lib/getCategories";
 import Categories from "@/components/proyectos/Categories";
 import Projects from "@/components/proyectos/Projects";
-import Link from "next/link";
+/* import Link from "next/link";
 import Image from "next/image";
-
+ */
 export default async function PortafolioPage() {
 
   const { data: projects } = await getProjects();
@@ -17,10 +17,20 @@ export default async function PortafolioPage() {
     <div className="w-full px-6 py-8">
 
       <div className="mb-6">
-        <h1 className="text-[28px] font-extralight">Proyectos</h1>
+        <h1 className="text-[28px] md:text-[52px] font-extralight">Proyectos</h1>
       </div>
 
-      <div className="mb-7 w-screen border-[0.2px]  border-[#D0D5DD] relative left-1/2 -translate-x-1/2"></div>
+      {/* <div className="mb-7 w-screen border-[0.2px]  border-[#D0D5DD] relative left-1/2 -translate-x-1/2"></div> */}
+
+      <div
+        className="w-screen relative left-1/2 -translate-x-1/2 mb-7"
+        style={{
+          height: "1px",
+          backgroundColor: "#D0D5DD",
+          transform: "scaleY(0.2)",
+          transformOrigin: "top",
+        }}
+      ></div>
 
       <Categories categories={categories} />
 
