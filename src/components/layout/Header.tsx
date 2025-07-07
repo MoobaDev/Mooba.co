@@ -63,7 +63,7 @@ export default function Header() {
         </ul>
         )}
 
-        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${ scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full mx-4 md:mx-50 md:my-15" : "bg-transparent py-6"}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${ scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6"}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
                 <Link href="/" className="cursor-pointer">
                 <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
