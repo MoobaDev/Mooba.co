@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="w-full border-t border-white/30 my-6 md:hidden"></div>
       
       <div className="md:hidden flex flex-col items-start gap-6 w-full">
-        <div className="flex flex-row gap-10 w-full">
+        <div className="flex flex-row justify-between w-full">
           <div className="flex flex-col gap-2 text-[16px]">
             <p className="font-normal">Barranquilla, CO</p>
             <p className="font-extralight">Cra 61 # 64-27</p>
