@@ -82,7 +82,7 @@ export default function HighlightedProjects() {
   });
 
   return (
-    <section className="mt-[120px] overflow-hidden">
+    <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       {/* Contenedor para el título con ancho máximo */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
         <div className="w-full flex justify-between items-center">

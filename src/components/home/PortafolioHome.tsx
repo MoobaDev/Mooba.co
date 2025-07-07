@@ -169,7 +169,7 @@ export default function PortafolioHome() {
   return (
     <section 
       ref={sectionRef}
-      className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden pb-[100px]"
+      className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
