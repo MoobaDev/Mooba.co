@@ -98,17 +98,17 @@ export default function Header() {
 
                 <nav className="flex">
                     <ul className="flex flex-col gap-2">
-                        <Link href="#" className="text-[32px] font-medium hover:cursor-pointer">Proyectos</Link>
+                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Proyectos</Link>
                         <li className="flex flex-col gap-2">
                             <button
                                 onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)}
-                                className="text-[32px] font-medium hover:cursor-pointer text-left"
+                                className="text-[32px] font-normal hover:cursor-pointer text-left"
                             >
                                 Servicios
                             </button>
 
                             {mobileServiciosOpen && (
-                                <ul className="flex flex-col text-[18px] font-extralight gap-3 pl-2">
+                                <ul className="flex flex-col text-[18px] font-extralight gap-3">
                                 <li className="hover:cursor-pointer">Branding</li>
                                 <li className="hover:cursor-pointer">Diseño web & Desarrollo</li>
                                 <li className="hover:cursor-pointer">Marketing Digital</li>
@@ -118,8 +118,8 @@ export default function Header() {
                             )}
                             </li>
 
-                        <Link href="#" className="text-[32px] font-medium hover:cursor-pointer">Nuestra esencia</Link>
-                        <Link href="#" className="text-[32px] font-medium hover:cursor-pointer">Contáctanos</Link>
+                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Nuestra esencia</Link>
+                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Contáctanos</Link>
                     </ul>
                 </nav>
 
@@ -127,12 +127,12 @@ export default function Header() {
                     <div className="w-full border-t border-white/30 my-6"></div>
                     <div className="flex flex-col gap-2 justify-end">
                         <div className="flex flex-row gap-10">
-                            <p className="flex flex-row justify-center text-xl font-extralight items-center gap-1 hover:cursor-pointer">LinkedIn <ArrowIcon /></p>
-                            <p className="flex flex-row justify-center text-xl font-extralight items-center gap-1 hover:cursor-pointer">Tiktok <ArrowIcon /></p>
+                            <Link  href="https://www.linkedin.com/company/mooba-agencia/"  target="_blank" rel="noopener noreferrer" className="flex flex-row text-[20px] font-extralight items-center gap-1"> LinkedIn <ArrowIcon /></Link>
+                            <Link href="https://www.tiktok.com/@agencia.mooba?_t=ZS-8xpXxG2jSq8&_r=1" target="_blank" rel="noopener noreferrer" className="flex flex-row text-[20px] font-extralight items-center gap-1">TikTok <ArrowIcon /></Link>
                         </div>
                         <div className="flex flex-row gap-10">
-                            <p className="flex flex-row justify-center text-xl font-extralight items-center gap-1 hover:cursor-pointer">Instagram <ArrowIcon /></p>
-                            <p className="flex flex-row justify-center text-xl font-extralight items-center gap-1 hover:cursor-pointer">Behance <ArrowIcon /></p>
+                            <Link href="https://www.instagram.com/moobaagencia?igsh=MWkxOXBkZnM5dW1qYQ==" target="_blank" rel="noopener noreferrer" className="flex flex-row  text-[20px] font-extralight items-center gap-1">Instagram <ArrowIcon /> </Link>
+                            <Link href="https://www.behance.net/moobaagencia" target="_blank" rel="noopener noreferrer" className="flex flex-row text-[20px] font-extralight items-center gap-1">Behance <ArrowIcon /></Link>
                         </div>
                     </div>
                 </div>
