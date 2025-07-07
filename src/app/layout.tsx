@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-});
+  weight: ["100", "200", "300", "400", "500", "700"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Mooba - Gestión de Proyectos",
+  title: "Mooba",
   description: "Plataforma de gestión de proyectos desarrollada con Next.js y Builder.io",
 };
 
@@ -20,9 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} antialiased bg-black text-white`}
+        className={`${dmSans.className} antialiased bg-black text-white`}
       >
-        {children}
+        <Header/>
+        <main className="relative z-0">
+          {children}
+        </main>
+        <Footer/>
       </body>
     </html>
   );
