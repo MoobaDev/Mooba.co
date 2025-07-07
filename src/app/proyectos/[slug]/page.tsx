@@ -81,14 +81,29 @@ export default async function projectPage({ params }: { params: { slug: string }
         </div>
       </div>
 
-      {project.desktopContent && (
-        <div className="w-full">
-          <div
-            className="max-w-none w-full"
-            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
-          />
+      <div className="">
+        <div className="hidden md:block">
+          {project.desktopContent && (
+            <div className="w-full">
+              <div
+                className="max-w-none w-full"
+                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
+              />
+            </div>
+          )}
         </div>
-      )}
+        <div className="block md:hidden">
+          {project.mobileContent && (
+            <div className="w-full">
+              <div
+                className="max-w-none w-full"
+                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+      
 
       {/* <div className="mb-8">
         <Link href="/proyectos" className="inline-flex items-center text-white-600 hover:underline mb-4">
