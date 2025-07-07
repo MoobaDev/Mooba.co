@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 
 interface Brand {
   id: number
@@ -12,72 +13,99 @@ interface Brand {
 const allBrands: Brand[] = [
   {
     id: 1,
-    name: "eticos",
-    logo: "/placeholder.svg?height=60&width=120&text=eticos",
+    name: "Eticos",
+    logo: "/images/brands/eticos.svg",
   },
   {
     id: 2,
     name: "Camila Santos",
-    logo: "/placeholder.svg?height=60&width=120&text=CAMILA+SANTOS",
-    subtitle: "interiorista",
+    logo: "/images/brands/camila-santos.svg",
+    subtitle: "Interiorista",
   },
   {
     id: 3,
     name: "La Economía",
-    logo: "/placeholder.svg?height=60&width=120&text=La+Economia",
+    logo: "/images/brands/la-economia.svg",
     subtitle: "Droguería",
   },
   {
     id: 4,
     name: "Tasqui",
-    logo: "/placeholder.svg?height=60&width=120&text=Tasqui",
+    logo: "/images/brands/tasqui.svg",
   },
   {
     id: 5,
     name: "Cobru",
-    logo: "/placeholder.svg?height=60&width=120&text=Cobru",
+    logo: "/images/brands/cobru.svg",
   },
   {
     id: 6,
     name: "Luxwave",
-    logo: "/placeholder.svg?height=60&width=120&text=Luxwave",
+    logo: "/images/brands/luxwave.svg",
     subtitle: "Design Studio",
   },
   {
     id: 7,
-    name: "TechFlow",
-    logo: "/placeholder.svg?height=60&width=120&text=TechFlow",
-    subtitle: "Software",
+    name: "BeeActive",
+    logo: "/images/brands/beeactive.svg",
+    subtitle: "Fitness",
   },
   {
     id: 8,
-    name: "Verde Natura",
-    logo: "/placeholder.svg?height=60&width=120&text=Verde+Natura",
-    subtitle: "Cosmética",
+    name: "Derken",
+    logo: "/images/brands/derken.svg",
   },
   {
     id: 9,
-    name: "Café Central",
-    logo: "/placeholder.svg?height=60&width=120&text=Cafe+Central",
+    name: "Fenalco",
+    logo: "/images/brands/fenalco.svg",
   },
   {
     id: 10,
-    name: "Fitness Pro",
-    logo: "/placeholder.svg?height=60&width=120&text=Fitness+Pro",
-    subtitle: "Gimnasio",
+    name: "Impacto News",
+    logo: "/images/brands/impacto-news.svg",
+    subtitle: "Noticias",
   },
   {
     id: 11,
-    name: "Arte & Diseño",
-    logo: "/placeholder.svg?height=60&width=120&text=Arte+Diseño",
-    subtitle: "Estudio",
+    name: "Isimo",
+    logo: "/images/brands/isimo.svg",
   },
   {
     id: 12,
-    name: "Digital Wave",
-    logo: "/placeholder.svg?height=60&width=120&text=Digital+Wave",
-    subtitle: "Marketing",
+    name: "JH",
+    logo: "/images/brands/jh.svg",
   },
+  {
+    id: 13,
+    name: "Lions",
+    logo: "/images/brands/lions.svg",
+  },
+  {
+    id: 14,
+    name: "Lovfaith",
+    logo: "/images/brands/lovfaith.svg",
+  },
+  {
+    id: 15,
+    name: "Sertemap",
+    logo: "/images/brands/sertemap.svg",
+  },
+  {
+    id: 16,
+    name: "Sinergia",
+    logo: "/images/brands/sinergia.svg",
+  },
+  {
+    id: 17,
+    name: "Torres White",
+    logo: "/images/brands/torres-white.svg",
+  },
+  {
+    id:18,
+    name: "Beeactive",
+    logo: "/images/brands/beeactive.svg",
+  }
 ]
 
 export default function TrustedBrands() {
@@ -143,16 +171,17 @@ export default function TrustedBrands() {
                 animatingIndex === index ? "opacity-0 transform scale-95" : "opacity-100 transform scale-100"
               }`}
             >
-              <div className="text-white">
-                <div className="font-medium text-base md:text-lg lg:text-xl mb-1 md:whitespace-nowrap">
-                  {brand.name}
-                </div>
-                {brand.subtitle && (
-                  <div className="text-gray-400 text-sm md:text-base lg:text-base md:whitespace-nowrap">
-                    {brand.subtitle}
-                  </div>
-                )}
+              {/* Logo */}
+              <div className="mb-3 md:mb-4 w-full max-w-[120px] h-[60px] flex items-center justify-start md:justify-center">
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  width={120}
+                  height={60}
+                  className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                />
               </div>
+              
             </div>
           ))}
         </div>
