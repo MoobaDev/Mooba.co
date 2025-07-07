@@ -77,7 +77,7 @@ export default function Header() {
                     <div className="relative flex flex-col gap-2" ref={serviciosRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <span className="hover:underline cursor-pointer">Servicios</span>
                     </div>
-                    <Link href="#" className="hover:underline cursor-pointer">Proyectos</Link>
+                    <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
                     <Link href="#" className="hover:underline cursor-pointer">Nuestra esencia</Link>
                     <Link href="#" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>

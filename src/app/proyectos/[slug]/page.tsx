@@ -65,7 +65,7 @@ export default async function projectPage({ params }: { params: { slug: string }
   }
 
   return (
-    <div className="w-full px-6 py-8" >
+    <div className="w-full px-6 pt-28 pb-8" >
 
       <div className="mb-16">
         <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
