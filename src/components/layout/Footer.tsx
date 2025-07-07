@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="hidden md:flex md:justify-between md:items-start">
+      <div className="hidden md:flex md:justify-between gap-5 md:items-start">
         <div className="flex flex-col text-[16px] gap-1">
           <p className="font-normal text-[20px]">Barranquilla, CO</p>
           <p className="font-extralight">Cra 61 # 64-29</p>
