@@ -106,7 +106,7 @@ export default function Header() {
                 <div className="flex flex-col">
                     <div className="flex justify-between items-center max-w-7xl">
                         <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer">
-                            <Image src="/logo2.svg" alt="Logo mooba" width={120} height={30} />
+                            <Image src="/logo.svg" alt="Logo mooba" width={120} height={30} />
                         </button>
                         <button onClick={() => setMobileOpen(false)} aria-label="Cerrar menú" className="cursor-pointer">
                             <CloseIcon />
