@@ -74,11 +74,11 @@ export default function Header() {
                 left: `${dropdownPosition.left}px`,
                 transform: 'translateY(0)'
             }}>
-            <li className="hover:underline hover:cursor-pointer">Branding</li>
-            <li className="hover:underline hover:cursor-pointer">Diseño web & Desarrollo</li>
-            <li className="hover:underline hover:cursor-pointer">Marketing Digital</li>
-            <li className="hover:underline hover:cursor-pointer">Contenido Audiovisual</li>
-            <li className="hover:underline hover:cursor-pointer">Campañas Publicitarias</li>
+            <li onClick={() => handleNavigate('/servicios/branding')} className="hover:underline hover:cursor-pointer">Branding</li>
+            <li onClick={() => handleNavigate('/servicios/diseno-y-desarrollo')} className="hover:underline hover:cursor-pointer">Diseño web & Desarrollo</li>
+            <li onClick={() => handleNavigate('/servicios/marketing-digital')} className="hover:underline hover:cursor-pointer">Marketing Digital</li>
+            <li onClick={() => handleNavigate('/servicios/contenido-audiovisual')} className="hover:underline hover:cursor-pointer">Contenido Audiovisual</li>
+            <li onClick={() => handleNavigate('/servicios/campanas-publicitarias')} className="hover:underline hover:cursor-pointer">Campañas Publicitarias</li>
         </ul>
         )}
 
@@ -94,9 +94,9 @@ export default function Header() {
                     <div className="relative flex flex-col gap-2" ref={serviciosRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <span className="hover:underline cursor-pointer">Servicios</span>
                     </div>
-                    <Link href="#" className="hover:underline cursor-pointer">Proyectos</Link>
-                    <Link href="#" className="hover:underline cursor-pointer">Nuestra esencia</Link>
-                    <Link href="#" className="hover:underline cursor-pointer">Contáctanos</Link>
+                    <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
+                    <Link href="/nuestra-esencia" className="hover:underline cursor-pointer">Nuestra esencia</Link>
+                    <Link href="/contactanos" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>
             </div>
         </header>
@@ -123,10 +123,10 @@ export default function Header() {
                             {mobileServiciosOpen && (
                                 <ul className="flex flex-col text-[18px] font-extralight gap-3">
                                     <li onClick={() => handleNavigate('/servicios/branding')} className="hover:cursor-pointer">Branding</li>
-                                    <li onClick={() => handleNavigate('/servicios/diseno')} className="hover:cursor-pointer">Diseño web & Desarrollo</li>
-                                    <li onClick={() => handleNavigate('/servicios/marketing')} className="hover:cursor-pointer">Marketing Digital</li>
-                                    <li onClick={() => handleNavigate('/servicios/audiovisual')} className="hover:cursor-pointer">Contenido Audiovisual</li>
-                                    <li onClick={() => handleNavigate('/servicios/publicidad')} className="hover:cursor-pointer">Campañas Publicitarias</li>
+                                    <li onClick={() => handleNavigate('/servicios/diseno-y-desarrollo')} className="hover:cursor-pointer">Diseño web & Desarrollo</li>
+                                    <li onClick={() => handleNavigate('/servicios/marketing-digital')} className="hover:cursor-pointer">Marketing Digital</li>
+                                    <li onClick={() => handleNavigate('/servicios/contenido-audiovisual')} className="hover:cursor-pointer">Contenido Audiovisual</li>
+                                    <li onClick={() => handleNavigate('/servicios/campanas-publicitarias')} className="hover:cursor-pointer">Campañas Publicitarias</li>
                                 </ul>
                                 )}
                             </li>
