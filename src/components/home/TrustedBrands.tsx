@@ -101,11 +101,6 @@ const allBrands: Brand[] = [
     name: "Torres White",
     logo: "brands/torres-white.svg",
   },
-  {
-    id: 18,
-    name: "Beeactive",
-    logo: "brands/beeactive.svg",
-  },
 ];
 
 export default function TrustedBrands() {
@@ -139,9 +134,11 @@ export default function TrustedBrands() {
         setVisibleBrands((prev) => {
           const newBrands = [...prev];
 
-          // Encontrar marcas que no están visibles
+          // Encontrar marcas que no están visibles (excluyendo la que está en la posición que va a cambiar)
           const hiddenBrands = allBrands.filter(
-            (brand) => !newBrands.some((visible) => visible.id === brand.id)
+            (brand) => !newBrands.some((visible, index) => 
+              visible.id === brand.id && index !== randomPosition
+            )
           );
 
           if (hiddenBrands.length > 0) {
@@ -159,7 +156,7 @@ export default function TrustedBrands() {
           setAnimatingIndex(null);
         }, 100);
       }, 500);
-    }, 4000); // Cada 4 segundos
+    }, 2000); // Cada 4 segundos
 
     return () => clearInterval(interval);
   }, [lastChangedPosition]);
@@ -168,29 +165,29 @@ export default function TrustedBrands() {
     <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       
         {/* Title */}
-        <h1 className="text-white text-2xl md:text-3xl font-light ">
+        <h2 className="text-3xl font-extralight md:text-4xl">
           Marcas que han confiado en nosotros
-        </h1>
+        </h2>
 
         {/* Single responsive grid */}
-        <div className="grid grid-cols-2 py-8 md:grid-cols-6 gap-x-8 gap-y-12 md:gap-x-12 md:gap-y-0">
+        <div className="grid grid-cols-2 py-8 md:grid-cols-6 gap-2.5 justify-items-center">
           {visibleBrands.map((brand, index) => (
             <div
               key={`${brand.id}-${index}`}
-              className={`flex flex-col items-start md:items-center justify-center text-left md:text-center transition-all duration-500 ease-in-out ${
+              className={`w-36 h-36 md:w-48 md:h-48 flex items-center justify-center transition-all duration-500 ease-in-out ${
                 animatingIndex === index
                   ? "opacity-0 transform scale-95"
                   : "opacity-100 transform scale-100"
               }`}
             >
               {/* Logo */}
-              <div className="mb-3 md:mb-4 w-full max-w-[120px] h-[60px] flex items-center justify-start md:justify-center">
+              <div className="w-full h-full flex items-center justify-center p-6">
                 <Image
                   src={brand.logo}
                   alt={brand.name}
-                  width={120}
-                  height={60}
-                  className="max-w-full max-h-full object-contain filter brightness-0 invert"
+                  width={130}
+                  height={65}
+                  className="max-w-32 max-h-16 object-contain filter brightness-0 invert"
                 />
               </div>
             </div>

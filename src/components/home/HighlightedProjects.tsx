@@ -18,21 +18,21 @@ const mockProjects: Project[] = [
     id: 1,
     title: "Luxwave",
     category: "Branding",
-    image: "/images/luxwave.png",
+    image: "/luxwave.png",
     tags: ["Diseño UX/UI", "Desarrollo web"],
   },
   {
     id: 2,
     title: "Sr. Julio",
     category: "Campañas publicitarias",
-    image: "/images/julio.jpg",
+    image: "/julio.jpg",
     tags: ["Campañas publicitarias"],
   },
   {
     id: 3,
     title: "TechFlow",
     category: "Desarrollo web",
-    image: "/images/iphone.jpg",
+    image: "/iphone.jpg",
     tags: ["React", "Next.js"],
   },
 ];
@@ -82,14 +82,14 @@ export default function HighlightedProjects() {
   });
 
   return (
-    <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+    <section className="mt-[120px] mx-auto overflow-hidden">
       {/* Contenedor para el título con ancho máximo */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
         <div className="w-full flex justify-between items-center">
           {/* Title */}
-          <h1 className="text-white text-2xl md:text-3xl font-light">
+          <h2 className="text-3xl md:text-4xl font-extralight">
             Proyectos destacados
-          </h1>
+          </h2>
         </div>
       </div>
 
@@ -128,14 +128,14 @@ export default function HighlightedProjects() {
                   {/* Show text for all slides, with different opacity */}
                   <div className="max-w-[1440px] mx-auto w-full">
                     <div className="mb-2 md:mb-3 max-w-[840px]">
-                      <h3 className={`text-lg md:text-xl font-light transition-opacity duration-300 ${
+                      <h5 className={`text-xl font-extralight transition-opacity duration-300 ${
                         loaded && currentSlide % mockProjects.length === idx
                           ? "text-white opacity-100"
                           : "text-white opacity-50"
                       }`}>
                         {project.title}
-                      </h3>
-                      <p className={`text-xs md:text-sm transition-opacity duration-300 ${
+                      </h5>
+                      <p className={`text-xl font-extralight transition-opacity duration-300 ${
                         loaded && currentSlide % mockProjects.length === idx
                           ? "text-gray-400 opacity-100"
                           : "text-gray-400 opacity-50"
@@ -149,10 +149,10 @@ export default function HighlightedProjects() {
                       {project.tags.map((tag, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className={`text-xs md:text-sm border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
+                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
                             loaded && currentSlide % mockProjects.length === idx
-                              ? "text-white border-white opacity-100"
-                              : "text-white border-white opacity-50"
+                              ? "text-gray-500 border-gray-300 opacity-100"
+                              : "text-gray-500 border-gray-300 opacity-50"
                           }`}
                         >
                           {tag}
