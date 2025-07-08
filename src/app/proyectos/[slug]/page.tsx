@@ -1,13 +1,8 @@
 //import DOMPurify from 'dompurify';
 //import { JSDOM } from 'jsdom';
 import { notFound } from "next/navigation";
-/* import Link from "next/link"; */
 import "../../globals.css";
 import { getProject } from "@/lib/getProject";
-
-/* interface StrapiResponse {
-  data: Project;
-} */
 
 function addAutoplayToVideos(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -42,6 +37,18 @@ function addAutoplayToVideos(html: string) {
     }
   );
   return result;
+}
+// Elimina cualquier width y height. Agrega width="100%" al final
+function fixImagesWidth(html: string) {
+  return html.replace(
+    /<img\b([^>]*)>/gi,
+    (match, attrs) => {
+      const newAttrs = attrs
+        .replace(/\s*width\s*=\s*["'][^"']*["']/gi, "")
+        .replace(/\s*height\s*=\s*["'][^"']*["']/gi, "");
+      return `<img${newAttrs} width="100%">`;
+    }
+  );
 }
 
 /* function sanitizeHTML(dirty: string) {
@@ -87,7 +94,7 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
+                dangerouslySetInnerHTML={{ __html: fixImagesWidth(addAutoplayToVideos(project.desktopContent)) }}
               />
             </div>
           )}
@@ -97,55 +104,22 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.mobileContent) }}
+                dangerouslySetInnerHTML={{ __html: fixImagesWidth(addAutoplayToVideos(project.mobileContent)) }}
               />
             </div>
           )}
         </div>
       </div>
-      
-
-      {/* <div className="mb-8">
-        <Link href="/proyectos" className="inline-flex items-center text-white-600 hover:underline mb-4">
-          <span className="mr-2">&#8592;</span>
-          Volver a proyectos
-        </Link>
-      </div>
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-        <div className="flex flex-wrap items-center gap-4 mb-6">
-          <span className="inline-block bg-gray-500 text-xs px-2 py-1 rounded">
-            {new Date(project.publishedAt).toLocaleDateString("es-ES", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-        </div>
-        {project.shortDescription && (
-          <p className="text-lg text-gray-500 leading-relaxed">{project.shortDescription}</p>
-        )}
-      </header>
-      <hr className="mb-8" />
-      {project.desktopContent && (
-        <div className="w-full">
-          <h2 className="text-2xl font-semibold mb-4">Contenido HTML CKEditor</h2>
-          <div
-            className="max-w-none w-full"
-            dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
-          />
-        </div>
-      )} */}
 
       {/* Debug Info */}
-      <details className="mt-12 p-4rounded-lg">
+      {/* <details className="mt-12 p-4rounded-lg">
         <summary className="cursor-pointer font-medium text-sm text-gray-600 mb-2">
           Ver información de debug
         </summary>
         <pre className="text-xs p-3 rounded border overflow-auto">
           {JSON.stringify(project, null, 2)}
         </pre>
-      </details>
+      </details> */}
     </div>
   );
 }
