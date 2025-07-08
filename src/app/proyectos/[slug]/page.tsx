@@ -97,7 +97,7 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.desktopContent) }}
+                dangerouslySetInnerHTML={{ __html: addAutoplayToVideos(project.mobileContent) }}
               />
             </div>
           )}

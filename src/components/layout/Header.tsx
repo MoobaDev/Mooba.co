@@ -98,7 +98,7 @@ export default function Header() {
 
                 <nav className="flex">
                     <ul className="flex flex-col gap-2">
-                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Proyectos</Link>
+                        <Link href="/proyectos" className="text-[32px] font-normal hover:cursor-pointer">Proyectos</Link>
                         <li className="flex flex-col gap-2">
                             <button
                                 onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)}

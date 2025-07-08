@@ -85,11 +85,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                 {Array.isArray(project.categorias) && project.categorias.map((cat) => (
                                     <div
                                         key={cat.slug}
-                                        className={`border-1 rounded-[100px] px-3 py-[2px] text-sm ${
-                                        categoria === cat.slug
-                                            ? "bg-white text-black border-white"
-                                            : "text-[#7A7F89] bg-transparent border-[#D0D5DD]"
-                                        }`}
+                                        className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
                                     >
                                         {cat.name}
                                     </div>
