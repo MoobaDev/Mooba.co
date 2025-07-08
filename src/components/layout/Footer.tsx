@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-black text-white py-8">
-      <div className="w-full border-t border-white/30 my-6 md:hidden"></div>
+      <div className="w-full border-t border-white/30 my-6"></div>
       
       <div className="md:hidden flex flex-col items-start gap-6 w-full mx-auto px-6 md:px-8 overflow-hidden">
         <div className="flex flex-row justify-between w-full">
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="hidden md:flex md:justify-between gap-5 mx-auto px-6 md:px-8 overflow-hidden md:items-start">
+      <div className="hidden md:flex md:justify-between gap-5 mx-auto px-6 md:px-8 overflow-hidden pt-4 md:items-start">
         <div className="flex flex-col text-[16px] gap-1">
           <p className="font-normal text-[20px]">Barranquilla, CO</p>
           <p className="font-extralight">Cra 61 # 64-29</p>
