@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { HamburgerIcon, ArrowIcon, CloseIcon } from "../../../Icons";
+import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
