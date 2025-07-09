@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HamburgerIcon, ArrowIcon, CloseIcon } from "../../../Icons";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,15 +44,33 @@ export default function Header() {
         }
     }, [scrolled, showDropdown]);
 
+    useEffect(() => {
+        if (mobileOpen) {
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        } else {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        }
+    }, [mobileOpen]);
+
+    const router = useRouter();
+
+    const handleNavigate = (url: string) => {
+        setMobileOpen(false);
+        setMobileServiciosOpen(false);
+        router.push(url);
+    };
+
     return (
         <>
         {showDropdown && (
         <ul
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="fixed z-[99] bg-black/30 backdrop-blur-md text-white p-4 rounded-lg flex flex-col gap-2 whitespace-nowrap text-[14px] "
-            style={{ 
-                top: `${dropdownPosition.top}px`, 
+            className="fixed z-[99] bg-white/30 backdrop-blur-md text-white p-4 rounded-lg flex flex-col gap-2 whitespace-nowrap text-[14px] "
+            style={{
+                top: `${dropdownPosition.top}px`,
                 left: `${dropdownPosition.left}px`,
                 transform: 'translateY(0)'
             }}>
@@ -63,16 +82,14 @@ export default function Header() {
         </ul>
         )}
 
-        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${ scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6"}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-all duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled  ? "bg-white/30 backdrop-blur-md px-4 py-3 my-10 rounded-full mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden"}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
                 <Link href="/" className="cursor-pointer">
                 <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
                 </Link>
-
                 <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
                 <HamburgerIcon />
                 </button>
-
                 <nav className="hidden md:flex gap-10 text-[14px]">
                     <div className="relative flex flex-col gap-2" ref={serviciosRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <span className="hover:underline cursor-pointer">Servicios</span>
@@ -88,7 +105,9 @@ export default function Header() {
             <div className="flex flex-col h-full justify-between">
                 <div className="flex flex-col">
                     <div className="flex justify-between items-center max-w-7xl">
-                        <Link href="/" className="cursor-pointer"> <Image src="/logo2.svg" alt="Logo mooba" width={120} height={30} /></Link>
+                        <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer">
+                            <Image src="/logo.svg" alt="Logo mooba" width={120} height={30} />
+                        </button>
                         <button onClick={() => setMobileOpen(false)} aria-label="Cerrar menú" className="cursor-pointer">
                             <CloseIcon />
                         </button>
@@ -98,28 +117,21 @@ export default function Header() {
 
                 <nav className="flex">
                     <ul className="flex flex-col gap-2">
-                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Proyectos</Link>
+                        <button onClick={() => handleNavigate('/proyectos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Proyectos</button>
                         <li className="flex flex-col gap-2">
-                            <button
-                                onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)}
-                                className="text-[32px] font-normal hover:cursor-pointer text-left"
-                            >
-                                Servicios
-                            </button>
-
+                        <button onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)} className="text-[32px] font-normal hover:cursor-pointer text-left"> Servicios</button>
                             {mobileServiciosOpen && (
                                 <ul className="flex flex-col text-[18px] font-extralight gap-3">
-                                <li className="hover:cursor-pointer">Branding</li>
-                                <li className="hover:cursor-pointer">Diseño web & Desarrollo</li>
-                                <li className="hover:cursor-pointer">Marketing Digital</li>
-                                <li className="hover:cursor-pointer">Contenido Audiovisual</li>
-                                <li className="hover:cursor-pointer">Campañas Publicitarias</li>
+                                    <li onClick={() => handleNavigate('/servicios/branding')} className="hover:cursor-pointer">Branding</li>
+                                    <li onClick={() => handleNavigate('/servicios/diseno')} className="hover:cursor-pointer">Diseño web & Desarrollo</li>
+                                    <li onClick={() => handleNavigate('/servicios/marketing')} className="hover:cursor-pointer">Marketing Digital</li>
+                                    <li onClick={() => handleNavigate('/servicios/audiovisual')} className="hover:cursor-pointer">Contenido Audiovisual</li>
+                                    <li onClick={() => handleNavigate('/servicios/publicidad')} className="hover:cursor-pointer">Campañas Publicitarias</li>
                                 </ul>
-                            )}
+                                )}
                             </li>
-
-                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Nuestra esencia</Link>
-                        <Link href="#" className="text-[32px] font-normal hover:cursor-pointer">Contáctanos</Link>
+                        <button onClick={() => handleNavigate('/nuestra-esencia')} className="text-[32px] font-normal hover:cursor-pointer text-left">Nuestra esencia</button>
+                        <button onClick={() => handleNavigate('/contactanos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
                     </ul>
                 </nav>
 

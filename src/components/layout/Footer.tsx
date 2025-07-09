@@ -4,10 +4,10 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white px-6 py-8">
-      <div className="w-full border-t border-white/30 my-6 md:hidden"></div>
+    <footer className="bg-black text-white py-8">
+      <div className="w-full border-t border-white/30 my-6"></div>
       
-      <div className="md:hidden flex flex-col items-start gap-6 w-full">
+      <div className="md:hidden flex flex-col items-start gap-6 w-full mx-auto px-6 md:px-8 overflow-hidden">
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-col gap-2 text-[16px]">
             <p className="font-normal">Barranquilla, CO</p>
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="hidden md:flex md:justify-between gap-5 md:items-start">
+      <div className="hidden md:flex md:justify-between gap-5 mx-auto px-6 md:px-8 overflow-hidden pt-4 md:items-start">
         <div className="flex flex-col text-[16px] gap-1">
           <p className="font-normal text-[20px]">Barranquilla, CO</p>
           <p className="font-extralight">Cra 61 # 64-29</p>
@@ -85,7 +85,7 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="hidden md:flex md:justify-end md:items-end md:mt-8">
+      <div className="hidden mx-auto px-6 md:px-8 overflow-hidden md:flex md:justify-end md:items-end md:mt-8">
         <div className="flex flex-row items-end justify-between w-full">
           <p className="text-[16px] font-base mt-2">© mooba 2025</p>
           <Link href="/"> <Image src="/logofooter.svg" alt="Logo mooba footer" width={180} height={40} className="w-[311px] h-[74px] md:w-[437px] md:h-[103]"/></Link>
