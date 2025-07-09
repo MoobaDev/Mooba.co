@@ -1,5 +1,6 @@
 "use client";
 import { Project } from "@/types/Proyecto";
+import GlassCursor from '@/components/ui/GlassCursor'
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -43,56 +44,56 @@ export default function Projects({ projects }: ProjectsProps) {
                   href={`/proyectos/${project.slug}`}
                   className={`flex flex-col gap-y-4 md:gap-y-2 ${getColSpan(idx)}`}
                 >
-                    {/* {(project.mobileImage || project.desktopImage) && (
-                      <> */}
-                        {/* Imagen para mobile */}
-                        <div className="block md:hidden">
-                          {project.mobileImage && (
-                            <Image
-                              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.mobileImage.formats?.medium?.url || project.mobileImage.url}`}
-                              alt={project.mobileImage.alternativeText || project.title}
-                              width={project.mobileImage.width}
-                              height={project.mobileImage.height}
-                              className="w-full h-80 object-contain"
-                            />
-                          )}
-                        </div>
-                        {/* Imagen para desktop */}
-                        <div className="hidden md:block">
-                          {project.desktopImage && (
-                            <Image
-                              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.formats?.medium?.url || project.desktopImage.url}`}
-                              alt={project.desktopImage.alternativeText || project.title}
-                              width={project.desktopImage.width}
-                              height={project.desktopImage.height}
-                              className="w-full h-80 object-cover"
-                            />
-                          )}
-                        </div>
-                      {/* </>
-                    )} */}
-                    <div className="flex flex-col flex-1 gap-y-2">
-                        <div className="flex flex-col">
-                          <h2 className="text-xl font-extralight line-clamp-2 mb-1">
-                              {project.title}
-                          </h2>
-                          <p className="text-[#ABB1BA] text-xl font-extralight line-clamp-1">
-                              {project.shortDescription}
-                          </p>
-                        </div>
-                        <div className="flex justify-between items-center mt-auto">
-                            <div className="flex flex-wrap gap-y-2">
-                                {Array.isArray(project.categorias) && project.categorias.map((cat) => (
-                                    <div
-                                        key={cat.slug}
-                                        className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
-                                    >
-                                        {cat.name}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                  {/* Imagen */}
+                  <div id={`proyecto-img-${project.slug}`} className="relative cursor-none">
+                    <div className="block md:hidden">
+                      {project.mobileImage && (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.mobileImage.formats?.medium?.url || project.mobileImage.url}`}
+                          alt={project.mobileImage.alternativeText || project.title}
+                          width={project.mobileImage.width}
+                          height={project.mobileImage.height}
+                          className="w-full h-80 object-cover"
+                        />
+                      )}
                     </div>
+                    <div className="hidden md:block">
+                      {project.desktopImage && (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.formats?.medium?.url || project.desktopImage.url}`}
+                          alt={project.desktopImage.alternativeText || project.title}
+                          width={project.desktopImage.width}
+                          height={project.desktopImage.height}
+                          className="w-full h-80 object-cover"
+                        />
+                      )}
+                    </div>
+                    {/* Cursor personalizado */}
+                    <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
+                  </div>
+
+                  <div className="flex flex-col flex-1 gap-y-2">
+                    <div className="flex flex-col">
+                      <h2 className="text-xl font-extralight line-clamp-2 mb-1">
+                        {project.title}
+                      </h2>
+                      <p className="text-[#ABB1BA] text-xl font-extralight line-clamp-1">
+                        {project.shortDescription}
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center mt-auto">
+                      <div className="flex flex-wrap gap-y-2">
+                        {Array.isArray(project.categorias) && project.categorias.map((cat) => (
+                          <div
+                            key={cat.slug}
+                            className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
+                          >
+                            {cat.name}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </Link>
             ))}
         </div>
