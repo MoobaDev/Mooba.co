@@ -1,15 +1,12 @@
-//import DOMPurify from 'dompurify';
-//import { JSDOM } from 'jsdom';
 import { notFound } from "next/navigation";
-import "../../globals.css";
 import { getProject } from "@/lib/getProject";
+import "../../globals.css";
 
-function addAutoplayToVideos(html: string) {
+function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
-  let result = html.replace(
+  let replaceResult = html.replace(
     /<video([^>]*)>/g,
     (match, attrs) => {
-      // Quita cualquier atributo controls, loop, autoplay, muted para evitar duplicados
       let newAttrs = attrs
         .replace(/\s*controls\b/gi, "")
         .replace(/\s*autoplay\b/gi, "")
@@ -20,13 +17,11 @@ function addAutoplayToVideos(html: string) {
       return `<video${newAttrs}>`;
     }
   );
-  // Para iframes de Vimeo/YouTube: quita controles y agrega autoplay=1&loop=1
-  result = result.replace(
+  // Para <iframes> de Vimeo/YouTube: quita controles y agrega autoplay=1&loop=1
+  replaceResult = replaceResult.replace(
     /<iframe([^>]+src=["'][^"']+)(vimeo\.com|youtube\.com|youtu\.be)([^"']*)["']/g,
-    (match, beforeSrc, provider, afterSrc) => {
-      // Quita controles, showinfo, modestbranding, loop, autoplay del src
+    (match) => {
       const newMatch = match.replace(/([?&])(controls|showinfo|modestbranding|autoplay|loop)=\d+/g, "");
-      // Agrega autoplay=1 y loop=1 al src
       return newMatch.replace(
         /(src=["'][^"']*)(["'])/,
         (srcMatch, srcUrl, quote) => {
@@ -36,11 +31,8 @@ function addAutoplayToVideos(html: string) {
       );
     }
   );
-  return result;
-}
-// Elimina cualquier width y height. Agrega width="100%" al final
-function fixImagesWidth(html: string) {
-  return html.replace(
+  // Elimina cualquier width y height. Agrega width="100%" al final
+  replaceResult = replaceResult.replace(
     /<img\b([^>]*)>/gi,
     (match, attrs) => {
       const newAttrs = attrs
@@ -49,23 +41,13 @@ function fixImagesWidth(html: string) {
       return `<img${newAttrs} width="100%">`;
     }
   );
+  return replaceResult
 }
-
-/* function sanitizeHTML(dirty: string) {
-  if (typeof window !== "undefined") {
-    return DOMPurify.sanitize(dirty);
-  }
-  // En SSR, devuelve el HTML tal cual (o solo texto plano si quieres máxima seguridad)
-  return dirty;
-} */
-
-/* DERKEN HTML: 
-  const cleanHtml = product ? DOMPurify.sanitize(product.description) : "";
-*/
 
 export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
   const project = await getProject(slug);
+  /* const cleanHtml = project ? DOMPurify.sanitize(project.desktopContent) : ""; */
 
   if (!project) {
     notFound();
@@ -94,7 +76,7 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: fixImagesWidth(addAutoplayToVideos(project.desktopContent)) }}
+                dangerouslySetInnerHTML={{ __html: htmlReplace(project.desktopContent) }}
               />
             </div>
           )}
@@ -104,7 +86,7 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: fixImagesWidth(addAutoplayToVideos(project.mobileContent)) }}
+                dangerouslySetInnerHTML={{ __html: htmlReplace(project.mobileContent) }}
               />
             </div>
           )}
