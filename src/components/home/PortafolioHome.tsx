@@ -1,64 +1,21 @@
-'use client';
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  tags: string[];
-  slug: string;
-}
+//  Cambiar por proyectos traido de strapi
+import { mockProjects } from "@/mocks/portafolioProjects";
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
   SECTION_START_THRESHOLD: 1.2, // Start animation before section is visible
-  SECTION_END_THRESHOLD: 0.5,   // Continue animation longer
-  PROJECT_SPACING: 0.12,         // Slightly more spacing between project animations
-  TRANSFORM_DURATION: 0.3,       // Duration of transform animation
-  OPACITY_DURATION: 0.2,         // Duration of opacity animation
-  INITIAL_TRANSLATE_Y: 200,      // Starting position (200% below)
-  FADE_MULTIPLIER: 1.5,          // Opacity animation speed
-  ANIMATION_DELAY: 0.08,         // Small delay before starting animations
+  SECTION_END_THRESHOLD: 0.5, // Continue animation longer
+  PROJECT_SPACING: 0.12, // Slightly more spacing between project animations
+  TRANSFORM_DURATION: 0.3, // Duration of transform animation
+  OPACITY_DURATION: 0.2, // Duration of opacity animation
+  INITIAL_TRANSLATE_Y: 200, // Starting position (200% below)
+  FADE_MULTIPLIER: 1.5, // Opacity animation speed
+  ANIMATION_DELAY: 0.08, // Small delay before starting animations
 } as const;
-
-// Mock data - in a real app, this would come from an API or CMS
-const mockProjects: Project[] = [
-  {
-    id: 1,
-    title: "beeactive",
-    category: "Identidad de marca",
-    image: "/luxwave.png",
-    tags: ["Branding"],
-    slug: "beeactive",
-  },
-  {
-    id: 2,
-    title: "eCommerce Eticos",
-    category: "Experiencia digital",
-    image: "/julio.jpg",
-    tags: ["Diseño UX/UI", "Desarrollo web"],
-    slug: "ecommerce-eticos",
-  },
-  {
-    id: 3,
-    title: "Luxwave",
-    category: "Identidad de marca",
-    image: "/luxwave.png",
-    tags: ["Branding"],
-    slug: "luxwave",
-  },
-  {
-    id: 4,
-    title: "Sitio institucional Eticos",
-    category: "Rediseño de sitio",
-    image: "/iphone.jpg",
-    tags: ["Diseño UX/UI", "Desarrollo app"],
-    slug: "sitio-institucional-eticos",
-  },
-];
 
 /**
  * Custom hook for managing scroll-based animations
@@ -73,15 +30,18 @@ const useScrollAnimation = () => {
     const rect = sectionRef.current.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const sectionHeight = rect.height;
-    
+
     const sectionTop = rect.top;
     const sectionBottom = rect.bottom;
-    
+
     const startPoint = windowHeight * ANIMATION_CONFIG.SECTION_START_THRESHOLD;
     const endPoint = -sectionHeight * ANIMATION_CONFIG.SECTION_END_THRESHOLD;
-    
+
     if (sectionTop <= startPoint && sectionBottom >= 0) {
-      const progress = Math.min(1, Math.max(0, (startPoint - sectionTop) / (startPoint - endPoint)));
+      const progress = Math.min(
+        1,
+        Math.max(0, (startPoint - sectionTop) / (startPoint - endPoint))
+      );
       setScrollProgress(progress);
     } else if (sectionTop > startPoint) {
       setScrollProgress(0);
@@ -92,7 +52,7 @@ const useScrollAnimation = () => {
 
   useEffect(() => {
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -103,10 +63,10 @@ const useScrollAnimation = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     calculateScrollProgress();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return { sectionRef, scrollProgress };
@@ -118,56 +78,62 @@ export default function PortafolioHome() {
   const getProjectTransform = (index: number): string => {
     // First project is always visible
     if (index === 0) {
-      return 'translateY(0%)';
+      return "translateY(0%)";
     }
-    
+
     const adjustedIndex = index - 1; // Adjust index so second project starts at 0
-    const startProgress = ANIMATION_CONFIG.ANIMATION_DELAY + (adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING);
+    const startProgress =
+      ANIMATION_CONFIG.ANIMATION_DELAY +
+      adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING;
     const endProgress = startProgress + ANIMATION_CONFIG.TRANSFORM_DURATION;
-    
+
     if (scrollProgress <= startProgress) {
       return `translateY(${ANIMATION_CONFIG.INITIAL_TRANSLATE_Y}%)`;
     } else if (scrollProgress >= endProgress) {
-      return 'translateY(0%)';
+      return "translateY(0%)";
     } else {
       // Smooth easing animation
-      const progress = (scrollProgress - startProgress) / (endProgress - startProgress);
+      const progress =
+        (scrollProgress - startProgress) / (endProgress - startProgress);
       const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
-      return `translateY(${ANIMATION_CONFIG.INITIAL_TRANSLATE_Y * (1 - easeProgress)}%)`;
+      return `translateY(${
+        ANIMATION_CONFIG.INITIAL_TRANSLATE_Y * (1 - easeProgress)
+      }%)`;
     }
   };
-
 
   const getProjectOpacity = (index: number): number => {
     // First project is always visible
     if (index === 0) {
       return 1;
     }
-    
+
     const adjustedIndex = index - 1;
-    const startProgress = ANIMATION_CONFIG.ANIMATION_DELAY + (adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING);
+    const startProgress =
+      ANIMATION_CONFIG.ANIMATION_DELAY +
+      adjustedIndex * ANIMATION_CONFIG.PROJECT_SPACING;
     const endProgress = startProgress + ANIMATION_CONFIG.OPACITY_DURATION;
-    
+
     if (scrollProgress <= startProgress) {
       return 0;
     } else if (scrollProgress >= endProgress) {
       return 1;
     } else {
-      const progress = (scrollProgress - startProgress) / (endProgress - startProgress);
+      const progress =
+        (scrollProgress - startProgress) / (endProgress - startProgress);
       return Math.min(1, progress * ANIMATION_CONFIG.FADE_MULTIPLIER);
     }
   };
 
-
   const getProjectAnimationStyles = (index: number) => ({
     transform: getProjectTransform(index),
     opacity: getProjectOpacity(index),
-    transition: 'transform 0.1s ease-out, opacity 0.2s ease-out',
-    willChange: 'transform, opacity'
+    transition: "transform 0.1s ease-out, opacity 0.2s ease-out",
+    willChange: "transform, opacity",
   });
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
     >
@@ -177,8 +143,8 @@ export default function PortafolioHome() {
           Ideas que se volvieron realidad
         </h2>
         {/* Desktop: Link with underline */}
-        <Link 
-          href="/portafolio" 
+        <Link
+          href="/portafolio"
           className="hidden md:block text-base font-normal  underline"
         >
           Ver todos los proyectos
@@ -209,9 +175,7 @@ export default function PortafolioHome() {
 
                 {/* Project Info */}
                 <div className="mb-3 mt-2 font-extralight text-xl">
-                  <h5>
-                    {project.title}
-                  </h5>
+                  <h5>{project.title}</h5>
                   <p className="text-gray-400">{project.category}</p>
                 </div>
 
@@ -230,7 +194,7 @@ export default function PortafolioHome() {
             </Link>
           ))}
         </div>
-        
+
         {/* Mobile: Button at the bottom */}
         <div className="flex mt-8 md:hidden">
           <Link

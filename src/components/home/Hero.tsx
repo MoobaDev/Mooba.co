@@ -11,7 +11,7 @@ export default function VideoHero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Mobile Video */}
+      {/* Mobile Video : Cambiar por video traido de strapi*/}
       <video
         autoPlay
         muted

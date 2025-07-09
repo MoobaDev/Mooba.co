@@ -4,38 +4,8 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
 import { useState } from "react";
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  tags: string[];
-}
-
-const mockProjects: Project[] = [
-  {
-    id: 1,
-    title: "Luxwave",
-    category: "Branding",
-    image: "/luxwave.png",
-    tags: ["Diseño UX/UI", "Desarrollo web"],
-  },
-  {
-    id: 2,
-    title: "Sr. Julio",
-    category: "Campañas publicitarias",
-    image: "/julio.jpg",
-    tags: ["Campañas publicitarias"],
-  },
-  {
-    id: 3,
-    title: "TechFlow",
-    category: "Desarrollo web",
-    image: "/iphone.jpg",
-    tags: ["React", "Next.js"],
-  },
-];
+//  Cambiar por proyectos traido de strapi
+import { mockProjects } from "@/mocks/highlightedProjects";
 
 export default function HighlightedProjects() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -99,10 +69,7 @@ export default function HighlightedProjects() {
         <div className="w-full">
           <div ref={sliderRef} className="keen-slider">
             {mockProjects.map((project, idx) => (
-              <div
-                key={project.id}
-                className="keen-slider__slide"
-              >
+              <div key={project.id} className="keen-slider__slide">
                 <div className="flex flex-col transition-all duration-300">
                   {/* Image Container - Different sizes for active vs inactive slides */}
                   <div
@@ -128,18 +95,22 @@ export default function HighlightedProjects() {
                   {/* Show text for all slides, with different opacity */}
                   <div className="max-w-[1440px] mx-auto w-full">
                     <div className="mb-2 md:mb-3 max-w-[840px]">
-                      <h5 className={`text-xl font-extralight transition-opacity duration-300 ${
-                        loaded && currentSlide % mockProjects.length === idx
-                          ? "text-white opacity-100"
-                          : "text-white opacity-50"
-                      }`}>
+                      <h5
+                        className={`text-xl font-extralight transition-opacity duration-300 ${
+                          loaded && currentSlide % mockProjects.length === idx
+                            ? "text-white opacity-100"
+                            : "text-white opacity-50"
+                        }`}
+                      >
                         {project.title}
                       </h5>
-                      <p className={`text-xl font-extralight transition-opacity duration-300 ${
-                        loaded && currentSlide % mockProjects.length === idx
-                          ? "text-gray-400 opacity-100"
-                          : "text-gray-400 opacity-50"
-                      }`}>
+                      <p
+                        className={`text-xl font-extralight transition-opacity duration-300 ${
+                          loaded && currentSlide % mockProjects.length === idx
+                            ? "text-gray-400 opacity-100"
+                            : "text-gray-400 opacity-50"
+                        }`}
+                      >
                         {project.category}
                       </p>
                     </div>
