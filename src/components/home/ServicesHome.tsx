@@ -117,7 +117,7 @@ export default function ServicesShowcase() {
 
         {/* Image Display Area - Solo en Desktop */}
         <div className="relative hidden lg:block">
-          <div className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
+          <div className="aspect-[4/3] bg-gray-100  overflow-hidden">
             {selectedImage ? (
               <div className="relative w-full h-full">
                 <Image
