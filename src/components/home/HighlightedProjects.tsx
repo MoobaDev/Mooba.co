@@ -24,7 +24,7 @@ export default function HighlightedProjects() {
       "(min-width: 768px)": {
         slides: {
           origin: 0.2,
-          perView: 1.6,
+          perView: 1.5,
           spacing: 15, // Ajustado para mantener proporción en tablets
         },
       },
@@ -37,7 +37,7 @@ export default function HighlightedProjects() {
       },
       "(min-width: 1440px)": {
         slides: {
-          origin: 0.2,
+          origin: 0.18,
           perView: 1.5, // Mantener proporción rectangular en pantallas grandes
           spacing: 30, // Aumentado el espacio para pantallas grandes
         },
@@ -69,27 +69,31 @@ export default function HighlightedProjects() {
         <div className="w-full">
           <div ref={sliderRef} className="keen-slider">
             {mockProjects.map((project, idx) => (
-              <div key={project.id} className="keen-slider__slide">
-                <div className="flex flex-col transition-all duration-300">
+              
+              <div key={project.id} className="keen-slider__slide ">
+                <div className="flex flex-col transition-all duration-300    ">
                   {/* Image Container - Different sizes for active vs inactive slides */}
                   <div
                     className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[16/9] ${
                       loaded && currentSlide % mockProjects.length === idx
                         ? "w-full h-auto"
-                        : "w-[98%] h-auto"
+                        : "w-full h-auto"
                     }`}
                   >
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       fill
-                      className={`object-cover transition-all duration-300 ${
+                      className={`object-fill transition-all duration-300 ${
                         loaded && currentSlide % mockProjects.length === idx
                           ? "brightness-100 scale-100"
-                          : "brightness-50 scale-[0.98]" // Menos oscurecimiento y escala reducida
+                          : "brightness-50 scale-100" // Menos oscurecimiento y escala reducida
                       }`}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
+                      
                     />
+
+                    
                   </div>
 
                   {/* Show text for all slides, with different opacity */}
@@ -116,7 +120,7 @@ export default function HighlightedProjects() {
                     </div>
 
                     {/* Tags - shown for all slides */}
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap">
                       {project.tags.map((tag, tagIdx) => (
                         <span
                           key={tagIdx}
