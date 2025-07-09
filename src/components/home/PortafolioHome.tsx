@@ -153,7 +153,7 @@ export default function PortafolioHome() {
 
       {/* Projects Grid */}
       <div className="w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-16">
           {mockProjects.map((project, index) => (
             <Link
               href={`/portafolio/${project.slug}`}
@@ -163,7 +163,7 @@ export default function PortafolioHome() {
             >
               <div className="flex flex-col h-full">
                 {/* Image Container */}
-                <div className="relative mb-4 overflow-hidden w-full h-[220px] sm:h-[320px]">
+                <div className="relative mb-4 overflow-hidden w-full aspect-[4/3]">
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
@@ -184,7 +184,7 @@ export default function PortafolioHome() {
                   {project.tags.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
-                      className="text-sm font-normal text-gray-500  border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5"
+                      className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5"
                     >
                       {tag}
                     </span>
