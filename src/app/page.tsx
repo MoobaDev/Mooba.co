@@ -1,3 +1,5 @@
+
+import ContactSection from "@/components/home/ContactUs"
 import VideoHero from "@/components/home/Hero"
 import HighlightedProjects from "@/components/home/HighlightedProjects"
 import PortafolioHome from "@/components/home/PortafolioHome"
@@ -8,12 +10,13 @@ import TrustedBrands from "@/components/home/TrustedBrands"
 
 export default function HomePage() {
   return (
-    <main>
+    <>
       <VideoHero />
       <HighlightedProjects />
       <PortafolioHome />
       <TrustedBrands />
       <ServicesHome />
-    </main>
+      <ContactSection />
+    </>
   )
 }
