@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { DropdownDownItem, DropdownUpItem } from "../ui/Icons";
 import TeamCarousel from "@/components/our-essence/TeamCarousel";
 
@@ -12,7 +11,7 @@ interface AccordionItemProps {
   onToggle?: () => void;
 }
 
-export function AccordionItemComponent({
+export default function AccordionItemComponent({
   title,
   children,
   carousel = false,
@@ -23,8 +22,8 @@ export function AccordionItemComponent({
     <section className="border-b border-white/30">
       <div className={`transition-all duration-300 ease-in-out ${isOpen ? "min-h-fit" : ""}`}>
         <button 
-          className="w-full flex justify-between items-start py-8 text-left font-light text-white transition-all duration-200" 
-          onClick={onToggle} 
+          className="w-full flex justify-between items-start py-8 text-left font-light text-white transition-all duration-200"
+          onClick={onToggle}
           aria-expanded={isOpen}
         >
           <div className="flex flex-col w-full">
@@ -62,34 +61,5 @@ export function AccordionItemComponent({
           )}
       </div>
     </section>
-  );
-}
-
-export function Accordion({ items }: { items: Array<{ title: string; content: string | React.ReactNode; carousel?: boolean }> }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (items.length > 0) {
-      const randomIndex = Math.floor(Math.random() * items.length);
-      setOpenIndex(randomIndex);
-    }
-  }, [items.length]);
-
-  return (
-    <div className="w-full mt-10 mx-auto bg-black">
-      <div className="divide-y border-white/30">
-        {items.map((item, index) => (
-          <AccordionItemComponent
-            key={index}
-            title={item.title}
-            carousel={item.carousel}
-            isOpen={openIndex === index}
-            onToggle={() => setOpenIndex(prev => prev === index ? null : index)}
-          >
-            {item.content}
-          </AccordionItemComponent>
-        ))}
-      </div>
-    </div>
   );
 }

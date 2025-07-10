@@ -1,7 +1,7 @@
 "use client";
 import { ChevronDown } from "lucide-react";
 
-export default function VideoHero() {
+export default function ViewportVideo() {
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
