@@ -1,212 +1,296 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, FreeMode } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
+import "swiper/css/autoplay";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { Swiper as SwiperType } from "swiper";
-import {RightArrow, LeftArrow} from "../ui/Icons"
+import { RightArrow, LeftArrow } from "../ui/Icons";
+import type SwiperType from 'swiper';
 
 interface TeamMember {
   name: string;
   position: string;
-  image: string;
+  images: string[];
 }
 
-export default function TeamCarousel() {
-  const teamMembers: TeamMember[] = [
-    { name: "Breyner Lugo", position: "Manager", image: "/brey.png" },
-    { name: "Edgardo Barreto", position: "Director Creativo", image: "/edgardo.png" },
-    { name: "Andrea Marenco", position: "Jefe de Mercadotecnia", image: "/andrea.png" },
-    { name: "Mary Borrás", position: "Creadora de campañas", image: "/Mary.png" },
-    { name: "Laura", position: "Especialista", image: "/laura.png" },
-    { name: "Breyner Lugo", position: "Manager", image: "/brey.png" },
-    { name: "Edgardo Barreto", position: "Director Creativo", image: "/edgardo.png" },
-    { name: "Andrea Marenco", position: "Jefe de Mercadotecnia", image: "/andrea.png" },
-    { name: "Mary Borrás", position: "Creadora de campañas", image: "/Mary.png" },
-    { name: "Laura", position: "Especialista", image: "/laura.png" },
-  ];
+interface TeamCarouselProps {
+  active?: boolean;
+}
 
+export default function TeamCarousel({ active = false }: TeamCarouselProps) {
   const swiperRef = useRef<SwiperType | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
-  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
-  const [isCentered, setIsCentered] = useState(false);
-  const [showCustomCursor, setShowCustomCursor] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [cursorDirection, setCursorDirection] = useState<'left' | 'right' | 'center'>('right');
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center');
+  const [showCursor, setShowCursor] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  const teamMembers: TeamMember[] = [
+    { 
+      name: "Breyner Lugo", 
+      position: "Manager", 
+      images: ["/brey.png", "/edgardo.png", "/andrea.png"] 
+    },
+    { 
+      name: "Edgardo Barreto", 
+      position: "Director Creativo", 
+      images: ["/edgardo.png", "/andrea.png", "/Mary.png", ] 
+    },
+    { 
+      name: "Andrea Marenco", 
+      position: "Jefe de Mercadotecnia", 
+      images: ["/andrea.png", "/Mary.png", ] 
+    },
+    { 
+      name: "Mary Borrás", 
+      position: "Creadora de campañas", 
+      images: ["/Mary.png", "/laura.png", "/brey.png"] 
+    },
+    { 
+      name: "Laura", 
+      position: "Ejecutiva comercial ", 
+      images: ["/laura.png", "/brey.png", "/edgardo.png"] 
+    },
+    { 
+      name: "Breyner Lugo", 
+      position: "Manager", 
+      images: ["/brey.png", "/edgardo.png", "/andrea.png"] 
+    },
+    { 
+      name: "Edgardo Barreto", 
+      position: "Director Creativo", 
+      images: ["/edgardo.png", "/andrea.png", "/Mary.png", ] 
+    },
+    { 
+      name: "Andrea Marenco", 
+      position: "Jefe de Mercadotecnia", 
+      images: ["/andrea.png", "/Mary.png", ] 
+    },
+    { 
+      name: "Mary Borrás", 
+      position: "Creadora de campañas", 
+      images: ["/Mary.png", "/laura.png", "/brey.png"] 
+    },
+    { 
+      name: "Laura", 
+      position: "Especialista", 
+      images: ["/laura.png", "/brey.png", "/edgardo.png"] 
+    },
+  ];
+
+  const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsAutoplayEnabled(true);
-      setIsCentered(true);
-      if (swiperRef.current) {
-        swiperRef.current.params.slidesOffsetBefore = 0;
-        swiperRef.current.params.centeredSlides = true;
-        swiperRef.current.update();
-        swiperRef.current.autoplay.start();
-      }
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       if (!carouselRef.current) return;
-      
-      const carouselRect = carouselRef.current.getBoundingClientRect();
-      const isOverCarousel = (
-        e.clientX >= carouselRect.left &&
-        e.clientX <= carouselRect.right &&
-        e.clientY >= carouselRect.top &&
-        e.clientY <= carouselRect.bottom
+
+      const rect = carouselRef.current.getBoundingClientRect();
+      const isOver = (
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
       );
-      
-      if (!isOverCarousel) {
-        setShowCustomCursor(false);
+
+      if (!isOver) {
+        setShowCursor(false);
+        document.body.style.cursor = 'auto'
         return;
       }
-      
-      const carouselWidth = carouselRect.width;
-      const relativeX = e.clientX - carouselRect.left;
-      const sideZone = carouselWidth * 0.3;
-      
-    if (relativeX <= sideZone) {
-      setShowCustomCursor(true);
-      setCursorDirection('left');
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-      document.body.style.cursor = 'none';
-    } else if (relativeX >= carouselWidth - sideZone) {
-      setShowCustomCursor(true);
-      setCursorDirection('right');
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-      document.body.style.cursor = 'none';
-    } else {
-      setShowCustomCursor(true);
-      setCursorDirection('center');
-      setCursorPosition({ x: e.clientX, y: e.clientY });
-      document.body.style.cursor = 'none';
-    }
 
-    };
+      const relativeX = e.clientX - rect.left;
+      const zone = rect.width * 0.3;
 
-    const handleClick = (e: MouseEvent) => {
-      if (!carouselRef.current) return;
-      
-      const carouselRect = carouselRef.current.getBoundingClientRect();
-      const isOverCarousel = (
-        e.clientX >= carouselRect.left &&
-        e.clientX <= carouselRect.right &&
-        e.clientY >= carouselRect.top &&
-        e.clientY <= carouselRect.bottom
-      );
-      
-      if (!isOverCarousel) return;
-      
-      const carouselWidth = carouselRect.width;
-      const relativeX = e.clientX - carouselRect.left;
-      const sideZone = carouselWidth * 0.3;
-      
-      if (swiperRef.current) {
-        if (relativeX <= sideZone) {
-          e.stopPropagation();
-          swiperRef.current.slidePrev();
-        } else if (relativeX >= carouselWidth - sideZone) {
-          e.stopPropagation();
-          swiperRef.current.slideNext();
-        }
+      if (relativeX <= zone) {
+        setCursorDir("left");
+      } else if (relativeX >= rect.width - zone) {
+        setCursorDir("right");
+      } else {
+        setCursorDir("center");
       }
+
+      setCursorPos({ x: e.clientX, y: e.clientY });
+      setShowCursor(true);
+      document.body.style.cursor = "none";
     };
 
-    const handleMouseLeave = () => {
-      setShowCustomCursor(false);
-      document.body.style.cursor = 'auto';
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleClick, true);
-    if (carouselRef.current) {
-      carouselRef.current.addEventListener('mouseleave', handleMouseLeave);
-    }
+    window.addEventListener("pointermove", handlePointerMove);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('click', handleClick, true);
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      document.body.style.cursor = 'auto';
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.body.style.cursor = "auto";
     };
   }, []);
 
-  const handleSwiperInit = (swiper: SwiperType) => {
-    swiperRef.current = swiper;
-    swiper.autoplay.stop();
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (!swiperRef.current) return;
+    
+    if (cursorDir === "left") {
+      swiperRef.current.slidePrev();
+    } else if (cursorDir === "right") {
+      swiperRef.current.slideNext();
+    }
   };
 
+  const handleInteraction = () => {
+    if (!hasStarted) {
+      setHasStarted(true);
+    }
+  };
+
+  useEffect(() => {
+    if (active) {
+      const timer = setTimeout(() => {
+        setHasStarted(true);
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [active]);
+
   return (
-    <div ref={carouselRef} className="w-full h-auto mb-10 relative">
-      {showCustomCursor && (
-        <div className="fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPosition.x, top: cursorPosition.y}}>
-          <div className="w-15 h-15 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center ">
-            {cursorDirection === 'right' && <RightArrow/>}
-            {cursorDirection === 'left' && <LeftArrow/>}
-            {cursorDirection === 'center' && <p className="text-white text-[14px] font-light">DRAG</p>}
+    <div 
+      ref={carouselRef} 
+      className="relative w-full cursor-none"
+      onClick={handleClick}
+      style={{cursor : 'none'}}
+    >
+      {showCursor && (
+        <div className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPos.x, top: cursorPos.y }}>
+          <div className="w-16 h-16 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm">
+            {cursorDir === "left" && <LeftArrow />}
+            {cursorDir === "right" && <RightArrow />}
+            {cursorDir === "center" && (
+              <p className="text-white text-sm font-light">DRAG</p>
+            )}
           </div>
         </div>
       )}
 
-      <Swiper
-        onSwiper={handleSwiperInit}
-        modules={[Autoplay, FreeMode]}
-        freeMode={{
-          enabled: true,
-          momentum: true,
-          momentumRatio: 0.9,
-        }}
-        loop={true}
-        autoplay={isAutoplayEnabled ? {
-          delay: 2500,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        } : false}
-        slidesPerView="auto"
-        slidesOffsetBefore={isCentered ? 0 : 20}
-        centeredSlides={isCentered}
-        spaceBetween={10}
-        grabCursor={true}
-        breakpoints={{
-          320: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-          640: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-          768: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-          1024: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-          1439: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-          2560: { spaceBetween: 10, slidesOffsetBefore: isCentered ? 0 : 35 },
-        }}
-        className="team-swiper"
-        style={{ cursor: showCustomCursor ? 'none' : 'grab' }}
+      <div className={`transition-all duration-800 ease-out`}>
+        <Swiper
+          modules={[Autoplay]}
+          loop={true}
+          //grabCursor={true}
+          centeredSlides={true}
+          autoplay={{
+            delay: 1500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          speed={600}
+          resistance={true}
+          resistanceRatio={0.7}
+          slidesPerGroup={1}
+          watchSlidesProgress={true}
+          className="team-swiper"
+          onTouchStart={handleInteraction}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          breakpoints={{
+            320: { 
+              slidesPerView: 1.5, 
+              spaceBetween: 12
+            },
+            640: { 
+              slidesPerView: 2, 
+              spaceBetween: 16
+            },
+            1024: { 
+              slidesPerView: 3, 
+              spaceBetween: 24
+            },
+            1440: { 
+              slidesPerView: 4.5, 
+              spaceBetween: 24
+            },
+            1920: { 
+              slidesPerView: 5.5, 
+              spaceBetween: 28
+            },
+          }}
+        >
+          {duplicatedMembers.map((member, index) => (
+            <SwiperSlide
+              key={`${member.name}-${index}`}
+              className="cursor-none transition-transform duration-300 ease-out"
+            >
+              <TeamMemberCard member={member} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
+}
+
+function TeamMemberCard({ member }: { member: TeamMember }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startImageCycle = () => {
+    if (member.images.length <= 1) return;
+    
+    intervalRef.current = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % member.images.length);
+    }, 200);
+  };
+
+  const stopImageCycle = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setCurrentImageIndex(0);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    startImageCycle();
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    stopImageCycle();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
+      <div 
+        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {teamMembers.map((member, index) => (
-          <SwiperSlide key={index} style={{ width: "auto" , cursor: showCustomCursor ? 'none' : 'grab'}}>
-            <div className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="pt-2">
-                <h3 className="font-[250] text-[16px]">{member.name}</h3>
-                <p className="font-[400] text-[12px]">{member.position}</p>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Image
+          src={member.images[currentImageIndex]}
+          alt={member.name}
+          fill
+          className="object-cover transition-opacity duration-100"
+          sizes="(max-width: 768px) 240px, 320px"
+        />
+        {isHovered && (
+          <div className="absolute inset-0 bg-black/5 pointer-events-none hidden md:block" />
+        )}
+      </div>
+      <div className="pt-2">
+        <h3 className="font-medium text-lg">{member.name}</h3>
+        <p className="text-sm">{member.position}</p>
+      </div>
     </div>
   );
 }
