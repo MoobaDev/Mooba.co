@@ -11,7 +11,6 @@ export default function Footer() {
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-col gap-2 text-[16px]">
             <p className="font-normal">Barranquilla, CO</p>
-            <p className="font-extralight">Cra 61 # 64-27</p>
             <p className="font-extralight">blugo@mooba.co</p>
             <p className="font-extralight">+57 304 3338350</p>
           </div>
@@ -36,11 +35,24 @@ export default function Footer() {
         
         <div className="flex flex-col w-full">
           <p className="font-base text-[16px] mb-2">Suscríbete a nuestro newsletter</p>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="bg-transparent border-b border-white/30 text-white placeholder-white/60 text-sm font-extralight py-2 focus:outline-none focus:border-white/60 transition-colors min-w-[200px]"
-          />
+          <div className="relative w-full min-w-[200px] mt-3">
+            <input
+              type="email"
+              id="email"
+              placeholder=" "
+              className="peer bg-transparent border-b border-white/30 text-white placeholder-transparent text-sm font-extralight py-2 focus:outline-none focus:border-white/60 transition-colors w-full"
+            />
+            <label
+              htmlFor="email"
+              className="absolute left-0 top-2 text-white/60 text-sm font-extralight transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-placeholder-shown:text-white/60 peer-focus:top-[-0.6rem] peer-focus:text-xs peer-focus:text-white"
+            >
+              Correo electrónico
+            </label>
+          </div>
+
+          <div className="bg-white text-black font-medium text-center px-4 py-3 mt-4 rounded-full text-[16px]">
+            Suscribirme
+          </div>
         </div>
         
         <div className="flex flex-col mt-6 items-center w-full md:flex-row md:items-end md:justify-between">
@@ -52,7 +64,6 @@ export default function Footer() {
       <div className="hidden md:flex md:justify-between gap-5 mx-auto px-6 md:px-8 overflow-hidden pt-4 md:items-start">
         <div className="flex flex-col text-[16px] gap-1">
           <p className="font-normal text-[20px]">Barranquilla, CO</p>
-          <p className="font-extralight">Cra 61 # 64-29</p>
           <p className="font-extralight">blugo@mooba.co</p>
           <p className="font-extralight">+57 304 333 8350</p>
         </div>
@@ -74,11 +85,25 @@ export default function Footer() {
         
         <div className="flex flex-col items-start">
           <p className="text-[16px] font-base mb-2">Suscríbete a nuestro newsletter</p>
-          <input
+          <div className="relative w-full min-w-[400px] mt-3">
+            <input
+              id="email"
               type="email"
-              placeholder="Correo electrónico"
-              className="bg-transparent border-b border-white/30 text-white placeholder-white/60 text-sm font-light py-2 focus:outline-none focus:border-white/60 transition-colors min-w-[400px]"
+              placeholder=" "
+              className="peer bg-transparent border-b border-white/30 text-white placeholder-transparent text-sm font-light py-2 focus:outline-none focus:border-white/60 transition-colors w-full"
             />
+            <label
+              htmlFor="email"
+              className="absolute left-0 top-2 text-white/60 text-sm font-extralight transition-all 
+                peer-placeholder-shown:top-2 
+                peer-placeholder-shown:text-sm 
+                peer-focus:top-[-0.6rem] 
+                peer-focus:text-xs 
+                peer-focus:text-white"
+            >
+              Correo electrónico
+            </label>
+          </div>
           <div className="bg-white text-black px-4 py-2 mt-4 rounded-full text-sm">
             Suscríbirme
           </div>
