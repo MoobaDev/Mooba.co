@@ -74,10 +74,10 @@ export default function HighlightedProjects() {
                 <div className="flex flex-col transition-all duration-300    ">
                   {/* Image Container - Different sizes for active vs inactive slides */}
                   <div
-                    className={`relative mb-3 md:mb-5 overflow-hidden transition-all duration-300 max-w-[906px] aspect-[906/684] ${
+                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[16/9] ${
                       loaded && currentSlide % mockProjects.length === idx
-                        ? "w-[906px] h-[684px]"
-                        : "w-[906px] h-[605px]"
+                        ? "w-full h-auto"
+                        : "w-full h-auto"
                     }`}
                   >
                     <Image
@@ -86,8 +86,8 @@ export default function HighlightedProjects() {
                       fill
                       className={`object-fill transition-all duration-300 ${
                         loaded && currentSlide % mockProjects.length === idx
-                          ? "brightness-100"
-                          : "brightness-50"
+                          ? "brightness-100 scale-100"
+                          : "brightness-50 scale-100" // Menos oscurecimiento y escala reducida
                       }`}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
                       
@@ -98,7 +98,7 @@ export default function HighlightedProjects() {
 
                   {/* Show text for all slides, with different opacity */}
                   <div className="max-w-[1440px] mx-auto w-full">
-                    <div className="mb-6 md:mb-8">
+                    <div className="mb-2 md:mb-3 max-w-[840px]">
                       <h5
                         className={`text-xl font-extralight transition-opacity duration-300 ${
                           loaded && currentSlide % mockProjects.length === idx
