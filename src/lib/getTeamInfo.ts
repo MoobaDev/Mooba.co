@@ -1,6 +1,6 @@
 import { StrapiIntegrantesResponse } from "@/types/Integrantes";
 
-export async function getIntegrantesInfo(): Promise<StrapiIntegrantesResponse> {
+export async function getTeamInfo(): Promise<StrapiIntegrantesResponse> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/integrantes?populate=*&sort=createdAt:desc`, {
       cache: "no-store",

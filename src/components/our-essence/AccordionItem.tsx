@@ -3,12 +3,32 @@
 import { DropdownDownItem, DropdownUpItem } from "../ui/Icons";
 import TeamCarousel from "@/components/our-essence/TeamCarousel";
 
+interface StrapiImage {
+  id: number;
+  url: string;
+  width: number;
+  height: number;
+  alternativeText?: string;
+  caption?: string;
+  formats?: {
+    thumbnail?: { url: string; };
+    small?: { url: string; };
+    medium?: { url: string; };
+    large?: { url: string; };
+  };
+}
+interface TeamMember{
+  name: string;
+  ocupation: string;
+  image: StrapiImage[]
+}
 interface AccordionItemProps {
   title: string;
   children: React.ReactNode;
   carousel?: boolean;
   isOpen?: boolean;
   onToggle?: () => void;
+  teamMembers?: TeamMember[];
 }
 
 export default function AccordionItemComponent({
@@ -17,6 +37,7 @@ export default function AccordionItemComponent({
   carousel = false,
   isOpen = false,
   onToggle,
+  teamMembers,
 }: AccordionItemProps) {
   return (
     <section className="border-b border-white/30">
@@ -42,9 +63,9 @@ export default function AccordionItemComponent({
                 {isOpen ? <DropdownUpItem /> : <DropdownDownItem />}
               </div>
             </div>
-            {isOpen && carousel && (
+            {isOpen && carousel && teamMembers &&(
               <div className="hidden md:block w-full mt-6">
-                <TeamCarousel/>
+                <TeamCarousel teamMembers={teamMembers}/>
               </div>
             )}
           </div>
@@ -54,9 +75,9 @@ export default function AccordionItemComponent({
         <div className="px-8 pb-8 text-gray-300 leading-relaxed font-[250] text-[18px] md:text-[20px] space-y-2">
           {children}
         </div>
-        {isOpen && carousel && (
+        {isOpen && carousel && teamMembers &&(
             <div className="w-full mt-6">
-              <TeamCarousel/>
+              <TeamCarousel teamMembers={teamMembers}/>
             </div>
           )}
       </div>

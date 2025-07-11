@@ -3,13 +3,36 @@
 import { useState, useEffect } from "react";
 import AccordionItemComponent from "./AccordionItem";
 
+interface StrapiImage {
+  id: number;
+  url: string;
+  width: number;
+  height: number;
+  alternativeText?: string;
+  caption?: string;
+  formats?: {
+    thumbnail?: { url: string; };
+    small?: { url: string; };
+    medium?: { url: string; };
+    large?: { url: string; };
+  };
+}
 interface AccordionItem {
   title: string;
   content: string;
   carousel?: boolean;
 }
+interface TeamMember{
+  name: string,
+  ocupation: string,
+  image: StrapiImage[]
+}
+interface AccordionClientProps{
+  items: AccordionItem[];
+  teamMembers: TeamMember[];
+}
 
-export default function AccordionClient({ items }: { items: AccordionItem[] }) {
+export default function AccordionClient({ items, teamMembers } : AccordionClientProps ) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -31,6 +54,7 @@ export default function AccordionClient({ items }: { items: AccordionItem[] }) {
             onToggle={() =>
               setOpenIndex((prev) => (prev === index ? null : index))
             }
+            teamMembers={item.carousel ? teamMembers : undefined}
           >
             {item.content}
           </AccordionItemComponent>

@@ -10,76 +10,38 @@ import { useEffect, useRef, useState } from "react";
 import { RightArrow, LeftArrow } from "../ui/Icons";
 import type SwiperType from 'swiper';
 
+interface StrapiImage {
+  id: number;
+  url: string;
+  width: number;
+  height: number;
+  alternativeText?: string;
+  caption?: string;
+  formats?: {
+    thumbnail?: { url: string; };
+    small?: { url: string; };
+    medium?: { url: string; };
+    large?: { url: string; };
+  };
+}
 interface TeamMember {
-  name: string;
-  position: string;
-  images: string[];
+ name: string;
+ ocupation: string;
+ image: StrapiImage[];
 }
 
 interface TeamCarouselProps {
+  teamMembers: TeamMember[];
   active?: boolean;
 }
 
-export default function TeamCarousel({ active = false }: TeamCarouselProps) {
+export default function TeamCarousel({ teamMembers, active = false }: TeamCarouselProps) {
   const swiperRef = useRef<SwiperType | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center');
   const [showCursor, setShowCursor] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-
-  const teamMembers: TeamMember[] = [
-    { 
-      name: "Breyner Lugo", 
-      position: "Manager", 
-      images: ["/brey.png", "/edgardo.png", "/andrea.png"] 
-    },
-    { 
-      name: "Edgardo Barreto", 
-      position: "Director Creativo", 
-      images: ["/edgardo.png", "/andrea.png", "/Mary.png", ] 
-    },
-    { 
-      name: "Andrea Marenco", 
-      position: "Jefe de Mercadotecnia", 
-      images: ["/andrea.png", "/Mary.png", ] 
-    },
-    { 
-      name: "Mary Borrás", 
-      position: "Creadora de campañas", 
-      images: ["/Mary.png", "/laura.png", "/brey.png"] 
-    },
-    { 
-      name: "Laura", 
-      position: "Ejecutiva comercial ", 
-      images: ["/laura.png", "/brey.png", "/edgardo.png"] 
-    },
-    { 
-      name: "Breyner Lugo", 
-      position: "Manager", 
-      images: ["/brey.png", "/edgardo.png", "/andrea.png"] 
-    },
-    { 
-      name: "Edgardo Barreto", 
-      position: "Director Creativo", 
-      images: ["/edgardo.png", "/andrea.png", "/Mary.png", ] 
-    },
-    { 
-      name: "Andrea Marenco", 
-      position: "Jefe de Mercadotecnia", 
-      images: ["/andrea.png", "/Mary.png", ] 
-    },
-    { 
-      name: "Mary Borrás", 
-      position: "Creadora de campañas", 
-      images: ["/Mary.png", "/laura.png", "/brey.png"] 
-    },
-    { 
-      name: "Laura", 
-      position: "Especialista", 
-      images: ["/laura.png", "/brey.png", "/edgardo.png"] 
-    },
-  ];
 
   const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
 
@@ -236,10 +198,10 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startImageCycle = () => {
-    if (member.images.length <= 1) return;
+    if (member.image.length <= 1) return;
     
     intervalRef.current = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % member.images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % member.image.length);
     }, 200);
   };
 
@@ -269,27 +231,35 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
     };
   }, []);
 
+ // const getImageUrl = (image: StrapiImage) => {
+   // return  image.url
+  //};
+
   return (
-    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
+    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10 cursor-none">
       <div 
-        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative"
+        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative cursor-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Image
-          src={member.images[currentImageIndex]}
-          alt={member.name}
-          fill
-          className="object-cover transition-opacity duration-100"
-          sizes="(max-width: 768px) 240px, 320px"
-        />
+        <div className="h-120">
+        {member.image && member.image.length > 0 &&
+          <Image
+            src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
+            alt={member.name}
+            className="object-cover h-full w-full transition-opacity duration-100"
+            width={member.image[currentImageIndex].width}
+            height={member.image[currentImageIndex].height}
+          />
+        }
+        </div>
         {isHovered && (
           <div className="absolute inset-0 bg-black/5 pointer-events-none hidden md:block" />
         )}
       </div>
       <div className="pt-2">
         <h3 className="font-medium text-lg">{member.name}</h3>
-        <p className="text-sm">{member.position}</p>
+        <p className="text-sm">{member.ocupation}</p>
       </div>
     </div>
   );
