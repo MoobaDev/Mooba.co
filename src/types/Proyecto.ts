@@ -22,6 +22,8 @@ export interface Project {
   shortDescription: string;
   mobileImage: StrapiImage;
   desktopImage: StrapiImage;
+  mobileVideo: StrapiImage;
+  desktopVideo: StrapiImage;
   desktopContent: string;
   mobileContent: string;
   createdAt: string;
