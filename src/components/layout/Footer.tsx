@@ -1,4 +1,4 @@
-import { ArrowIcon } from "../../../Icons";
+import { ArrowIcon } from "../ui/Icons";
 import Link from "next/link";
 import Image from "next/image";
 
