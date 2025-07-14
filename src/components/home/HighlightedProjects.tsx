@@ -74,10 +74,10 @@ export default function HighlightedProjects() {
                 <div className="flex flex-col transition-all duration-300    ">
                   {/* Image Container - Different sizes for active vs inactive slides */}
                   <div
-                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[16/9] ${
+                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[905/605] ${
                       loaded && currentSlide % mockProjects.length === idx
                         ? "w-full h-auto"
-                        : "w-full h-auto"
+                        : "w-full h-auto scale-[0.95]"
                     }`}
                   >
                     <Image
@@ -89,49 +89,45 @@ export default function HighlightedProjects() {
                           ? "brightness-100 scale-100"
                           : "brightness-50 scale-100" // Menos oscurecimiento y escala reducida
                       }`}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 900px"
-                      
                     />
 
                     
                   </div>
 
                   {/* Show text for all slides, with different opacity */}
-                  <div className="max-w-[1440px] mx-auto w-full">
-                    <div className="mb-2 md:mb-3 max-w-[840px]">
-                      <h5
-                        className={`text-xl font-extralight transition-opacity duration-300 ${
+                  <div className={` max-w-[1440px] mx-auto w-full ${
                           loaded && currentSlide % mockProjects.length === idx
                             ? "text-white opacity-100"
-                            : "text-white opacity-50"
-                        }`}
+                            : "text-white opacity-50 scale-[0.95]"
+                        } `}>
+                    <div className="mb-2 md:mb-3 max-w-[840px]">
+                      <h5
+                        className={`text-xl font-extralight transition-opacity duration-300 `}
                       >
                         {project.title}
                       </h5>
                       <p
-                        className={`text-xl font-extralight transition-opacity duration-300 ${
-                          loaded && currentSlide % mockProjects.length === idx
-                            ? "text-gray-400 opacity-100"
-                            : "text-gray-400 opacity-50"
-                        }`}
+                        className={`text-xl font-extralight transition-opacity duration-300 $`}
                       >
                         {project.category}
                       </p>
                     </div>
 
                     {/* Tags - shown for all slides */}
-                    <div className="flex flex-wrap">
+                    <div
+                      className={`flex flex-wrap transition-all duration-300`}
+                    >
                       {project.tags.map((tag, tagIdx) => (
-                        <span
-                          key={tagIdx}
-                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
-                            loaded && currentSlide % mockProjects.length === idx
-                              ? "text-gray-500 border-gray-300 opacity-100"
-                              : "text-gray-500 border-gray-300 opacity-50"
-                          }`}
-                        >
-                          {tag}
-                        </span>
+                      <span
+                        key={tagIdx}
+                        className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
+                        loaded && currentSlide % mockProjects.length === idx
+                          ? "text-gray-500 border-gray-300 opacity-100"
+                          : "text-gray-500 border-gray-300 opacity-50"
+                        }`}
+                      >
+                        {tag}
+                      </span>
                       ))}
                     </div>
                   </div>
