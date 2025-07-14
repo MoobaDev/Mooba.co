@@ -96,7 +96,7 @@ export default function Header() {
                     </div>
                     <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
                     <Link href="#" className="hover:underline cursor-pointer">Nuestra esencia</Link>
-                    <Link href="/contacto" className="hover:underline cursor-pointer">Contáctanos</Link>
+                    <Link href="/contactanos" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>
             </div>
         </header>
@@ -131,7 +131,7 @@ export default function Header() {
                                 )}
                             </li>
                         <button onClick={() => handleNavigate('/nuestra-esencia')} className="text-[32px] font-normal hover:cursor-pointer text-left">Nuestra esencia</button>
-                        <button onClick={() => handleNavigate('/contacto')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
+                        <button onClick={() => handleNavigate('/contactanos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
                     </ul>
                 </nav>
 
