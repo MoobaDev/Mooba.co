@@ -24,10 +24,11 @@ interface StrapiImage {
     large?: { url: string; };
   };
 }
+
 interface TeamMember {
- name: string;
- ocupation: string;
- image: StrapiImage[];
+  name: string;
+  ocupation: string;
+  image: StrapiImage[];
 }
 
 interface TeamCarouselProps {
@@ -231,28 +232,23 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
     };
   }, []);
 
- // const getImageUrl = (image: StrapiImage) => {
-   // return  image.url
-  //};
-
   return (
-    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10 cursor-none">
+    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
       <div 
-        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative cursor-none"
+        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="h-120">
-        {member.image && member.image.length > 0 &&
+         {member.image && member.image.length > 0 &&
           <Image
             src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
             alt={member.name}
-            className="object-cover h-full w-full transition-opacity duration-100"
+            className="object-cover h-full w-full transition-opacity duration-300 ease-in-out"
             width={member.image[currentImageIndex].width}
             height={member.image[currentImageIndex].height}
+            priority={currentImageIndex === 0}
           />
         }
-        </div>
         {isHovered && (
           <div className="absolute inset-0 bg-black/5 pointer-events-none hidden md:block" />
         )}
