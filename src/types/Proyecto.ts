@@ -20,9 +20,7 @@ export interface Project {
   title: string;
   slug: string;
   shortDescription: string;
-  mobileImage: StrapiImage;
   desktopImage: StrapiImage;
-  mobileVideo: StrapiImage;
   desktopVideo: StrapiImage;
   desktopContent: string;
   mobileContent: string;
