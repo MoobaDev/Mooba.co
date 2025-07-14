@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+//import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/layout/Footer";
@@ -10,10 +10,10 @@ const dmSans = DM_Sans({
   display: "swap",
 })
 
-export const metadata: Metadata = {
+/* export const metadata: Metadata = {
   title: "Mooba Agencia - Marketing Digital, Diseño Web y Redes Sociales",
   description: "Plataforma de gestión de proyectos desarrollada con Next.js y Builder.io",
-};
+}; */
 
 export default function RootLayout({
   children,

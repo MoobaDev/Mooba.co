@@ -57,6 +57,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: seo?.description || '',
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
+    alternates: {
+      canonical: `https://mooba.co/proyectos`,
+    },
     openGraph: {
       title: seo?.title || project.title,
       description: seo?.description || '',
