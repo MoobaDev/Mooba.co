@@ -21,7 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
+      <head><link rel="icon" href="/favicon.ico" sizes="any" /></head>
       <body
         className={`${dmSans.className} antialiased bg-black text-white`}
       >
