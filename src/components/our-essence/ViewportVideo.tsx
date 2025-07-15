@@ -1,7 +1,27 @@
 "use client";
 import { ChevronDown } from "lucide-react";
 
-export default function ViewportVideo() {
+interface StrapiVideo {
+  id: number;
+  url: string;
+}
+export interface Video{
+  name: string;
+  video: StrapiVideo;
+  mobileVideo: StrapiVideo;
+}
+export interface StrapiVideoResponse {
+data: Video[];
+meta: {
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  };
+};
+}
+export default function ViewportVideo({video}: {video: Video}) {
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -19,7 +39,7 @@ export default function ViewportVideo() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover md:hidden"
       >
-        <source src="videos/landing_video_mobile.mp4" type="video/mp4" />
+        <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.mobileVideo.url}`} type="video/mp4" />
       </video>
 
       {/* Desktop Video */}
@@ -30,7 +50,7 @@ export default function ViewportVideo() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover hidden md:block"
       >
-        <source src="videos/landing_video_desktop.mp4" type="video/mp4" />
+        <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.video.url}`} type="video/mp4" />
       </video>
 
       {/* Scroll Down Indicator */}
