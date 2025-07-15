@@ -2,14 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { allBrands } from "@/mocks/brands";
-// Cambiar por marcas extraidas de Strapi
 import { Brand } from "@/types/brands.type";
 
-export default function TrustedBrands() {
-  const [visibleBrands, setVisibleBrands] = useState<Brand[]>(
-    allBrands.slice(0, 6)
-  );
+
+export default function TrustedBrands({ brands }: { brands: Brand[] }) {
+  
+  const [visibleBrands, setVisibleBrands] = useState<Brand[]>(brands.slice(0, 6));
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [lastChangedPosition, setLastChangedPosition] = useState<number | null>(
     null
@@ -17,7 +15,6 @@ export default function TrustedBrands() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Seleccionar una posición aleatoria diferente a la anterior
       let randomPosition: number;
       do {
         randomPosition = Math.floor(Math.random() * 6);
@@ -26,28 +23,18 @@ export default function TrustedBrands() {
         lastChangedPosition !== null
       );
 
-      // Guardar la posición que va a cambiar
       setLastChangedPosition(randomPosition);
-
-      // Animar salida de la posición aleatoria
       setAnimatingIndex(randomPosition);
 
       setTimeout(() => {
-        // Cambiar la marca en la posición que está animando
         setVisibleBrands((prev) => {
           const newBrands = [...prev];
 
-          // Encontrar marcas que no están visibles (excluyendo la que está en la posición que va a cambiar)
-          const hiddenBrands = allBrands.filter(
-            (brand) =>
-              !newBrands.some(
-                (visible, index) =>
-                  visible.id === brand.id && index !== randomPosition
-              )
+          const hiddenBrands = brands.filter(
+            (brand) => !newBrands.some((visible, index) => visible.id === brand.id && index !== randomPosition)
           );
 
           if (hiddenBrands.length > 0) {
-            // Seleccionar una marca aleatoria de las ocultas
             const randomHiddenBrand =
               hiddenBrands[Math.floor(Math.random() * hiddenBrands.length)];
             newBrands[randomPosition] = randomHiddenBrand;
@@ -56,16 +43,25 @@ export default function TrustedBrands() {
           return newBrands;
         });
 
-        // Animar entrada
         setTimeout(() => {
           setAnimatingIndex(null);
         }, 100);
       }, 500);
-    }, 2000); // Cada 4 segundos
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [lastChangedPosition]);
+  }, [lastChangedPosition, brands]);
 
+
+  if (!brands || brands.length === 0) { 
+    return (
+      <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+        <h2 className="text-3xl font-extralight md:text-4xl">
+          No hemos podifo cargar las marcas
+        </h2>
+      </section>
+    );
+  }
   return (
     <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       {/* Title */}
@@ -87,11 +83,11 @@ export default function TrustedBrands() {
             {/* Logo */}
             <div className="w-full h-full flex items-center justify-center p-6">
               <Image
-                src={brand.logo}
-                alt={brand.name}
+                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${brand.image.url}`}
+                alt={brand.brand}
                 width={130}
                 height={65}
-                className="max-w-32 max-h-16 object-contain filter brightness-0 invert"
+                className="w-full h-full object-cover filter brightness-0 invert"
               />
             </div>
           </div>
