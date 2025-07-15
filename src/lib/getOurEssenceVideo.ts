@@ -1,6 +1,6 @@
 import { StrapiVideoResponse } from "@/types/VideoNosotros";
 
-export async function getTeamInfo(): Promise<StrapiVideoResponse> {
+export async function getVideos(): Promise<StrapiVideoResponse> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/viewport-video-nosotros-seccion?populate=*`, {
       cache: "no-store",
