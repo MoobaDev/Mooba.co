@@ -4,31 +4,34 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Service, ServiceImage } from "@/types/service.type";
 // Cambiar por servicios extraidas de Strapi
-import { servicesData } from "@/mocks/services";
 
-export default function ServicesShowcase() {
+export default function ServicesShowcase({
+  services,
+}: {
+  services: Service[];
+}) {
+
   const [selectedImage, setSelectedImage] = useState<ServiceImage | null>(
-    servicesData[0].images[0]
+    services[0]?.image[0] ?? null
   );
   const [hoveredService, setHoveredService] = useState<number | null>(
-    servicesData[0].id
+    services[0].id
   );
   const [activeService, setActiveService] = useState<number | null>(
-    servicesData[0].id
+    services[0].id
   );
 
   useEffect(() => {
-    const randomService =
-      servicesData[Math.floor(Math.random() * servicesData.length)];
+    const randomService = services[Math.floor(Math.random() * services.length)];
     const randomImage =
-      randomService.images[
-        Math.floor(Math.random() * randomService.images.length)
+      randomService.image[
+        Math.floor(Math.random() * randomService.image.length)
       ];
 
     setActiveService(randomService.id);
     setHoveredService(randomService.id);
     setSelectedImage(randomImage);
-  }, []);
+  }, [services]);
 
   // Efecto para manejar el scroll en móvil
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function ServicesShowcase() {
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
       setHoveredService(service.id);
       const randomImage =
-        service.images[Math.floor(Math.random() * service.images.length)];
+        service.image[Math.floor(Math.random() * service.image.length)];
       setSelectedImage(randomImage);
     }
   };
@@ -94,7 +97,7 @@ export default function ServicesShowcase() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Services List */}
         <div className="space-y-2">
-          {servicesData.map((service) => {
+          {services.map((service) => {
             const isActive =
               typeof window !== "undefined" && window.innerWidth < 1024
                 ? activeService === service.id
@@ -121,7 +124,7 @@ export default function ServicesShowcase() {
             {selectedImage ? (
               <div className="relative w-full h-full">
                 <Image
-                  src={selectedImage.url}
+                  src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
                   alt={selectedImage.alt}
                   fill
                   className="object-cover transition-opacity duration-500"
