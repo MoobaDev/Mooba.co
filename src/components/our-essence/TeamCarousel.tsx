@@ -43,10 +43,24 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
   const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center');
   const [showCursor, setShowCursor] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-
+  const [isMobile, setIsMobile] = useState(false);
   const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
 
   useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+  useEffect(() => {
+
+    if (isMobile) return;
     const handlePointerMove = (e: PointerEvent) => {
       if (!carouselRef.current) return;
 
@@ -86,13 +100,14 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
       window.removeEventListener("pointermove", handlePointerMove);
       document.body.style.cursor = "auto";
     };
-  }, []);
+  }, [isMobile]);
 
   const handleClick = (e: React.MouseEvent) => {
+    if (isMobile) return;
     e.stopPropagation();
-    
+
     if (!swiperRef.current) return;
-    
+
     if (cursorDir === "left") {
       swiperRef.current.slidePrev();
     } else if (cursorDir === "right") {
@@ -111,17 +126,17 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
       const timer = setTimeout(() => {
         setHasStarted(true);
       }, 2000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [active]);
 
   return (
-    <div 
-      ref={carouselRef} 
+    <div
+      ref={carouselRef}
       className="relative w-full cursor-none"
       onClick={handleClick}
-      style={{cursor : 'none'}}
+      style={{cursor : isMobile ? 'auto' : 'none'}}
     >
       {showCursor && (
         <div className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPos.x, top: cursorPos.y }}>
@@ -139,7 +154,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
         <Swiper
           modules={[Autoplay]}
           loop={true}
-          //grabCursor={true}
+          grabCursor={isMobile}
           centeredSlides={true}
           autoplay={{
             delay: 1500,
@@ -157,24 +172,24 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
             swiperRef.current = swiper;
           }}
           breakpoints={{
-            320: { 
-              slidesPerView: 1.5, 
+            320: {
+              slidesPerView: 1.5,
               spaceBetween: 12
             },
-            640: { 
-              slidesPerView: 2, 
+            640: {
+              slidesPerView: 2,
               spaceBetween: 16
             },
-            1024: { 
-              slidesPerView: 3, 
+            1024: {
+              slidesPerView: 3,
               spaceBetween: 24
             },
-            1440: { 
-              slidesPerView: 4.5, 
+            1440: {
+              slidesPerView: 4.5,
               spaceBetween: 24
             },
-            1920: { 
-              slidesPerView: 5.5, 
+            1920: {
+              slidesPerView: 5.5,
               spaceBetween: 28
             },
           }}
@@ -196,14 +211,20 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
 function TeamMemberCard({ member }: { member: TeamMember }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isTapped, setIsTapped] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const startImageCycle = () => {
+  const startImageCycle = (duration: number = 200) => {
     if (member.image.length <= 1) return;
-    
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
     intervalRef.current = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % member.image.length);
-    }, 200);
+    }, duration);
   };
 
   const stopImageCycle = () => {
@@ -224,22 +245,40 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
     stopImageCycle();
   };
 
+  const handleTouchStart = () => {
+    if (member.image.length <= 1) return;
+
+    setIsTapped(true);
+    startImageCycle(1000 / member.image.length);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      stopImageCycle();
+      setIsTapped(false);
+    }, 1000);
+  };
+
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
     };
   }, []);
 
   return (
     <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
-      <div 
+      <div
         className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
       >
-         {member.image && member.image.length > 0 &&
+        {member.image && member.image.length > 0 &&
           <Image
             src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
             alt={member.name}
@@ -249,8 +288,8 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
             priority={currentImageIndex === 0}
           />
         }
-        {isHovered && (
-          <div className="absolute inset-0 bg-black/5 pointer-events-none hidden md:block" />
+        {(isHovered || isTapped) && (
+          <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         )}
       </div>
       <div className="pt-2">
