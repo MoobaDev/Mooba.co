@@ -2,8 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-//  Cambiar por proyectos traido de strapi
-import { mockProjects } from "@/mocks/portafolioProjects";
+import { Project } from "@/types/Proyecto";
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
@@ -72,7 +71,7 @@ const useScrollAnimation = () => {
   return { sectionRef, scrollProgress };
 };
 
-export default function PortafolioHome() {
+export default function PortafolioHome({ projects }: { projects: Project[] }) {
   const { sectionRef, scrollProgress } = useScrollAnimation();
 
   const getProjectTransform = (index: number): string => {
@@ -132,10 +131,20 @@ export default function PortafolioHome() {
     willChange: "transform, opacity",
   });
 
+  if (!projects || projects.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
+        <h2 className="text-3xl md:text-4xl font-extralight">
+          No hemos podifo cargar los proyectos
+        </h2>
+      </section>
+    );
+  }
+
   return (
     <section
       ref={sectionRef}
-      className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
+      className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
@@ -144,7 +153,7 @@ export default function PortafolioHome() {
         </h2>
         {/* Desktop: Link with underline */}
         <Link
-          href="/portafolio"
+          href="/proyectos"
           className="hidden md:block text-base font-normal  underline"
         >
           Ver todos los proyectos
@@ -154,39 +163,50 @@ export default function PortafolioHome() {
       {/* Projects Grid */}
       <div className="w-full">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-16">
-          {mockProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <Link
-              href={`/portafolio/${project.slug}`}
-              key={project.id}
+              href={`/proyectos/${project.slug}`}
+              key={project.slug}
               className="block group cursor-pointer w-full"
               style={getProjectAnimationStyles(index)}
             >
               <div className="flex flex-col h-full">
                 {/* Image Container */}
-                <div className="relative mb-4 overflow-hidden w-full aspect-[4/3]">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-all duration-300 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  />
+                <div className="relative mb-4 overflow-hidden w-full aspect-[4/4]">
+                  {project.desktopVideo ? (
+                    <video
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                      autoPlay
+                      loop
+                      muted
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage?.url}`}
+                      alt={project.title}
+                      fill
+                      className="object-cover w-full h-full"
+                    />
+                  )}
                 </div>
 
                 {/* Project Info */}
                 <div className="mb-3 mt-2 font-extralight text-xl">
                   <h5>{project.title}</h5>
-                  <p className="text-gray-400">{project.category}</p>
+                  <p className="text-gray-400 truncate overflow-hidden whitespace-nowrap">
+                    {project.shortDescription}
+                  </p>
                 </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap">
-                  {project.tags.map((tag, tagIdx) => (
+                  {project.categorias.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
                       className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5"
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   ))}
                 </div>
