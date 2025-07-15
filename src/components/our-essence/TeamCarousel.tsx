@@ -50,20 +50,17 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
     checkIfMobile();
     window.addEventListener('resize', checkIfMobile);
-
     return () => {
       window.removeEventListener('resize', checkIfMobile);
     };
   }, []);
-  useEffect(() => {
 
+  useEffect(() => {
     if (isMobile) return;
     const handlePointerMove = (e: PointerEvent) => {
       if (!carouselRef.current) return;
-
       const rect = carouselRef.current.getBoundingClientRect();
       const isOver = (
         e.clientX >= rect.left &&
@@ -71,16 +68,13 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom
       );
-
       if (!isOver) {
         setShowCursor(false);
         document.body.style.cursor = 'auto'
         return;
       }
-
       const relativeX = e.clientX - rect.left;
       const zone = rect.width * 0.3;
-
       if (relativeX <= zone) {
         setCursorDir("left");
       } else if (relativeX >= rect.width - zone) {
@@ -88,14 +82,11 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
       } else {
         setCursorDir("center");
       }
-
       setCursorPos({ x: e.clientX, y: e.clientY });
       setShowCursor(true);
       document.body.style.cursor = "none";
     };
-
     window.addEventListener("pointermove", handlePointerMove);
-
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       document.body.style.cursor = "auto";
@@ -105,9 +96,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
   const handleClick = (e: React.MouseEvent) => {
     if (isMobile) return;
     e.stopPropagation();
-
     if (!swiperRef.current) return;
-
     if (cursorDir === "left") {
       swiperRef.current.slidePrev();
     } else if (cursorDir === "right") {
@@ -126,18 +115,12 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
       const timer = setTimeout(() => {
         setHasStarted(true);
       }, 2000);
-
       return () => clearTimeout(timer);
     }
   }, [active]);
 
   return (
-    <div
-      ref={carouselRef}
-      className="relative w-full cursor-none"
-      onClick={handleClick}
-      style={{cursor : isMobile ? 'auto' : 'none'}}
-    >
+    <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} style={{cursor : isMobile ? 'auto' : 'none'}}>
       {showCursor && (
         <div className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPos.x, top: cursorPos.y }}>
           <div className="w-16 h-16 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -195,10 +178,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           }}
         >
           {duplicatedMembers.map((member, index) => (
-            <SwiperSlide
-              key={`${member.name}-${index}`}
-              className="cursor-none transition-transform duration-300 ease-out"
-            >
+            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none transition-transform duration-300 ease-out">
               <TeamMemberCard member={member} />
             </SwiperSlide>
           ))}
@@ -272,12 +252,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 
   return (
     <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
-      <div
-        className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-      >
+      <div className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
         {member.image && member.image.length > 0 &&
           <Image
             src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
