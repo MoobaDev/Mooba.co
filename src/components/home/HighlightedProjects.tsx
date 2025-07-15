@@ -4,10 +4,12 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
 import { useState } from "react";
-//  Cambiar por proyectos traido de strapi
-import { mockProjects } from "@/mocks/highlightedProjects";
+import { Project } from '@/types/Proyecto';
+import Link from "next/link";
 
-export default function HighlightedProjects() {
+export default function HighlightedProjects({ projects }: { projects: { proyecto: Project }[] | null }) {
+  
+  
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
@@ -18,28 +20,28 @@ export default function HighlightedProjects() {
     slides: {
       origin: 0.1,
       perView: 1.2,
-      spacing: 8, // Espacio reducido entre slides en móvil
+      spacing: 8,
     },
     breakpoints: {
       "(min-width: 768px)": {
         slides: {
           origin: 0.2,
           perView: 1.5,
-          spacing: 15, // Ajustado para mantener proporción en tablets
+          spacing: 15,
         },
       },
       "(min-width: 1024px)": {
         slides: {
           origin: 0.2,
-          perView: 1.5, // Ajustado para mantener la proporción rectangular en laptop
+          perView: 1.5,
           spacing: 20,
         },
       },
       "(min-width: 1440px)": {
         slides: {
           origin: 0.2,
-          perView: 1.5, // Mantener proporción rectangular en pantallas grandes
-          spacing: 32, // Aumentado el espacio para pantallas grandes
+          perView: 1.5,
+          spacing: 32,
         },
       },
     },
@@ -51,83 +53,94 @@ export default function HighlightedProjects() {
     },
   });
 
+  if (!projects || projects.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
+        <h2 className="text-3xl md:text-4xl font-extralight">
+          No hemos podifo cargar los proyectos destacados
+        </h2>
+      </section>
+    );
+  }
+
   return (
     <section className="mt-[120px] mx-auto overflow-hidden">
-      {/* Contenedor para el título con ancho máximo */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
         <div className="w-full flex justify-between items-center">
-          {/* Title */}
           <h2 className="text-3xl md:text-4xl font-extralight">
             Proyectos destacados
           </h2>
         </div>
       </div>
 
-      {/* Carousel Container - Ahora sin max-width y tomando todo el ancho */}
       <div className="relative overflow-hidden w-full">
-        {/* Project Carousel */}
         <div className="w-full">
           <div ref={sliderRef} className="keen-slider">
-            {mockProjects.map((project, idx) => (
-              
-              <div key={project.id} className="keen-slider__slide ">
-                <div className="flex flex-col transition-all duration-300    ">
-                  {/* Image Container - Different sizes for active vs inactive slides */}
-                  <div
+            {projects.map(({ proyecto }, idx) => (
+              <div key={proyecto.slug} className="keen-slider__slide">
+                <div className="flex flex-col transition-all duration-300">
+                  <Link
+                    href={`/proyectos/${proyecto.slug}`}
                     className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[905/605] ${
-                      loaded && currentSlide % mockProjects.length === idx
+                      loaded && currentSlide % projects.length === idx
                         ? "w-full h-auto"
                         : "w-full h-auto scale-[0.95]"
                     }`}
                   >
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      fill
-                      className={`object-fill transition-all duration-300 ${
-                        loaded && currentSlide % mockProjects.length === idx
-                          ? "brightness-100 scale-100"
-                          : "brightness-50 scale-100" // Menos oscurecimiento y escala reducida
-                      }`}
-                    />
+                    {proyecto.desktopVideo ? (
+                      <video
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${proyecto.desktopVideo.url}`}
+                        autoPlay
+                        loop
+                        muted
+                        className={`object-cover w-full h-full transition-all duration-300 ${
+                          loaded && currentSlide % projects.length === idx
+                            ? "brightness-100 scale-100"
+                            : "brightness-50 scale-100"
+                        }`}
+                      />
+                    ) : (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${proyecto.desktopImage?.url}`}
+                        alt={proyecto.title}
+                        fill
+                        className={`object-cover w-full h-full transition-all duration-300 ${
+                          loaded && currentSlide % projects.length === idx
+                            ? "brightness-100 scale-100"
+                            : "brightness-50 scale-100"
+                        }`}
+                      />
+                    )}
+                  </Link>
 
-                    
-                  </div>
-
-                  {/* Show text for all slides, with different opacity */}
-                  <div className={` max-w-[1440px] mx-auto w-full ${
-                          loaded && currentSlide % mockProjects.length === idx
-                            ? "text-white opacity-100"
-                            : "text-white opacity-50 scale-[0.95]"
-                        } `}>
+                  <div
+                    className={`max-w-[1440px] mx-auto w-full ${
+                      loaded && currentSlide % projects.length === idx
+                        ? "text-white opacity-100"
+                        : "text-white opacity-50 scale-[0.95]"
+                    }`}
+                  >
                     <div className="mb-2 md:mb-3 max-w-[840px]">
-                      <h5
-                        className={`text-xl font-extralight transition-opacity duration-300 `}
-                      >
-                        {project.title}
+                      <h5 className="text-xl font-extralight transition-opacity duration-300">
+                        {proyecto.title}
                       </h5>
-                      <p
-                        className={`text-xl font-extralight transition-opacity duration-300 $`}
-                      >
-                        {project.category}
+                      <p className="text-xl font-extralight transition-opacity duration-300">
+                        {proyecto.shortDescription}
                       </p>
                     </div>
 
-                    {/* Tags - shown for all slides */}
-                    <div
-                      className={`flex flex-wrap transition-all duration-300`}
-                    >
-                      {project.tags.map((tag, tagIdx) => (
-                      <span
-                        key={tagIdx}
-                        className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
-                        loaded && currentSlide % mockProjects.length === idx
-                          ? "text-gray-500 border-gray-300 opacity-100"
-                          : "text-gray-500 border-gray-300 opacity-50"
-                        }`}
-                      >
-                        {tag}
-                      </span>
+                    <div className="flex flex-wrap transition-all duration-300">
+                      {proyecto.categorias.map((cat, tagIdx) => (
+                        <span
+                          key={tagIdx}
+                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
+                            loaded && currentSlide % projects.length === idx
+                              ? "text-gray-500 border-gray-300 opacity-100"
+                              : "text-gray-500 border-gray-300 opacity-50"
+                          }`}
+                        >
+                          {cat.name}
+                        </span>
                       ))}
                     </div>
                   </div>
