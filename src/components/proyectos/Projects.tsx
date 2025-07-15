@@ -41,8 +41,8 @@ export default function Projects({ projects }: ProjectsProps) {
           {filtered.map((project, idx) => {
             const colSpan = getColSpan(idx);
             const mod = idx % 6;
-            const aspectRatio = mod === 1 || mod === 5 ? 'h-full object-cover' : 'aspect-[16/9]';
-            /* aspect-[16/9] */
+            const aspectRatio = mod === 1 || mod === 5 ? 'h-full object-cover' : 'aspect-[16/9] max-h-[510px] overflow-hidden';
+            
             return (
               <Link
                 key={project.slug}
@@ -51,30 +51,7 @@ export default function Projects({ projects }: ProjectsProps) {
               >
                 {/* Media (imagen o video) */}
                 <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
-                  {/* Mobile */}
-                  <div className={`block md:hidden w-full ${aspectRatio} overflow-hidden`}>
-                    {project.mobileVideo ? (
-                      <video
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.mobileVideo.url}`}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      />
-                    ) : project.mobileImage ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.mobileImage.url}`}
-                        alt={project.mobileImage.alternativeText || project.title}
-                        width={project.mobileImage.width}
-                        height={project.mobileImage.height}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : null}
-                  </div>
-
-                  {/* Desktop */}
-                  <div className={`hidden md:block w-full ${aspectRatio} overflow-hidden`}>
+                  <div className={`w-full ${aspectRatio} overflow-hidden`}>
                     {project.desktopVideo ? (
                       <video
                         src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
