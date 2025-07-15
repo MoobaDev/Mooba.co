@@ -57,7 +57,7 @@ export default function HighlightedProjects({ projects }: { projects: { proyecto
     return (
       <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
         <h2 className="text-3xl md:text-4xl font-extralight">
-          No hemos podifo cargar los proyectos destacados
+          No hemos podido cargar los proyectos destacados
         </h2>
       </section>
     );
