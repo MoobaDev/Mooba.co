@@ -27,25 +27,35 @@ const countries = [
 ];
 
 const employeeCounts = [
-  "1-10 empleados",
-  "11-50 empleados",
-  "51-100 empleados",
+  "1-30 empleados",
+  "31-100 empleados",
   "101-500 empleados",
-  "500+ empleados",
+  "Más de 500 empleados"
 ];
 
 const industries = [
-  "Tecnología",
-  "Salud",
-  "Educación",
-  "Finanzas",
-  "Retail",
-  "Manufactura",
-  "Servicios",
+  "Automotriz",
+  "Bancario",
   "Construcción",
-  "Turismo",
-  "Alimentación",
-  "Otro",
+  "Consumo Masivo",
+  "Distribución de productos",
+  "Educación",
+  "Fabricación",
+  "Farmacéutico",
+  "Financiero o Asegurador",
+  "Firma de abogados",
+  "Moda o Calzado",
+  "Restaurantes o Alimentos",
+  "Retail",
+  "Salud y Belleza",
+  "Servicios Profesionales",
+  "Servicios de Marketing Digital",
+  "Servicios Hardware",
+  "Servicios para eCommerce",
+  "Tecnología",
+  "Telecomunicaciones",
+  "Textil",
+  "Viajes y Turismo",
 ];
 
 const services = [
