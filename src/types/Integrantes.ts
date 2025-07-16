@@ -18,6 +18,7 @@ interface StrapiImage {
 export interface Integrantes{
     name: string;
     ocupation: string;
+    phrase: string;
     image: StrapiImage[];
 }
 export interface StrapiIntegrantesResponse {

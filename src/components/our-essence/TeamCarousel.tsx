@@ -11,29 +11,30 @@ import { RightArrow, LeftArrow } from "../ui/Icons";
 import type SwiperType from 'swiper';
 
 interface StrapiImage {
-  id: number;
-  url: string;
-  width: number;
-  height: number;
-  alternativeText?: string;
-  caption?: string;
+  id: number
+  url: string
+  width: number
+  height: number
+  alternativeText?: string
+  caption?: string
   formats?: {
-    thumbnail?: { url: string; };
-    small?: { url: string; };
-    medium?: { url: string; };
-    large?: { url: string; };
-  };
+    thumbnail?: { url: string; }
+    small?: { url: string; }
+    medium?: { url: string; }
+    large?: { url: string; }
+  }
 }
 
 interface TeamMember {
-  name: string;
-  ocupation: string;
-  image: StrapiImage[];
+  name: string
+  ocupation: string
+  phrase: string
+  image: StrapiImage[]
 }
 
 interface TeamCarouselProps {
-  teamMembers: TeamMember[];
-  active?: boolean;
+  teamMembers: TeamMember[]
+  active?: boolean
 }
 
 export default function TeamCarousel({ teamMembers, active = false }: TeamCarouselProps) {
@@ -133,7 +134,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
         </div>
       )}
 
-      <div className={`transition-all duration-800 ease-out`}>
+      <div className="transition-all mt-50px overflow-visible duration-800 ease-out">
         <Swiper
           modules={[Autoplay]}
           loop={true}
@@ -149,15 +150,15 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           resistanceRatio={0.7}
           slidesPerGroup={1}
           watchSlidesProgress={true}
-          className="team-swiper"
+          className="team-swiper mt-50px overflow-visible"
           onTouchStart={handleInteraction}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
           breakpoints={{
             320: {
-              slidesPerView: 1.5,
-              spaceBetween: 12
+              slidesPerView: 1.4,
+              spaceBetween: 16
             },
             640: {
               slidesPerView: 2,
@@ -178,7 +179,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           }}
         >
           {duplicatedMembers.map((member, index) => (
-            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none transition-transform duration-300 ease-out">
+            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-transform duration-300 ease-out">
               <TeamMemberCard member={member} />
             </SwiperSlide>
           ))}
@@ -189,75 +190,78 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
 }
 
 function TeamMemberCard({ member }: { member: TeamMember }) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isTapped, setIsTapped] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const [isTapped, setIsTapped] = useState(false)
+  const [showPhrase, setShowPhrase] = useState(false)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const startImageCycle = (duration: number = 200) => {
-    if (member.image.length <= 1) return;
-
+    if (member.image.length <= 1) return
     if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+      clearInterval(intervalRef.current)
     }
-
     intervalRef.current = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % member.image.length);
-    }, duration);
-  };
+      setCurrentImageIndex((prev) => (prev + 1) % member.image.length)
+    }, duration)
+  }
 
   const stopImageCycle = () => {
     if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
     }
-    setCurrentImageIndex(0);
-  };
+    setCurrentImageIndex(0)
+  }
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
-    startImageCycle();
-  };
+    setIsHovered(true)
+    setShowPhrase(true)
+    startImageCycle()
+  }
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    stopImageCycle();
-  };
+    setIsHovered(false)
+    setShowPhrase(false)
+    stopImageCycle()
+  }
 
   const handleTouchStart = () => {
-    if (member.image.length <= 1) return;
-
-    setIsTapped(true);
-    startImageCycle(1000 / member.image.length);
+    if (member.image.length <= 1) return
+    setIsTapped(true)
+    setShowPhrase(true)
+    startImageCycle(1000 / member.image.length)
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current)
     }
     timeoutRef.current = setTimeout(() => {
-      stopImageCycle();
-      setIsTapped(false);
-    }, 1000);
-  };
+      stopImageCycle()
+      setIsTapped(false)
+      setShowPhrase(false)
+    }, 1000)
+  }
 
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+        clearInterval(intervalRef.current)
       }
       if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+        clearTimeout(timeoutRef.current)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   return (
-    <div className="flex flex-col overflow-hidden shadow-md transition-transform duration-300 mb-10">
-      <div className="w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
+    <div className={`flex flex-col overflow-hidden shadow-md mt-10 transition-transform duration-300 mb-10 ${(isHovered || isTapped) ? 'border-[0.1px] pl-3 py-3 md:p-4 transform scale-[1.1] z-30 border-white/60' : 'border-2 z-10 border-transparent'}`}>
+      <div className= {`w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative transition-all duration-300 ${(isHovered || isTapped) ? 'pr-0 md:pr-4' : 'p-0'}`}
+      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
         {member.image && member.image.length > 0 &&
           <Image
             src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
             alt={member.name}
-            className="object-cover h-full w-full transition-opacity duration-300 ease-in-out"
+            className={`object-cover h-full w-full ${(isHovered || isTapped) ? 'pr-0 md:pr-4' : 'p-0'}`}
             width={member.image[currentImageIndex].width}
             height={member.image[currentImageIndex].height}
             priority={currentImageIndex === 0}
@@ -267,10 +271,15 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         )}
       </div>
-      <div className="pt-2">
-        <h3 className="font-medium text-lg">{member.name}</h3>
-        <p className="text-sm">{member.ocupation}</p>
+      <div className="pt-2 font-[250]">
+        <h3 className="text-[24px]">{member.name}</h3>
+        <p className="text-[18px] ">{member.ocupation}</p>
+        {showPhrase && (
+          <p className="text-[20px] italic text-gray-600 mt-1 transition-opacity duration-300 ease-in-out">
+           &ldquo;{member.phrase}&rdquo;
+          </p>
+        )}
       </div>
     </div>
-  );
+  )
 }

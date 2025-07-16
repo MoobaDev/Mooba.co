@@ -17,6 +17,7 @@ export default async function NuestraEsenciaPage() {
   const TeamMembers = integrantes.map((persona) => ({
     name: persona.name, 
     ocupation: persona.ocupation,
+    phrase: persona.phrase,
     image: persona.image,
   }))
   return (
