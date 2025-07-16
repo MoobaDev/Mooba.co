@@ -1,7 +1,12 @@
 "use client";
 import { ChevronDown } from "lucide-react";
+import type { VideoHero } from "@/types/videoHero.type";
 
-export default function VideoHero() {
+export default function VideoHero({
+  videoHero,
+}: {
+  videoHero: VideoHero[] | null;
+}) {
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -9,9 +14,19 @@ export default function VideoHero() {
     });
   };
 
+  if (!videoHero || videoHero.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
+        <h2 className="text-3xl md:text-4xl font-extralight">
+          No hemos podido cargar el Demo Reel
+        </h2>
+      </section>
+    );
+  }
+
   return (
-    <section className="relative h-screen w-full overflow-hidden">
-      {/* Mobile Video : Cambiar por video traido de strapi*/}
+    <section className="relative h-screen w-full overflow-hidden aspect-[16/9]">
+      {/* Mobile Video */}
       <video
         autoPlay
         muted
@@ -19,7 +34,10 @@ export default function VideoHero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover md:hidden"
       >
-        <source src="videos/landing_video_mobile.mp4" type="video/mp4" />
+        <source
+          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${videoHero[0].mobileVideo.url}`}
+          type={videoHero[0].mobileVideo.mime}
+        />
       </video>
 
       {/* Desktop Video */}
@@ -30,7 +48,10 @@ export default function VideoHero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover hidden md:block"
       >
-        <source src="videos/landing_video_desktop.mp4" type="video/mp4" />
+        <source
+          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${videoHero[0].video.url}`}
+          type={videoHero[0].video.mime}
+        />
       </video>
 
       {/* Scroll Down Indicator */}

@@ -125,8 +125,9 @@ export default function ServicesShowcase({
               <div className="relative w-full h-full">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
-                  alt={selectedImage.alt}
+                  alt={selectedImage.alt || selectedImage.name}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover transition-opacity duration-500"
                 />
               </div>
