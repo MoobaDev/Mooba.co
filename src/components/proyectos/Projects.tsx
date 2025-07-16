@@ -51,7 +51,28 @@ export default function Projects({ projects }: ProjectsProps) {
               >
                 {/* Media (imagen o video) */}
                 <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
-                  <div className={`w-full ${aspectRatio} overflow-hidden`}>
+                  <div className={`hidden md:block w-full ${aspectRatio} overflow-hidden`}>
+                    {project.desktopVideo ? (
+                      <video
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : project.desktopImage ? (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
+                        alt={project.desktopImage.alternativeText || project.title}
+                        width={project.desktopImage.width}
+                        height={project.desktopImage.height}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : null}
+                  </div>
+                  
+                  <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
                     {project.desktopVideo ? (
                       <video
                         src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
