@@ -9,18 +9,11 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    useEffect(() => {
-        const handleScroll = () => {
-        setScrolled(window.scrollY > 10);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-  
+    const router = useRouter();
     const [showDropdown, setShowDropdown] = useState(false);
     const serviciosRef = useRef<HTMLDivElement>(null);
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
-    
+
     const handleMouseEnter = () => {
         if (serviciosRef.current) {
             const rect = serviciosRef.current.getBoundingClientRect();
@@ -34,6 +27,21 @@ export default function Header() {
     const handleMouseLeave = () => {
         setShowDropdown(false);
     }
+    
+    const handleNavigate = (url: string) => {
+        setMobileOpen(false);
+        setMobileServiciosOpen(false);
+        router.push(url);
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+        setScrolled(window.scrollY > 10);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     useEffect(() => {
         if (showDropdown && serviciosRef.current) {
             const rect = serviciosRef.current.getBoundingClientRect();
@@ -53,14 +61,6 @@ export default function Header() {
         document.documentElement.style.overflow = '';
         }
     }, [mobileOpen]);
-
-    const router = useRouter();
-
-    const handleNavigate = (url: string) => {
-        setMobileOpen(false);
-        setMobileServiciosOpen(false);
-        router.push(url);
-    };
 
     return (
         <>

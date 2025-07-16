@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="flex flex-col gap-2 text-[16px]">
             <p className="font-normal">Barranquilla, CO</p>
             <p className="font-extralight">blugo@mooba.co</p>
-            <p className="font-extralight">+57 304 3338350</p>
+            <p className="font-extralight">+57 304 333 8350</p>
           </div>
         
           <div className="font-base text-[16px]">
