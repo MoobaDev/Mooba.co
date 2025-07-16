@@ -4,10 +4,10 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
 import { useState } from "react";
-import { Project } from '@/types/Proyecto';
+import { HighlightedProject } from '@/types/highlightedProjects.type';
 import Link from "next/link";
 
-export default function HighlightedProjects({ projects }: { projects: { proyecto: Project }[] | null }) {
+export default function HighlightedProjects({ projects }: { projects: HighlightedProject[] | null }) {
   
   
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -64,7 +64,7 @@ export default function HighlightedProjects({ projects }: { projects: { proyecto
   }
 
   return (
-    <section className="mt-[120px] mx-auto overflow-hidden">
+    <section className="mt-[64px] md:mt-[120px] mx-auto overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
         <div className="w-full flex justify-between items-center">
           <h2 className="text-3xl md:text-4xl font-extralight">

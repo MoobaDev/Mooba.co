@@ -8,20 +8,22 @@ import { Service, ServiceImage } from "@/types/service.type";
 export default function ServicesShowcase({
   services,
 }: {
-  services: Service[];
+  services: Service[] | null;
 }) {
 
   const [selectedImage, setSelectedImage] = useState<ServiceImage | null>(
-    services[0]?.image[0] ?? null
+    services && services[0]?.image[0] ? services[0].image[0] : null
   );
   const [hoveredService, setHoveredService] = useState<number | null>(
-    services[0].id
+    services && services[0] ? services[0].id : null
   );
   const [activeService, setActiveService] = useState<number | null>(
-    services[0].id
+    services && services[0] ? services[0].id : null
   );
 
   useEffect(() => {
+    if (!services || services.length === 0) return;
+
     const randomService = services[Math.floor(Math.random() * services.length)];
     const randomImage =
       randomService.image[
@@ -70,6 +72,16 @@ export default function ServicesShowcase({
       setSelectedImage(randomImage);
     }
   };
+
+  if (!services || services.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+        <h2 className="text-3xl font-extralight md:text-4xl">
+          No hemos podido cargar los servicios
+        </h2>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-[1440px] mt-16 mx-auto px-6 md:px-8 overflow-hidden">

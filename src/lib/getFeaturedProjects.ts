@@ -1,6 +1,5 @@
-import { Project } from "@/types/Proyecto";
-
-export async function getFeturedProject(): Promise<Project[] | null> {
+import { HighlightedProject } from "@/types/highlightedProjects.type";
+export async function getFeturedProject(): Promise<HighlightedProject[] | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyecto-destacados?populate[proyecto][populate]=*`,

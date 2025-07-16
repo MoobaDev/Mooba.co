@@ -5,9 +5,9 @@ import Image from "next/image";
 import { Brand } from "@/types/brands.type";
 
 
-export default function TrustedBrands({ brands }: { brands: Brand[] }) {
+export default function TrustedBrands({ brands }: { brands: Brand[] | null }) {
   
-  const [visibleBrands, setVisibleBrands] = useState<Brand[]>(brands.slice(0, 6));
+  const [visibleBrands, setVisibleBrands] = useState<Brand[]>((brands ?? []).slice(0, 6));
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [lastChangedPosition, setLastChangedPosition] = useState<number | null>(
     null
@@ -30,7 +30,7 @@ export default function TrustedBrands({ brands }: { brands: Brand[] }) {
         setVisibleBrands((prev) => {
           const newBrands = [...prev];
 
-          const hiddenBrands = brands.filter(
+          const hiddenBrands = (brands ?? []).filter(
             (brand) => !newBrands.some((visible, index) => visible.id === brand.id && index !== randomPosition)
           );
 
@@ -63,7 +63,7 @@ export default function TrustedBrands({ brands }: { brands: Brand[] }) {
     );
   }
   return (
-    <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+    <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       {/* Title */}
       <h2 className="text-3xl font-extralight md:text-4xl">
         Marcas que han confiado en nosotros

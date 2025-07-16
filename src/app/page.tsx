@@ -12,6 +12,7 @@ import { getServices } from "@/lib/getServices"
 import { getVideoHero } from "@/lib/getVideoHero"
 
 export default async function HomePage() {
+    
     const videoHero = await getVideoHero();
     const featuredProjects = await getFeturedProject();
     const allProjectsResponse = await getAllProjects();
@@ -19,22 +20,23 @@ export default async function HomePage() {
     const brandsResponse = await getBrands();
     const services = await getServices();
 
-
     return (
         <>
-            <Suspense fallback={<div>Loading video hero...</div>}>
+            <Suspense fallback={<div>Cargando Demo Reel...</div>}>
                 <VideoHero videoHero={videoHero} />
             </Suspense>
-            <Suspense fallback={<div>Loading featured projects...</div>}>
+            <Suspense fallback={<div>Cargando proyectos destacados...</div>}>
                 <HighlightedProjects projects={featuredProjects} />
             </Suspense>
-            <Suspense fallback={<div>Loading portfolio projects...</div>}>
+            <Suspense fallback={<div>Cargando proyectos...</div>}>
                 <PortafolioHome projects={allProjects} />
             </Suspense>
-            <Suspense fallback={<div>Loading trusted brands...</div>}>
-                <TrustedBrands brands={brandsResponse!} />
+            <Suspense fallback={<div>Cargando marcas...</div>}>
+                <TrustedBrands brands={brandsResponse} />
             </Suspense>
-            <ServicesHome services={services} />
+            <Suspense fallback={<div>Cargando servicios...</div>}>
+                <ServicesHome services={services} />
+            </Suspense>
             <ContactSection />
         </>
     );

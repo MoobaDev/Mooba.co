@@ -144,7 +144,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
   return (
     <section
       ref={sectionRef}
-      className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
+      className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto md:pb-8 px-6 md:px-8 overflow-hidden"
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
@@ -192,15 +192,17 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
                 </div>
 
                 {/* Project Info */}
-                <div className="mb-3 mt-2 font-extralight text-xl">
-                  <h5>{project.title}</h5>
+                <div className="mb-3 mt-2 font-extralight text-xl flex-grow">
+                  <h5 className="truncate overflow-hidden whitespace-nowrap">
+                    {project.title}
+                  </h5>
                   <p className="text-gray-400 truncate overflow-hidden whitespace-nowrap">
                     {project.shortDescription}
                   </p>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap mt-auto">
                   {project.categorias.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
