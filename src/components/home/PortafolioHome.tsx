@@ -162,7 +162,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
 
       {/* Projects Grid */}
       <div className="w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {projects.map((project, index) => (
             <Link
               href={`/proyectos/${project.slug}`}

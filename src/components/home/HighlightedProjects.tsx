@@ -136,7 +136,7 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                           className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
                             loaded && currentSlide % projects.length === idx
                               ? "text-gray-500 border-gray-300 opacity-100"
-                              : "text-gray-500 border-gray-300 opacity-50"
+                              : "text-gray-500 border-gray-300 opacity-100"
                           }`}
                         >
                           {cat.name}
