@@ -4,49 +4,38 @@ import { DropdownDownItem, DropdownUpItem } from "../ui/Icons";
 import TeamCarousel from "@/components/our-essence/TeamCarousel";
 
 interface StrapiImage {
-  id: number;
-  url: string;
-  width: number;
-  height: number;
-  alternativeText?: string;
-  caption?: string;
+  id: number
+  url: string
+  width: number
+  height: number
+  alternativeText?: string
+  caption?: string
   formats?: {
-    thumbnail?: { url: string; };
-    small?: { url: string; };
-    medium?: { url: string; };
-    large?: { url: string; };
+    thumbnail?: { url: string }
+    small?: { url: string}
+    medium?: { url: string}
+    large?: { url: string}
   };
 }
 interface TeamMember{
-  name: string;
-  ocupation: string;
+  name: string
+  ocupation: string
   image: StrapiImage[]
 }
 interface AccordionItemProps {
-  title: string;
-  children: React.ReactNode;
-  carousel?: boolean;
-  isOpen?: boolean;
-  onToggle?: () => void;
-  teamMembers?: TeamMember[];
+  title: string
+  children: React.ReactNode
+  carousel?: boolean
+  isOpen?: boolean
+  onToggle?: () => void
+  teamMembers?: TeamMember[]
 }
 
-export default function AccordionItemComponent({
-  title,
-  children,
-  carousel = false,
-  isOpen = false,
-  onToggle,
-  teamMembers,
-}: AccordionItemProps) {
+export default function AccordionItemComponent({ title, children, carousel = false, isOpen = false, onToggle, teamMembers,}: AccordionItemProps) {
   return (
     <section className="border-b border-white/30">
       <div className={`transition-all duration-300 ease-in-out ${isOpen ? "min-h-fit" : ""}`}>
-        <button 
-          className="w-full flex justify-between items-start py-8 text-left font-light text-white transition-all duration-200"
-          onClick={onToggle}
-          aria-expanded={isOpen}
-        >
+        <button className="w-full flex justify-between items-start py-8 text-left font-light text-white transition-all duration-200" onClick={onToggle} aria-expanded={isOpen}>
           <div className="flex flex-col w-full">
             <div className="flex justify-between px-8 items-start w-full gap-4">
               <h2 className="text-[36px] md:text-[40px] font-[250] md:max-w-[31%] leading-tight tracking-tight flex-1">
@@ -76,11 +65,11 @@ export default function AccordionItemComponent({
           {children}
         </div>
         {isOpen && carousel && teamMembers &&(
-            <div className="w-full mt-6">
-              <TeamCarousel teamMembers={teamMembers}/>
-            </div>
-          )}
+          <div className="w-full mt-6">
+            <TeamCarousel teamMembers={teamMembers}/>
+          </div>
+        )}
       </div>
     </section>
-  );
+  )
 }

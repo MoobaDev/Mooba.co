@@ -1,14 +1,14 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/autoplay";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { RightArrow, LeftArrow } from "../ui/Icons";
-import type SwiperType from 'swiper';
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay } from "swiper/modules"
+import "swiper/css"
+import "swiper/css/free-mode"
+import "swiper/css/autoplay"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import { RightArrow, LeftArrow } from "../ui/Icons"
+import type SwiperType from 'swiper'
 
 interface StrapiImage {
   id: number
@@ -18,10 +18,10 @@ interface StrapiImage {
   alternativeText?: string
   caption?: string
   formats?: {
-    thumbnail?: { url: string; }
-    small?: { url: string; }
-    medium?: { url: string; }
-    large?: { url: string; }
+    thumbnail?: { url: string }
+    small?: { url: string }
+    medium?: { url: string }
+    large?: { url: string }
   }
 }
 
@@ -31,94 +31,96 @@ interface TeamMember {
   phrase: string
   image: StrapiImage[]
 }
-
 interface TeamCarouselProps {
   teamMembers: TeamMember[]
   active?: boolean
 }
-
+interface TeamMemberCardProps{
+  member: TeamMember
+  isMobile:boolean
+}
 export default function TeamCarousel({ teamMembers, active = false }: TeamCarouselProps) {
-  const swiperRef = useRef<SwiperType | null>(null);
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center');
-  const [showCursor, setShowCursor] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
+  const swiperRef = useRef<SwiperType | null>(null)
+  const carouselRef = useRef<HTMLDivElement | null>(null)
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
+  const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center')
+  const [showCursor, setShowCursor] = useState(false)
+  const [hasStarted, setHasStarted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers]
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isMobile) return
+    e.stopPropagation()
+    if (!swiperRef.current) return
+    if (cursorDir === "left") {
+      swiperRef.current.slidePrev();
+    } else if (cursorDir === "right") {
+      swiperRef.current.slideNext()
+    }
+  }
+
+  const handleInteraction = () => {
+    if (!hasStarted) {
+      setHasStarted(true)
+    }
+  }
 
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 768)
     };
     checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
+    window.addEventListener('resize', checkIfMobile)
     return () => {
-      window.removeEventListener('resize', checkIfMobile);
-    };
-  }, []);
+      window.removeEventListener('resize', checkIfMobile)
+    }
+  }, [])
 
   useEffect(() => {
     if (isMobile) return;
     const handlePointerMove = (e: PointerEvent) => {
-      if (!carouselRef.current) return;
-      const rect = carouselRef.current.getBoundingClientRect();
+      if (!carouselRef.current) return
+      const rect = carouselRef.current.getBoundingClientRect()
       const isOver = (
         e.clientX >= rect.left &&
         e.clientX <= rect.right &&
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom
-      );
+      )
       if (!isOver) {
-        setShowCursor(false);
+        setShowCursor(false)
         document.body.style.cursor = 'auto'
-        return;
+        return
       }
-      const relativeX = e.clientX - rect.left;
-      const zone = rect.width * 0.3;
+      const relativeX = e.clientX - rect.left
+      const zone = rect.width * 0.3
       if (relativeX <= zone) {
-        setCursorDir("left");
+        setCursorDir("left")
       } else if (relativeX >= rect.width - zone) {
-        setCursorDir("right");
+        setCursorDir("right")
       } else {
-        setCursorDir("center");
+        setCursorDir("center")
       }
-      setCursorPos({ x: e.clientX, y: e.clientY });
-      setShowCursor(true);
-      document.body.style.cursor = "none";
+      setCursorPos({ x: e.clientX, y: e.clientY })
+      setShowCursor(true)
+      document.body.style.cursor = "none"
     };
-    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointermove", handlePointerMove)
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      document.body.style.cursor = "auto";
-    };
-  }, [isMobile]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (isMobile) return;
-    e.stopPropagation();
-    if (!swiperRef.current) return;
-    if (cursorDir === "left") {
-      swiperRef.current.slidePrev();
-    } else if (cursorDir === "right") {
-      swiperRef.current.slideNext();
+      window.removeEventListener("pointermove", handlePointerMove)
+      document.body.style.cursor = "auto"
     }
-  };
-
-  const handleInteraction = () => {
-    if (!hasStarted) {
-      setHasStarted(true);
-    }
-  };
+  }, [isMobile])
 
   useEffect(() => {
     if (active) {
       const timer = setTimeout(() => {
-        setHasStarted(true);
-      }, 2000);
-      return () => clearTimeout(timer);
+        setHasStarted(true)
+      }, 2000)
+      return () => clearTimeout(timer)
     }
-  }, [active]);
+  }, [active])
 
   return (
     <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} style={{cursor : isMobile ? 'auto' : 'none'}}>
@@ -153,7 +155,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           className="team-swiper mt-50px overflow-visible"
           onTouchStart={handleInteraction}
           onSwiper={(swiper) => {
-            swiperRef.current = swiper;
+            swiperRef.current = swiper
           }}
           breakpoints={{
             320: {
@@ -180,7 +182,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
         >
           {duplicatedMembers.map((member, index) => (
             <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-transform duration-300 ease-out">
-              <TeamMemberCard member={member} />
+              <TeamMemberCard member={member} isMobile={isMobile}/>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -189,13 +191,14 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
   );
 }
 
-function TeamMemberCard({ member }: { member: TeamMember }) {
+function TeamMemberCard({ member , isMobile}: TeamMemberCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [isTapped, setIsTapped] = useState(false)
   const [showPhrase, setShowPhrase] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const isActive = isHovered || isTapped
 
   const startImageCycle = (duration: number = 200) => {
     if (member.image.length <= 1) return
@@ -216,15 +219,19 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   }
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
-    setShowPhrase(true)
-    startImageCycle()
+    if(!isMobile){
+      setIsHovered(true)
+      setShowPhrase(true)
+      startImageCycle()
+    }
   }
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
-    setShowPhrase(false)
-    stopImageCycle()
+    if(!isMobile){
+      setIsHovered(false)
+      setShowPhrase(false)
+      stopImageCycle()
+    }
   }
 
   const handleTouchStart = () => {
@@ -254,31 +261,32 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
   }, [])
 
   return (
-    <div className={`flex flex-col overflow-hidden shadow-md mt-10 transition-transform duration-300 mb-10 ${(isHovered || isTapped) ? 'border-[0.1px] pl-3 py-3 md:p-4 transform scale-[1.1] z-30 border-white/60' : 'border-2 z-10 border-transparent'}`}>
-      <div className= {`w-[240px] h-[375px] md:w-[320px] md:h-[500px] relative transition-all duration-300 ${(isHovered || isTapped) ? 'pr-0 md:pr-4' : 'p-0'}`}
-      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
-        {member.image && member.image.length > 0 &&
-          <Image
-            src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
-            alt={member.name}
-            className={`object-cover h-full w-full ${(isHovered || isTapped) ? 'pr-0 md:pr-4' : 'p-0'}`}
-            width={member.image[currentImageIndex].width}
-            height={member.image[currentImageIndex].height}
-            priority={currentImageIndex === 0}
-          />
-        }
-        {(isHovered || isTapped) && (
-          <div className="absolute inset-0 bg-black/5 pointer-events-none" />
-        )}
-      </div>
-      <div className="pt-2 font-[250]">
-        <h3 className="text-[24px]">{member.name}</h3>
-        <p className="text-[18px] ">{member.ocupation}</p>
-        {showPhrase && (
-          <p className="text-[20px] italic text-gray-600 mt-1 transition-opacity duration-300 ease-in-out">
-           &ldquo;{member.phrase}&rdquo;
-          </p>
-        )}
+    <div className={`flex flex-col shadow-md mt-10 mb-10 transition-all duration-300 ${isActive ? 'transform scale-[1.1] z-30' : ''}`}> 
+      <div className={`w-fit p-3 border transition-all duration-300 ${isActive ? 'border-gray-400' : 'border-transparent'}`}> 
+        <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
+          {member.image && member.image.length > 0 &&
+            <Image
+              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
+              alt={member.name}
+              className="object-cover w-[240px] h-[375px] md:w-[320px] md:h-[500px]"
+              width={member.image[currentImageIndex].width}
+              height={member.image[currentImageIndex].height}
+              priority={currentImageIndex === 0}
+            />
+          }
+          {(isHovered || isTapped) && (
+            <div className="absolute inset-0 bg-black/5 pointer-events-none" />
+          )}
+        </div>
+        <div className="pt-2 font-[250]">
+          <h3 className="text-[24px]">{member.name}</h3>
+          <p className="text-[18px]">{member.ocupation}</p>
+          {showPhrase && (
+            <p className="text-[20px] italic text-white mt-1 transition-opacity duration-300 ease-in-out">
+              &ldquo;{member.phrase}&rdquo;
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )

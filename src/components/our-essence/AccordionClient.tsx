@@ -1,26 +1,25 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import AccordionItemComponent from "./AccordionItem";
+"use client"
+import { useState, useEffect } from "react"
+import AccordionItemComponent from "./AccordionItem"
 
 interface StrapiImage {
-  id: number;
-  url: string;
-  width: number;
-  height: number;
-  alternativeText?: string;
-  caption?: string;
+  id: number
+  url: string
+  width: number
+  height: number
+  alternativeText?: string
+  caption?: string
   formats?: {
-    thumbnail?: { url: string; };
-    small?: { url: string; };
-    medium?: { url: string; };
-    large?: { url: string; };
+    thumbnail?: { url: string}
+    small?: { url: string }
+    medium?: { url: string}
+    large?: { url: string}
   };
 }
 interface AccordionItem {
-  title: string;
-  content: string;
-  carousel?: boolean;
+  title: string
+  content: string
+  carousel?: boolean
 }
 interface TeamMember{
   name: string,
@@ -28,19 +27,19 @@ interface TeamMember{
   image: StrapiImage[]
 }
 interface AccordionClientProps{
-  items: AccordionItem[];
-  teamMembers: TeamMember[];
+  items: AccordionItem[]
+  teamMembers: TeamMember[]
 }
 
 export default function AccordionClient({ items, teamMembers } : AccordionClientProps ) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (items.length > 0) {
-      const randomIndex = Math.floor(Math.random() * items.length);
-      setOpenIndex(randomIndex);
+      const randomIndex = Math.floor(Math.random() * items.length)
+      setOpenIndex(randomIndex)
     }
-  }, [items.length]);
+  }, [items.length])
 
   return (
     <div className="w-full mt-10 mx-auto bg-black">

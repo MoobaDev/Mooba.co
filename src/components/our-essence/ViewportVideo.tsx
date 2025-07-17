@@ -1,53 +1,41 @@
-"use client";
-import { ChevronDown } from "lucide-react";
-
+"use client"
+import { ChevronDown } from "lucide-react"
 interface StrapiVideo {
-  id: number;
-  url: string;
+  id: number
+  url: string
 }
 export interface Video{
-  name: string;
-  video: StrapiVideo;
-  mobileVideo: StrapiVideo;
+  name: string
+  video: StrapiVideo
+  mobileVideo: StrapiVideo
 }
 export interface StrapiVideoResponse {
-data: Video[];
+data: Video[]
 meta: {
   pagination: {
-    page: number;
-    pageSize: number;
-    pageCount: number;
-    total: number;
-  };
-};
+    page: number
+    pageSize: number
+    pageCount: number
+    total: number
+  }
 }
+}
+
 export default function ViewportVideo({video}: {video: Video}) {
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
       behavior: "smooth",
-    });
-  };
+    })
+  }
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover md:hidden"
-      >
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover md:hidden">
         <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.mobileVideo.url}`} type="video/mp4" />
       </video>
 
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute aspect-[16/9] inset-0 object-cover hidden md:block"
-      >
+      <video autoPlay muted loop playsInline className="absolute aspect-[16/9] inset-0 object-cover hidden md:block">
         <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.video.url}`} type="video/mp4" />
       </video>
 
@@ -66,5 +54,5 @@ export default function ViewportVideo({video}: {video: Video}) {
       </div>
       <div className="absolute inset-0 bg-black/10 pointer-events-none" />
     </section>
-  );
+  )
 }

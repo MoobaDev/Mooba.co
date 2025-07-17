@@ -1,4 +1,4 @@
-import ViewportVideo from "../../components/our-essence/ViewportVideo";
+import ViewportVideo from "../../components/home/Hero";
 import { getNosotrosInfo } from "@/lib/getNosotrosInfo";
 import AccordionClient from "@/components/our-essence/AccordionClient";
 import {getTeamInfo} from "../../lib/getTeamInfo";
@@ -7,7 +7,7 @@ import { getVideos } from "@/lib/getOurEssenceVideo";
 export default async function NuestraEsenciaPage() {
   const { data } = await getNosotrosInfo();
   const {data: integrantes} = await getTeamInfo();
-  const {data: videos} = await getVideos();
+  const videos = await getVideos();
 
   const infoSections = data.map((item) => ({
     title: item.sectionName,
@@ -22,7 +22,7 @@ export default async function NuestraEsenciaPage() {
   }))
   return (
     <main>
-      <ViewportVideo video={videos[0]} />
+      <ViewportVideo videoHero={videos} />
       <AccordionClient items={infoSections} teamMembers={TeamMembers}/>
     </main>
   );

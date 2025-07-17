@@ -1,26 +1,23 @@
-import { StrapiVideoResponse } from "@/types/VideoNosotros";
+import { VideoHero } from "@/types/videoHero.type";
 
-export async function getVideos(): Promise<StrapiVideoResponse> {
+export async function getVideos(): Promise<VideoHero[] | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/viewport-video-nosotros-seccion?populate=*`, {
-      cache: "no-store",
-      headers: {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/viewport-video-nosotros-seccion?populate=*`,
+      { 
+        cache: "no-store", 
+        headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-    });
-
+      }, },
+      
+    );
     if (!res.ok) {
-      throw new Error("Failed to fetch video");
+      return null;
     }
-
-    return res.json();
+    const response = await res.json();
+    return response.data || null;
   } catch (error) {
-    console.error("Error fetching video:", error);
-    return {
-      data: [],
-      meta: {
-        pagination: { page: 1, pageSize: 25, pageCount: 0, total: 0 },
-      },
-    };
+    console.error("Error fetching VideoHero", error);
+    return null;
   }
 }
