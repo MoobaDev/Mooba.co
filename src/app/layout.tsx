@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import Providers from "./providers";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
         <main className="relative z-0">
           <Providers>{children}</Providers>
         </main>
+        <WhatsAppButton />
         <Footer />
       </body>
     </html>
