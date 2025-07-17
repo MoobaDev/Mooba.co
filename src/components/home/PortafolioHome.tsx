@@ -134,9 +134,9 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
   if (!projects || projects.length === 0) {
     return (
       <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
-        <h2 className="text-3xl md:text-4xl font-extralight">
-          No hemos podifo cargar los proyectos
-        </h2>
+        <h1 className="text-3xl md:text-4xl font-extralight">
+          No hemos podido cargar los proyectos
+        </h1>
       </section>
     );
   }
@@ -148,9 +148,9 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
-        <h2 className="text-3xl md:text-4xl font-extralight">
+        <h1 className="text-3xl md:text-4xl font-extralight">
           Ideas que se volvieron realidad
-        </h2>
+        </h1>
         {/* Desktop: Link with underline */}
         <Link
           href="/proyectos"

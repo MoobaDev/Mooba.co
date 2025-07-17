@@ -76,9 +76,9 @@ export default function ServicesShowcase({
   if (!services || services.length === 0) {
     return (
       <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
-        <h2 className="text-3xl font-extralight md:text-4xl">
+        <h1 className="text-3xl font-extralight md:text-4xl">
           No hemos podido cargar los servicios
-        </h2>
+        </h1>
       </section>
     );
   }
@@ -124,7 +124,7 @@ export default function ServicesShowcase({
                 }`}
                 onMouseEnter={() => handleServiceHover(service)}
               >
-                <h1 className="text-4xl font-normal">{service.name}</h1>
+                <h2 className="text-4xl font-normal">{service.name}</h2>
               </div>
             );
           })}

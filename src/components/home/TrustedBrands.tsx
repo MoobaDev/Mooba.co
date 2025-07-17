@@ -56,18 +56,18 @@ export default function TrustedBrands({ brands }: { brands: Brand[] | null }) {
   if (!brands || brands.length === 0) { 
     return (
       <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
-        <h2 className="text-3xl font-extralight md:text-4xl">
-          No hemos podifo cargar las marcas
-        </h2>
+        <h1 className="text-3xl font-extralight md:text-4xl">
+          No hemos podido cargar las marcas
+        </h1>
       </section>
     );
   }
   return (
     <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
       {/* Title */}
-      <h2 className="text-3xl font-extralight md:text-4xl">
+      <h1 className="text-3xl font-extralight md:text-4xl">
         Marcas que han confiado en nosotros
-      </h2>
+      </h1>
 
       {/* Single responsive grid */}
       <div className="grid grid-cols-2 py-8 md:grid-cols-6 gap-2.5 justify-items-center">

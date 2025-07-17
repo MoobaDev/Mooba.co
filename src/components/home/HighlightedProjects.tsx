@@ -56,9 +56,9 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
   if (!projects || projects.length === 0) {
     return (
       <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
-        <h2 className="text-3xl md:text-4xl font-extralight">
+        <h1 className="text-3xl md:text-4xl font-extralight">
           No hemos podido cargar los proyectos destacados
-        </h2>
+        </h1>
       </section>
     );
   }
@@ -67,9 +67,9 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
     <section className="mt-[64px] md:mt-[120px] mx-auto overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
         <div className="w-full flex justify-between items-center">
-          <h2 className="text-3xl md:text-4xl font-extralight">
+          <h1 className="text-3xl md:text-4xl font-extralight">
             Proyectos destacados
-          </h2>
+          </h1>
         </div>
       </div>
 
