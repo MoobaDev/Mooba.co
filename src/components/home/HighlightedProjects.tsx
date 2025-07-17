@@ -39,8 +39,8 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
       },
       "(min-width: 1440px)": {
         slides: {
-          origin: 0.17,
-          perView: 1.5,
+          origin: 0.27,
+          perView: 2.2,
           spacing: 8,
         },
       },
@@ -81,10 +81,10 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                 <div className="flex flex-col transition-all duration-300">
                   <Link
                     href={`/proyectos/${proyecto.slug}`}
-                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 max-w-[1440px] aspect-[905/605] ${
+                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 aspect-[905/605] ${
                       loaded && currentSlide % projects.length === idx
-                        ? "w-full h-auto"
-                        : "w-full h-auto scale-[0.95]"
+                        ? "w-full h-auto max-w-[1440px] "
+                        : "w-full h-auto max-w-[1440px] scale-[0.95]"
                     }`}
                   >
                     {proyecto.desktopVideo ? (
