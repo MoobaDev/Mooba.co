@@ -15,9 +15,9 @@ export default function ContactUs() {
       <div className="grid grid-cols-4 md:grid-cols-12 gap-8">
         {/* Left side - Title */}
         <div className="col-span-4 md:col-span-2 flex flex-col items-start">
-          <h1 className="text-white text-3xl md:text-4xl font-normal">
+          <h2 className="text-white text-3xl md:text-4xl font-normal">
             Dejanos tu información
-          </h1>
+          </h2>
         </div>
 
         {/* Right side - Form Container */}
