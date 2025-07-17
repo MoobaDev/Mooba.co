@@ -20,28 +20,28 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
     slides: {
       origin: 0.1,
       perView: 1.2,
-      spacing: 8,
+      spacing: 12,
     },
     breakpoints: {
       "(min-width: 768px)": {
         slides: {
           origin: 0.2,
           perView: 1.5,
-          spacing: 15,
+          spacing: 16,
         },
       },
       "(min-width: 1024px)": {
         slides: {
           origin: 0.2,
           perView: 1.5,
-          spacing: 20,
+          spacing: 8,
         },
       },
       "(min-width: 1440px)": {
         slides: {
-          origin: 0.2,
+          origin: 0.17,
           perView: 1.5,
-          spacing: 32,
+          spacing: 8,
         },
       },
     },
