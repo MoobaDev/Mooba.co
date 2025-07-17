@@ -61,8 +61,8 @@ export default function VideoHero({
       >
         {/* Desktop Mouse Indicator */}
         <div className="hidden md:flex flex-col items-center">
-          <div className="w-8 h-10 border-2 border-white rounded-full relative">
-            <div className="w-1 h-3 bg-white rounded-full animate-bounce absolute top-3 left-1/2 transform -translate-x-1/2"></div>
+          <div className="w-7 h-10 border-3 border-white rounded-t-xl rounded-b-xl relative">
+            <div className="w-1 h-2 bg-white rounded-full animate-bounce absolute top-2 left-1/2 transform -translate-x-1/2"></div>
           </div>
           <span className="text-sm font-normal text-white mt-2">Desliza</span>
         </div>
@@ -70,7 +70,7 @@ export default function VideoHero({
         {/* Mobile Chevron Down */}
         <div className="md:hidden flex flex-col items-center">
           <ChevronDown className="w-6 h-6 text-white animate-bounce" />
-          <span className="text-sm font-normal text-white mt-2">Desliza</span>
+          <span className="text-sm font-normal text-white">Desliza</span>
         </div>
       </div>
 
