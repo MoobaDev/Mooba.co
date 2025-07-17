@@ -133,7 +133,7 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                       {proyecto.categorias.map((cat, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-[10px] py-[1px] transition-opacity duration-300 ${
+                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 ${
                             loaded && currentSlide % projects.length === idx
                               ? "text-gray-500 border-gray-300 opacity-100"
                               : "text-gray-500 border-gray-300 opacity-100"
