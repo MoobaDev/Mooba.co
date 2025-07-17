@@ -124,7 +124,7 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                       <h5 className="text-xl font-extralight transition-opacity duration-300">
                         {proyecto.title}
                       </h5>
-                      <p className="text-xl font-extralight transition-opacity duration-300">
+                      <p className="text-xl text-[#ABB1BA] font-extralight transition-opacity duration-300">
                         {proyecto.shortDescription}
                       </p>
                     </div>
@@ -133,10 +133,10 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                       {proyecto.categorias.map((cat, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className={`text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 ${
+                          className={`text-sm font-normal border  rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 ${
                             loaded && currentSlide % projects.length === idx
-                              ? "text-gray-500 border-gray-300 opacity-100"
-                              : "text-gray-500 border-gray-300 opacity-100"
+                              ? "text-[#7A7F89] border-[#D0D5DD]  opacity-100"
+                              : "text-[#7A7F89] border-[#D0D5DD]  opacity-100"
                           }`}
                         >
                           {cat.name}

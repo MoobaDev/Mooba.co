@@ -196,7 +196,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
                   <h5 className="truncate overflow-hidden whitespace-nowrap">
                     {project.title}
                   </h5>
-                  <p className="text-gray-400 truncate overflow-hidden whitespace-nowrap">
+                  <p className="text-[#ABB1BA] truncate overflow-hidden whitespace-nowrap">
                     {project.shortDescription}
                   </p>
                 </div>
