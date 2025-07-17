@@ -1,8 +1,8 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
 import { ChevronDown } from "lucide-react";
-import { useSubmitContactForm } from "../../hooks/useSubmitContactForm";
+import { useSubmitContactForm } from "@/hooks/useSubmitContactForm";
+import { useForm } from "@tanstack/react-form";
 
 const countries = [
   "Argentina",
@@ -27,25 +27,35 @@ const countries = [
 ];
 
 const employeeCounts = [
-  "1-10 empleados",
-  "11-50 empleados",
-  "51-100 empleados",
+  "1-30 empleados",
+  "31-100 empleados",
   "101-500 empleados",
-  "500+ empleados",
+  "Más de 500 empleados"
 ];
 
 const industries = [
-  "Tecnología",
-  "Salud",
-  "Educación",
-  "Finanzas",
-  "Retail",
-  "Manufactura",
-  "Servicios",
+  "Automotriz",
+  "Bancario",
   "Construcción",
-  "Turismo",
-  "Alimentación",
-  "Otro",
+  "Consumo Masivo",
+  "Distribución de productos",
+  "Educación",
+  "Fabricación",
+  "Farmacéutico",
+  "Financiero o Asegurador",
+  "Firma de abogados",
+  "Moda o Calzado",
+  "Restaurantes o Alimentos",
+  "Retail",
+  "Salud y Belleza",
+  "Servicios Profesionales",
+  "Servicios de Marketing Digital",
+  "Servicios Hardware",
+  "Servicios para eCommerce",
+  "Tecnología",
+  "Telecomunicaciones",
+  "Textil",
+  "Viajes y Turismo",
 ];
 
 const services = [
@@ -55,6 +65,131 @@ const services = [
   "Contenido Audiovisual",
   "Campañas Publicitarias",
 ];
+
+interface FloatingLabelInputProps {
+  field: {
+    name: string;
+    state: {
+      value: string;
+      meta: {
+        errors: (string | undefined)[];
+        isFocused?: boolean;
+      };
+    };
+    handleBlur: () => void;
+    handleChange: (value: string) => void;
+  };
+  label: string;
+  type?: string;
+}
+
+const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text" }) => (
+  <div className="space-y-2">
+    <div className="relative">
+      <label
+        htmlFor={field.name}
+        className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
+          field.state.value || field.state.meta.isFocused
+            ? "text-xs text-white -translate-y-4"
+            : "text-base text-gray-500 translate-y-0"
+        }`}
+      >
+        {label}
+      </label>
+      <input
+        id={field.name}
+        name={field.name}
+        type={type}
+        value={field.state.value}
+        onBlur={() => {
+          field.handleBlur();
+          field.state.meta.isFocused = false;
+        }}
+        onFocus={() => (field.state.meta.isFocused = true)}
+        onChange={(e) => field.handleChange(e.target.value)}
+        className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
+          field.state.meta.errors.length > 0
+            ? "border-red-700 focus:border-red-500"
+            : "border-zinc-600 focus:border-white"
+        }`}
+        placeholder=" "
+      />
+      {field.state.meta.errors.length > 0 && (
+        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
+          <span className="text-black text-xs font-bold">!</span>
+        </div>
+      )}
+    </div>
+    {field.state.meta.errors.length > 0 && (
+      <p className="text-red-700 text-xs font-extralight">
+        {field.state.meta.errors[0]}
+      </p>
+    )}
+  </div>
+);
+
+interface FloatingLabelSelectProps {
+  field: {
+    name: string;
+    state: {
+      value: string;
+      meta: {
+        errors: (string | undefined)[];
+        isFocused?: boolean;
+      };
+    };
+    handleBlur: () => void;
+    handleChange: (value: string) => void;
+  };
+  label: string;
+  options: string[];
+}
+
+const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label, options }) => (
+  <div className="space-y-2">
+    <div className="relative">
+      <select
+        id={field.name}
+        name={field.name}
+        value={field.state.value}
+        onBlur={field.handleBlur}
+        onChange={(e) => field.handleChange(e.target.value)}
+        className={`font-normal peer w-full bg-transparent border-0 border-b pt-2 focus:outline-none transition-colors appearance-none cursor-pointer
+          ${field.state.meta.errors.length > 0 ? "border-red-700 focus:border-red-500" : "border-zinc-600 focus:border-white"}
+          ${!field.state.value ? "text-gray-500" : "text-white"}
+        `}
+      >
+        <option className="text-gray-500" value="" disabled hidden>
+          {label}
+        </option>
+        {options.map((option) => (
+          <option key={option} value={option} className="bg-black text-white">
+        {option}
+          </option>
+        ))}
+      </select>
+      {field.state.value && (
+        <label
+          htmlFor={field.name}
+          className="absolute left-0 top-2 text-xs text-white transition-all pointer-events-none -translate-y-4"
+        >
+          {label}
+        </label>
+      )}
+      <ChevronDown className="absolute right-2 top-2 w-5 h-5 text-gray-500 pointer-events-none" />
+      {field.state.meta.errors.length > 0 && (
+        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
+          <span className="text-black text-xs font-bold">!</span>
+        </div>
+      )}
+    </div>
+    {field.state.meta.errors.length > 0 && (
+      <p className="text-red-700 text-xs font-extralight">
+        {field.state.meta.errors[0]}
+      </p>
+    )}
+  </div>
+);
 
 export default function ContactForm() {
   const { mutate, isPending, isError, isSuccess } = useSubmitContactForm();
@@ -106,32 +241,8 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Nombre"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b  pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
+              <div className="mt-2">
+                <FloatingLabelInput field={field} label="Nombre" />
               </div>
             )}
           </form.Field>
@@ -144,32 +255,8 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Apellido"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b  pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
+              <div className="mt-2">
+                <FloatingLabelInput field={field} label="Apellido" />
               </div>
             )}
           </form.Field>
@@ -190,34 +277,11 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    type="email"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Correo electrónico"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b  pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
+              <FloatingLabelInput
+                field={field}
+                label="Correo electrónico"
+                type="email"
+              />
             )}
           </form.Field>
 
@@ -229,45 +293,7 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    className={`w-full bg-transparent ${
-                      field.state.value ? "text-white" : "text-gray-500"
-                    } border-0 border-b pb-2 focus:outline-none transition-colors appearance-none cursor-pointer ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  >
-                    {field.state.value === "" && (
-                      <option value="" disabled hidden>
-                        País
-                      </option>
-                    )}
-                    {countries.map((country) => (
-                      <option
-                        key={country}
-                        value={country}
-                        className="bg-black text-white"
-                      >
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-0 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
+              <FloatingLabelSelect field={field} label="País" options={countries} />
             )}
           </form.Field>
         </div>
@@ -281,36 +307,7 @@ export default function ContactForm() {
                 !value ? "Este campo es requerido" : undefined,
             }}
           >
-            {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    type="tel"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Celular"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
-            )}
+            {(field) => <FloatingLabelInput field={field} label="Celular" />}
           </form.Field>
 
           <form.Field
@@ -320,35 +317,7 @@ export default function ContactForm() {
                 !value ? "Este campo es requerido" : undefined,
             }}
           >
-            {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Nombre de la empresa"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b  pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
-            )}
+            {(field) => <FloatingLabelInput field={field} label="Nombre de la empresa" />}
           </form.Field>
         </div>
 
@@ -361,35 +330,7 @@ export default function ContactForm() {
                 !value ? "Este campo es requerido" : undefined,
             }}
           >
-            {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="Cargo /Ocupación"
-                    className={`w-full bg-transparent text-white placeholder-gray-500 border-0 border-b  pb-2 focus:outline-none transition-colors ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-                      <span className="text-black text-xs font-bold">!</span>
-                    </div>
-                  )}
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
-            )}
+            {(field) => <FloatingLabelInput field={field} label="Cargo / Ocupación" />}
           </form.Field>
 
           <form.Field
@@ -400,45 +341,7 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    className={`w-full bg-transparent ${
-                      field.state.value ? "text-white" : "text-gray-500"
-                    } border-0 border-b pb-2 focus:outline-none transition-colors appearance-none cursor-pointer ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  >
-                    {field.state.value === "" && (
-                      <option value="" disabled hidden>
-                        Cantidad de empleados en tu empresa
-                      </option>
-                    )}
-                    {employeeCounts.map((count) => (
-                      <option
-                        key={count}
-                        value={count}
-                        className="bg-black text-white"
-                      >
-                        {count}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-0 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
+              <FloatingLabelSelect field={field} label="Cantidad de empleados en tu empresa" options={employeeCounts} />
             )}
           </form.Field>
         </div>
@@ -453,45 +356,7 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    className={`w-full bg-transparent ${
-                      field.state.value ? "text-white" : "text-gray-500"
-                    } border-0 border-b pb-2 focus:outline-none transition-colors appearance-none cursor-pointer ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  >
-                    {field.state.value === "" && (
-                      <option value="" disabled hidden>
-                        Sector o industria
-                      </option>
-                    )}
-                    {industries.map((industry) => (
-                      <option
-                        key={industry}
-                        value={industry}
-                        className="bg-black text-white"
-                      >
-                        {industry}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-0 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
+              <FloatingLabelSelect field={field} label="Sector o industria" options={industries} />
             )}
           </form.Field>
 
@@ -503,45 +368,7 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <div className="space-y-2">
-                <div className="relative">
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    className={`w-full bg-transparent ${
-                      field.state.value ? "text-white" : "text-gray-500"
-                    } border-0 border-b pb-2 focus:outline-none transition-colors appearance-none cursor-pointer ${
-                      field.state.meta.errors.length > 0
-                        ? "border-red-700 focus:border-red-500"
-                        : "border-zinc-600 focus:border-white"
-                    }`}
-                  >
-                    {field.state.value === "" && (
-                      <option value="" disabled hidden>
-                        Servicio que te interesa
-                      </option>
-                    )}
-                    {services.map((service) => (
-                      <option
-                        key={service}
-                        value={service}
-                        className="bg-black text-white"
-                      >
-                        {service}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-0 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-                {field.state.meta.errors.length > 0 && (
-                  <p className="text-red-700 text-xs font-extralight">
-                    {field.state.meta.errors[0]}
-                  </p>
-                )}
-              </div>
+              <FloatingLabelSelect field={field} label="Servicio que te interesa" options={services} />
             )}
           </form.Field>
         </div>
@@ -570,8 +397,6 @@ export default function ContactForm() {
             </div>
           )}
         </form.Field>
-
-       
 
         {/* Submit Button */}
         <div>

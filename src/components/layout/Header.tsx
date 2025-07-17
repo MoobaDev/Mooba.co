@@ -96,7 +96,7 @@ export default function Header() {
                     </div>
                     <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
                     <Link href="#" className="hover:underline cursor-pointer">Nuestra esencia</Link>
-                    <Link href="#" className="hover:underline cursor-pointer">Contáctanos</Link>
+                    <Link href="/contactanos" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>
             </div>
         </header>
