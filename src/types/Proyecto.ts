@@ -28,9 +28,6 @@ export interface Project {
   updatedAt: string;
   publishedAt: string;
   categorias: Category[];
-  desktopVideo?: {
-    url: string;
-  };
 }
 
 export interface Category {
