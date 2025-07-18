@@ -43,7 +43,7 @@ export default function AccordionClient({ items, teamMembers } : AccordionClient
 
   return (
     <div className="w-full mt-10 mx-auto bg-black">
-      <div className="divide-y border-white/30">
+      <div>
         {items.map((item, index) => (
           <AccordionItemComponent
             key={index}

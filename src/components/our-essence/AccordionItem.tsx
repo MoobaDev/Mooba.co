@@ -33,11 +33,11 @@ interface AccordionItemProps {
 
 export default function AccordionItemComponent({ title, children, carousel = false, isOpen = false, onToggle, teamMembers,}: AccordionItemProps) {
   return (
-    <section className="border-b border-white/30">
+    <section className="">
       <div className={`transition-all duration-300 ease-in-out ${isOpen ? "min-h-fit" : ""}`}>
-        <button className="w-full flex justify-between items-start py-8 text-left font-light text-white transition-all duration-200" onClick={onToggle} aria-expanded={isOpen}>
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between px-8 items-start w-full gap-4">
+        <button className="w-full flex justify-between items-start text-left font-light text-white transition-all duration-200" onClick={onToggle} aria-expanded={isOpen}>
+          <div className="flex flex-col w-full items-center">
+            <div className="flex justify-between px-8 py-8 items-start max-w-[1440px] border-b border-white/30 gap-4">
               <h2 className="text-[36px] md:text-[40px] font-[250] md:max-w-[31%] leading-tight tracking-tight flex-1">
                 {title}
               </h2>
