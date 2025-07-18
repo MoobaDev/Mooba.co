@@ -22,14 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head><link rel="icon" href="/favicon.ico" sizes="any" /></head>
+      <head><link rel="icon" href="/favicon.png" sizes="any" /></head>
       <body
         className={`${dmSans.className} antialiased bg-black text-white`}
       >
         <Header/>
-        <main className="relative z-0">
-          {children}
-        </main>
+          <main className="relative z-0">
+            {children}
+          </main>
         <Footer/>
       </body>
     </html>
