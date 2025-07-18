@@ -83,7 +83,7 @@ export const CursorRightArrow = () => {
 export const CursorViewProject = () => {
     return (
         <div className="flex items-center gap-2 px-4 py-3 bg-black/40 backdrop-blur-md rounded-full border border-neutral-400/30 ">
-            <span className="text-white text-sm font-medium whitespace-nowrap">Ver proyecto</span>
+            <span className="text-white text-base font-extralight whitespace-nowrap">Ver proyecto</span>
         </div>
     );
 };
