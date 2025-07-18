@@ -1,6 +1,7 @@
-import { ArrowIcon } from "../../../Icons";
+import { ArrowIcon } from "../ui/Icons";
 import Link from "next/link";
 import Image from "next/image";
+import NewsletterForm from "./InputEmail"
 
 export default function Footer() {
   return (
@@ -11,9 +12,8 @@ export default function Footer() {
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-col gap-2 text-[16px]">
             <p className="font-normal">Barranquilla, CO</p>
-            <p className="font-extralight">Cra 61 # 64-27</p>
             <p className="font-extralight">blugo@mooba.co</p>
-            <p className="font-extralight">+57 304 3338350</p>
+            <p className="font-extralight">+57 304 333 8350</p>
           </div>
         
           <div className="font-base text-[16px]">
@@ -35,12 +35,7 @@ export default function Footer() {
         </div>
         
         <div className="flex flex-col w-full">
-          <p className="font-base text-[16px] mb-2">Suscríbete a nuestro newsletter</p>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="bg-transparent border-b border-white/30 text-white placeholder-white/60 text-sm font-extralight py-2 focus:outline-none focus:border-white/60 transition-colors min-w-[200px]"
-          />
+        <NewsletterForm/>
         </div>
         
         <div className="flex flex-col mt-6 items-center w-full md:flex-row md:items-end md:justify-between">
@@ -52,7 +47,6 @@ export default function Footer() {
       <div className="hidden md:flex md:justify-between gap-5 mx-auto px-6 md:px-8 overflow-hidden pt-4 md:items-start">
         <div className="flex flex-col text-[16px] gap-1">
           <p className="font-normal text-[20px]">Barranquilla, CO</p>
-          <p className="font-extralight">Cra 61 # 64-29</p>
           <p className="font-extralight">blugo@mooba.co</p>
           <p className="font-extralight">+57 304 333 8350</p>
         </div>
@@ -72,16 +66,8 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="flex flex-col items-start">
-          <p className="text-[16px] font-base mb-2">Suscríbete a nuestro newsletter</p>
-          <input
-              type="email"
-              placeholder="Correo electrónico"
-              className="bg-transparent border-b border-white/30 text-white placeholder-white/60 text-sm font-light py-2 focus:outline-none focus:border-white/60 transition-colors min-w-[400px]"
-            />
-          <div className="bg-white text-black px-4 py-2 mt-4 rounded-full text-sm">
-            Suscríbirme
-          </div>
+        <div className="flex flex-col">
+          <NewsletterForm/>
         </div>
       </div>
       
