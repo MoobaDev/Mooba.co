@@ -3,12 +3,14 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import Providers from "./providers";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "700"],
   display: "swap",
-})
+});
 
 /* export const metadata: Metadata = {
   title: "Mooba Agencia - Marketing Digital, Diseño Web y Redes Sociales",
@@ -28,9 +30,10 @@ export default function RootLayout({
       >
         <Header/>
           <main className="relative z-0">
-            {children}
+            <Providers>{children}</Providers>
           </main>
-        <Footer/>
+        <WhatsAppButton />
+        <Footer />
       </body>
     </html>
   );
