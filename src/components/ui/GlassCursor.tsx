@@ -3,45 +3,45 @@
 import { useEffect, useRef } from 'react'
 
 type GlassCursorProps = {
-  targetId: string // ID del elemento sobre el que aparecerá el cursor
-  label?: string   // Texto que mostrará la bolita (por defecto "Ver")
+  targetId: string
+  label?: string
 }
 
-export default function GlassCursor({ targetId, label = '' }: GlassCursorProps) {
-    const cursorRef = useRef<HTMLDivElement>(null)
+export default function GlassCursor({ targetId, label = 'Ver proyecto' }: GlassCursorProps) {
+  const cursorRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-            const target = document.getElementById(targetId)
-            const cursor = cursorRef.current
+  useEffect(() => {
+    const target = document.getElementById(targetId)
+    const cursor = cursorRef.current
 
-            if (!target || !cursor) return
+    if (!target || !cursor) return
 
-            const handleMove = (e: MouseEvent) => {
-                cursor.style.left = `${e.clientX - 32}px`
-                cursor.style.top = `${e.clientY - 32}px`
-                cursor.classList.remove('hidden')
-            }
+    const handleMove = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX - cursor.offsetWidth / 2}px`
+      cursor.style.top = `${e.clientY - cursor.offsetHeight / 2}px`
+      cursor.classList.remove('hidden')
+    }
 
-            const handleLeave = () => {
-                cursor.classList.add('hidden')
-            }
+    const handleLeave = () => {
+      cursor.classList.add('hidden')
+    }
 
-            target.addEventListener('mousemove', handleMove)
-            target.addEventListener('mouseleave', handleLeave)
+    target.addEventListener('mousemove', handleMove)
+    target.addEventListener('mouseleave', handleLeave)
 
-            return () => {
-                target.removeEventListener('mousemove', handleMove)
-                target.removeEventListener('mouseleave', handleLeave)
-            }
-    }, [targetId])
+    return () => {
+      target.removeEventListener('mousemove', handleMove)
+      target.removeEventListener('mouseleave', handleLeave)
+    }
+  }, [targetId])
 
-    return (
-        <div
-            ref={cursorRef}
-            className="hidden pointer-events-none fixed z-50 w-16 h-16 rounded-full bg-black/30 backdrop-blur-md 
-                        text-center text-xs/3 text-white flex items-center justify-center transition-transform duration-75"
-        >
-            {label}
-        </div>
-    )
+  return (
+    <div
+      ref={cursorRef}
+      className="hidden pointer-events-none fixed z-50 px-4 py-3 rounded-full bg-black/40 backdrop-blur-md border border-neutral-400/30 flex items-center gap-2"
+      style={{ minWidth: '120px', minHeight: '40px' }}
+    >
+      <span className="text-white text-base font-extralight whitespace-nowrap">{label}</span>
+    </div>
+  )
 }

@@ -41,7 +41,7 @@ export default function Projects({ projects }: ProjectsProps) {
           {filtered.map((project, idx) => {
             const colSpan = getColSpan(idx);
             const mod = idx % 6;
-            const aspectRatio = mod === 1 || mod === 5 ? 'h-full object-cover' : 'aspect-[16/9] max-h-[510px] overflow-hidden';
+            const aspectRatio = mod === 1 || mod === 5 ? 'h-full object-cover' : 'aspect-[16/9] md:max-h-[350px] lg:max-h-[510px]  overflow-hidden';
             
             return (
               <Link
