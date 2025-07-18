@@ -62,3 +62,35 @@ export const WhatsAppIconDesktop =() =>{
         </svg>
     )
 }
+
+// Cursores personalizados con efecto glassmorphism
+export const CursorLeftArrow = () => {
+    return (
+        <div className="flex items-center justify-center px-4 py-4 bg-black/40 backdrop-blur-md rounded-full border border-neutral-400/30 shadow-lg">
+            <LeftArrow />
+        </div>
+    );
+};
+
+export const CursorRightArrow = () => {
+    return (
+        <div className="flex items-center justify-center px-4 py-4 bg-black/40 backdrop-blur-md rounded-full border border-neutral-400/30">
+            <RightArrow />
+        </div>
+    );
+};
+
+export const CursorViewProject = () => {
+    return (
+        <div className="flex items-center gap-2 px-4 py-3 bg-black/40 backdrop-blur-md rounded-full border border-neutral-400/30 ">
+            <span className="text-white text-base font-extralight whitespace-nowrap">Ver proyecto</span>
+        </div>
+    );
+};
+
+export const Cursor = () => {
+    return (
+        <div className="flex items-center justify-center px-4 py-4 bg-white/40 backdrop-blur-md rounded-full border border-neutral-400/30">
+        </div>
+    );
+};
