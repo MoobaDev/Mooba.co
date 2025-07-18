@@ -68,7 +68,7 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
     setMousePosition({ x: e.clientX, y: e.clientY });
     
     // Zona más pequeña para activar las flechas (20% en cada extremo)
-    if (x < width * 0.27) {
+    if (x < width * 0.28) {
       setCursorType('left');
     } else if (x > width * 0.75) {
       setCursorType('right');
