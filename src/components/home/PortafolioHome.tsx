@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-//  Cambiar por proyectos traido de strapi
-import { mockProjects } from "@/mocks/portafolioProjects";
+import { Project } from "@/types/Proyecto";
+import { CursorViewProject } from '@/components/ui/Icons';
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
@@ -72,8 +72,10 @@ const useScrollAnimation = () => {
   return { sectionRef, scrollProgress };
 };
 
-export default function PortafolioHome() {
+export default function PortafolioHome({ projects }: { projects: Project[] }) {
   const { sectionRef, scrollProgress } = useScrollAnimation();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   const getProjectTransform = (index: number): string => {
     // First project is always visible
@@ -132,19 +134,43 @@ export default function PortafolioHome() {
     willChange: "transform, opacity",
   });
 
+  const handleProjectMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setIsHovering(true);
+    setMousePosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleProjectMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMousePosition({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleProjectMouseLeave = () => {
+    setIsHovering(false);
+    setMousePosition({ x: 0, y: 0 });
+  };
+
+  if (!projects || projects.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto px-6 md:px-8">
+        <h1 className="text-3xl md:text-4xl font-extralight">
+          No hemos podido cargar los proyectos
+        </h1>
+      </section>
+    );
+  }
+
   return (
     <section
       ref={sectionRef}
-      className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden"
+      className="max-w-[1440px] mt-[64px] md:mt-[120px] mx-auto md:pb-8 px-6 md:px-8 overflow-hidden"
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
-        <h2 className="text-3xl md:text-4xl font-extralight">
+        <h1 className="text-3xl md:text-4xl font-extralight">
           Ideas que se volvieron realidad
-        </h2>
+        </h1>
         {/* Desktop: Link with underline */}
         <Link
-          href="/portafolio"
+          href="/proyectos"
           className="hidden md:block text-base font-normal  underline"
         >
           Ver todos los proyectos
@@ -153,40 +179,77 @@ export default function PortafolioHome() {
 
       {/* Projects Grid */}
       <div className="w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-16">
-          {mockProjects.map((project, index) => (
+        {/* Cursor personalizado */}
+        <div 
+          className="fixed z-50 pointer-events-none"
+          style={{
+            left: mousePosition.x,
+            top: mousePosition.y - 20,
+            transform: 'translate(-50%, -50%)',
+            opacity: isHovering && mousePosition.x !== 0 ? 1 : 0,
+            transition: 'opacity 0.2s ease'
+          }}
+        >
+          <CursorViewProject />
+        </div>
+
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 ${isHovering ? 'cursor-none' : ''}`}
+             style={isHovering ? { cursor: 'none' } : {}}>
+          {projects.map((project, index) => (
             <Link
-              href={`/portafolio/${project.slug}`}
-              key={project.id}
-              className="block group cursor-pointer w-full"
-              style={getProjectAnimationStyles(index)}
+              href={`/proyectos/${project.slug}`}
+              key={project.slug}
+              className={`block group w-full ${isHovering ? 'cursor-none' : 'cursor-pointer'}`}
+              style={{
+                ...getProjectAnimationStyles(index),
+                ...(isHovering ? { cursor: 'none' } : {})
+              }}
+              onMouseEnter={handleProjectMouseEnter}
+              onMouseMove={handleProjectMouseMove}
+              onMouseLeave={handleProjectMouseLeave}
             >
-              <div className="flex flex-col h-full">
+              <div className={`flex flex-col h-full ${isHovering ? 'cursor-none' : ''}`}>
                 {/* Image Container */}
-                <div className="relative mb-4 overflow-hidden w-full aspect-[4/3]">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-all duration-300 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  />
+                <div className={`relative mb-4 overflow-hidden w-full aspect-[4/4] ${isHovering ? 'cursor-none' : ''}`}>
+                  {project.desktopVideo ? (
+                    <video
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                      autoPlay
+                      loop
+                      muted
+                      className={`object-cover w-full h-full ${isHovering ? 'cursor-none' : ''}`}
+                      style={isHovering ? { cursor: 'none' } : {}}
+                    />
+                  ) : (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage?.url}`}
+                      alt={project.title}
+                      fill
+                      className={`object-cover w-full h-full ${isHovering ? 'cursor-none' : ''}`}
+                      style={isHovering ? { cursor: 'none' } : {}}
+                    />
+                  )}
                 </div>
 
                 {/* Project Info */}
-                <div className="mb-3 mt-2 font-extralight text-xl">
-                  <h5>{project.title}</h5>
-                  <p className="text-gray-400">{project.category}</p>
+                <div className={`mb-3 mt-2 font-extralight text-xl flex-grow ${isHovering ? 'cursor-none' : ''}`}>
+                  <h5 className={`truncate overflow-hidden whitespace-nowrap ${isHovering ? 'cursor-none' : ''}`}>
+                    {project.title}
+                  </h5>
+                  <p className={`text-[#ABB1BA] truncate overflow-hidden whitespace-nowrap ${isHovering ? 'cursor-none' : ''}`}>
+                    {project.shortDescription}
+                  </p>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap">
-                  {project.tags.map((tag, tagIdx) => (
+                <div className={`flex flex-wrap mt-auto ${isHovering ? 'cursor-none' : ''}`}>
+                  {project.categorias.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
-                      className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5"
+                      className={`text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 ${isHovering ? 'cursor-none' : ''}`}
+                      style={isHovering ? { cursor: 'none' } : {}}
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   ))}
                 </div>

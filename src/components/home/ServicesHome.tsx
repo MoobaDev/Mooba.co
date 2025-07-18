@@ -4,31 +4,36 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Service, ServiceImage } from "@/types/service.type";
 // Cambiar por servicios extraidas de Strapi
-import { servicesData } from "@/mocks/services";
 
-export default function ServicesShowcase() {
+export default function ServicesShowcase({
+  services,
+}: {
+  services: Service[] | null;
+}) {
+
   const [selectedImage, setSelectedImage] = useState<ServiceImage | null>(
-    servicesData[0].images[0]
+    services && services[0]?.image[0] ? services[0].image[0] : null
   );
   const [hoveredService, setHoveredService] = useState<number | null>(
-    servicesData[0].id
+    services && services[0] ? services[0].id : null
   );
   const [activeService, setActiveService] = useState<number | null>(
-    servicesData[0].id
+    services && services[0] ? services[0].id : null
   );
 
   useEffect(() => {
-    const randomService =
-      servicesData[Math.floor(Math.random() * servicesData.length)];
+    if (!services || services.length === 0) return;
+
+    const randomService = services[Math.floor(Math.random() * services.length)];
     const randomImage =
-      randomService.images[
-        Math.floor(Math.random() * randomService.images.length)
+      randomService.image[
+        Math.floor(Math.random() * randomService.image.length)
       ];
 
     setActiveService(randomService.id);
     setHoveredService(randomService.id);
     setSelectedImage(randomImage);
-  }, []);
+  }, [services]);
 
   // Efecto para manejar el scroll en móvil
   useEffect(() => {
@@ -63,10 +68,20 @@ export default function ServicesShowcase() {
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
       setHoveredService(service.id);
       const randomImage =
-        service.images[Math.floor(Math.random() * service.images.length)];
+        service.image[Math.floor(Math.random() * service.image.length)];
       setSelectedImage(randomImage);
     }
   };
+
+  if (!services || services.length === 0) {
+    return (
+      <section className="max-w-[1440px] mt-[120px] mx-auto px-6 md:px-8 overflow-hidden">
+        <h1 className="text-3xl font-extralight md:text-4xl">
+          No hemos podido cargar los servicios
+        </h1>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-[1440px] mt-16 mx-auto px-6 md:px-8 overflow-hidden">
@@ -94,7 +109,7 @@ export default function ServicesShowcase() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Services List */}
         <div className="space-y-2">
-          {servicesData.map((service) => {
+          {services.map((service) => {
             const isActive =
               typeof window !== "undefined" && window.innerWidth < 1024
                 ? activeService === service.id
@@ -109,7 +124,7 @@ export default function ServicesShowcase() {
                 }`}
                 onMouseEnter={() => handleServiceHover(service)}
               >
-                <h1 className="text-4xl font-normal">{service.name}</h1>
+                <h2 className="text-4xl font-normal">{service.name}</h2>
               </div>
             );
           })}
@@ -121,9 +136,10 @@ export default function ServicesShowcase() {
             {selectedImage ? (
               <div className="relative w-full h-full">
                 <Image
-                  src={selectedImage.url}
-                  alt={selectedImage.alt}
+                  src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
+                  alt={selectedImage.alt || selectedImage.name}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover transition-opacity duration-500"
                 />
               </div>
