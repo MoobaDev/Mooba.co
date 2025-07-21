@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/useSubmitContactForm";
 import { useForm } from "@tanstack/react-form";
@@ -288,7 +288,7 @@ const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, t
   const [hasAutofill, setHasAutofill] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const input = inputRef.current;
     if (!input) return;
 
