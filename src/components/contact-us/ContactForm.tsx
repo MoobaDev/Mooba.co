@@ -1,8 +1,32 @@
 "use client";
 
+import React from "react";
 import { ChevronDown } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/useSubmitContactForm";
 import { useForm } from "@tanstack/react-form";
+
+// Estilos para prevenir el autocompletado blanco
+const autocompleteCss = `
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: white !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+`;
 
 const countries = [
   "Afganistán",
@@ -260,53 +284,79 @@ interface FloatingLabelInputProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text", pattern, inputMode, onKeyDown }) => (
-  <div className="space-y-2">
-    <div className="relative">
-      <label
-        htmlFor={field.name}
-        className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
-          field.state.value || field.state.meta.isFocused
-            ? "text-xs text-white -translate-y-4"
-            : "text-base text-gray-500 translate-y-0"
-        }`}
-      >
-        {label}
-      </label>
-      <input
-        id={field.name}
-        name={field.name}
-        type={type}
-        pattern={pattern}
-        inputMode={inputMode}
-        value={field.state.value}
-        onBlur={() => {
-          field.handleBlur();
-          field.state.meta.isFocused = false;
-        }}
-        onFocus={() => (field.state.meta.isFocused = true)}
-        onChange={(e) => field.handleChange(e.target.value)}
-        onKeyDown={onKeyDown}
-        className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
-          field.state.meta.errors.length > 0
-            ? "border-red-700 focus:border-red-500"
-            : "border-zinc-600 focus:border-white"
-        }`}
-        placeholder=" "
-      />
+const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text", pattern, inputMode, onKeyDown }) => {
+  const [hasAutofill, setHasAutofill] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const checkAutofill = () => {
+      const isAutofilled = input.matches?.(':-webkit-autofill') || false;
+      setHasAutofill(isAutofilled);
+    };
+
+    // Check on mount and on interval
+    checkAutofill();
+    const interval = setInterval(checkAutofill, 200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="space-y-2">
+      <div className="relative">
+        <label
+          htmlFor={field.name}
+          className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
+            field.state.value || field.state.meta.isFocused || hasAutofill
+              ? "text-xs text-white -translate-y-4"
+              : "text-base text-gray-500 translate-y-0"
+          }`}
+        >
+          {label}
+        </label>
+        <input
+          ref={inputRef}
+          id={field.name}
+          name={field.name}
+          type={type}
+          pattern={pattern}
+          inputMode={inputMode}
+          value={field.state.value}
+          onBlur={() => {
+            field.handleBlur();
+            field.state.meta.isFocused = false;
+          }}
+          onFocus={() => {
+            field.state.meta.isFocused = true;
+          }}
+          onChange={(e) => {
+            field.handleChange(e.target.value);
+          }}
+          onKeyDown={onKeyDown}
+          className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
+            field.state.meta.errors.length > 0
+              ? "border-red-700 focus:border-red-500"
+              : "border-zinc-600 focus:border-white"
+          }`}
+          placeholder=" "
+        />
+        {field.state.meta.errors.length > 0 && (
+          <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
+            <span className="text-black text-xs font-bold">!</span>
+          </div>
+        )}
+      </div>
       {field.state.meta.errors.length > 0 && (
-        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-          <span className="text-black text-xs font-bold">!</span>
-        </div>
+        <p className="text-red-700 text-xs font-extralight">
+          {field.state.meta.errors[0]}
+        </p>
       )}
     </div>
-    {field.state.meta.errors.length > 0 && (
-      <p className="text-red-700 text-xs font-extralight">
-        {field.state.meta.errors[0]}
-      </p>
-    )}
-  </div>
-);
+  );
+};
 
 interface FloatingLabelSelectProps {
   field: {
@@ -371,7 +421,7 @@ const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label,
   </div>
 );
 
-export default function   ContactForm() {
+export default function ContactForm() {
   const { mutate, isPending, isError, isSuccess } = useSubmitContactForm();
 
   const form = useForm({
@@ -402,7 +452,9 @@ export default function   ContactForm() {
   });
 
   return (
-    <div className="container mx-auto font-normal text-base w-full">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: autocompleteCss }} />
+      <div className="container mx-auto font-normal text-base w-full">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -628,5 +680,6 @@ export default function   ContactForm() {
         )}
       </form>
     </div>
+    </>
   );
 }
