@@ -9,21 +9,7 @@ import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { RightArrow, LeftArrow } from "../ui/Icons"
 import type SwiperType from 'swiper'
-
-interface StrapiImage {
-  id: number
-  url: string
-  width: number
-  height: number
-  alternativeText?: string
-  caption?: string
-  formats?: {
-    thumbnail?: { url: string }
-    small?: { url: string }
-    medium?: { url: string }
-    large?: { url: string }
-  }
-}
+import {StrapiImage} from '../../types/Integrantes'
 
 interface TeamMember {
   name: string
