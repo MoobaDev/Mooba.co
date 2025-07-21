@@ -255,9 +255,12 @@ interface FloatingLabelInputProps {
   };
   label: string;
   type?: string;
+  pattern?: string;
+  inputMode?: "numeric" | "text" | "email" | "tel";
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text" }) => (
+const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text", pattern, inputMode, onKeyDown }) => (
   <div className="space-y-2">
     <div className="relative">
       <label
@@ -274,6 +277,8 @@ const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, t
         id={field.name}
         name={field.name}
         type={type}
+        pattern={pattern}
+        inputMode={inputMode}
         value={field.state.value}
         onBlur={() => {
           field.handleBlur();
@@ -281,6 +286,7 @@ const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, t
         }}
         onFocus={() => (field.state.meta.isFocused = true)}
         onChange={(e) => field.handleChange(e.target.value)}
+        onKeyDown={onKeyDown}
         className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
           field.state.meta.errors.length > 0
             ? "border-red-700 focus:border-red-500"
@@ -477,11 +483,30 @@ export default function ContactForm() {
           <form.Field
             name="phone"
             validators={{
-              onChange: ({ value }) =>
-                !value ? "Este campo es requerido" : undefined,
+              onChange: ({ value }) => {
+                if (!value) return "Este campo es requerido";
+                if (!/^\d+$/.test(value)) {
+                  return "Solo se permiten números";
+                }
+                return undefined;
+              },
             }}
           >
-            {(field) => <FloatingLabelInput field={field} label="Celular" />}
+            {(field) => (
+              <FloatingLabelInput 
+                field={field} 
+                label="Celular" 
+                type="tel"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                onKeyDown={(e) => {
+                  // Solo permitir números, Backspace, Delete, Tab y flechas
+                  if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+              />
+            )}
           </form.Field>
 
           <form.Field

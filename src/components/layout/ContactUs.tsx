@@ -16,7 +16,7 @@ export default function ContactUs() {
         {/* Left side - Title */}
         <div className="col-span-4 md:col-span-2 flex flex-col items-start">
           <h2 className="text-white text-3xl md:text-4xl font-normal">
-            Dejanos tu información
+            Déjanos tu información
           </h2>
         </div>
 
