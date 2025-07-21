@@ -30,8 +30,8 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
     breakpoints: {
       "(min-width: 768px)": {
         slides: {
-          origin: 0.2,
-          perView: 1.5,
+          origin: 0.27,
+          perView: 2.2,
           spacing: 16,
         },
       },
