@@ -6,6 +6,7 @@ import SafeHtml from "@/components/proyectos/SafeHtml";
 import PortafolioHome from '@/components/home/PortafolioHome';
 import { getAllProjects } from '@/lib/getAllProyects';
 import ContactSection from '@/components/home/ContactUs';
+import { getSeoProject } from '@/lib/getSeoProject';
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -51,7 +52,7 @@ function htmlReplace(html: string) {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { slug } = params;
-  const project = await getProject(slug);
+  const project = await getSeoProject(slug);
 
   if (!project) return {}
 
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
     alternates: {
-      canonical: `https://mooba.co/proyectos`,
+      canonical: `https://mooba.co/proyectos/${slug}`,
     },
     openGraph: {
       title: seo?.title || project.title,
@@ -84,7 +85,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function projectPage({ params }: { params: { slug: string }}) {
-  const { slug } = await params;
+  const { slug } = params;
   const project = await getProject(slug);
 
   const { data: allProjects } = await getAllProjects();
