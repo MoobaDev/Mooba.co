@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { getProject } from "@/lib/getProject";
 import "../../globals.css";
 import SafeHtml from "@/components/proyectos/SafeHtml";
+import PortafolioHome from '@/components/home/PortafolioHome';
+import { getAllProjects } from '@/lib/getAllProyects';
+import ContactSection from '@/components/home/ContactUs';
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -82,28 +85,30 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
   const project = await getProject(slug);
+  const { data: projects } = await getAllProjects();
+  const portfolioProjects = projects.slice(0, 4);
 
   if (!project) {
     notFound();
   }
 
   return (
-    <div className="w-full max-w-360 mx-auto px-6 md:px-8 pt-28 pb-8" >
+    <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >
 
-      <div className="mb-16">
+      <div className="mb-16 px-6 md:px-8">
         <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
         <div className="flex flex-wrap gap-y-2">
           {Array.isArray(project.categorias) && project.categorias.map((cat) => (
-              <div
-                  key={cat.slug}
-                  className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
-              >
-                  {cat.name}
-              </div>
+            <div
+                key={cat.slug}
+                className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
+            >
+                {cat.name}
+            </div>
           ))}
         </div>
       </div>
-      <div className="">
+      <div className="px-6 md:px-8">
         <div className="hidden md:block">
           {project.desktopContent && (
             <div className="w-full">
@@ -123,6 +128,12 @@ export default async function projectPage({ params }: { params: { slug: string }
           )}
         </div>
       </div>
+
+      <div className="hidden md:block">
+        <PortafolioHome projects={portfolioProjects} />
+      </div>
+
+      <ContactSection />
 
       {/* Debug Info */}
       {/* <details className="mt-12 p-4rounded-lg">
