@@ -141,16 +141,28 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
               slidesPerView: 1.6,
               spaceBetween: 4,
             },
+            540: {
+              slidesPerView: 2.1,
+              spaceBetween: 4,
+            },
             640: {
-              slidesPerView: 2,
+              slidesPerView: 2.4,
               spaceBetween: 4,
             },
             768: {
               slidesPerView: 2.2,
               spaceBetween: 4,
             },
+            892: {
+              slidesPerView: 2.6,
+              spaceBetween: 4,
+            },
             1024: {
               slidesPerView: 2.9,
+              spaceBetween: 4,
+            },
+            1232: {
+              slidesPerView: 3.5,
               spaceBetween: 4,
             },
             1440: {
