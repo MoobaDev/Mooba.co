@@ -1,46 +1,32 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay } from "swiper/modules"
-import "swiper/css"
-import "swiper/css/free-mode"
-import "swiper/css/autoplay"
-import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import { RightArrow, LeftArrow } from "../ui/Icons"
-import type SwiperType from 'swiper'
-import {StrapiImage} from '../../types/Integrantes'
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/autoplay";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { RightArrow, LeftArrow } from "../ui/Icons";
+import type SwiperType from "swiper";
+import { TeamCarouselProps,TeamMemberCardProps } from "@/types/Integrantes"
 
-interface TeamMember {
-  name: string
-  ocupation: string
-  phrase: string
-  image: StrapiImage[]
-}
-interface TeamCarouselProps {
-  teamMembers: TeamMember[]
-  active?: boolean
-}
-interface TeamMemberCardProps{
-  member: TeamMember
-  isMobile:boolean
-}
-export default function TeamCarousel({ teamMembers, active = false }: TeamCarouselProps) {
+export default function TeamCarousel({ teamMembers, active = false,}: TeamCarouselProps) {
   const swiperRef = useRef<SwiperType | null>(null)
   const carouselRef = useRef<HTMLDivElement | null>(null)
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
-  const [cursorDir, setCursorDir] = useState<'left' | 'right' | 'center'>('center')
+  const [cursorDir, setCursorDir] = useState<"left" | "right" | "center">( "center" )
   const [showCursor, setShowCursor] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const duplicatedMembers = [...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers]
+  const duplicatedMembers = [ ...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers,]
 
   const handleClick = (e: React.MouseEvent) => {
     if (isMobile) return
     e.stopPropagation()
     if (!swiperRef.current) return
     if (cursorDir === "left") {
-      swiperRef.current.slidePrev();
+      swiperRef.current.slidePrev()
     } else if (cursorDir === "right") {
       swiperRef.current.slideNext()
     }
@@ -50,33 +36,32 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
     if (!hasStarted) {
       setHasStarted(true)
     }
-  }
+  };
 
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth <= 768)
-    };
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile)
+    }
+    checkIfMobile()
+    window.addEventListener("resize", checkIfMobile)
     return () => {
-      window.removeEventListener('resize', checkIfMobile)
+      window.removeEventListener("resize", checkIfMobile)
     }
   }, [])
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile) return
     const handlePointerMove = (e: PointerEvent) => {
       if (!carouselRef.current) return
       const rect = carouselRef.current.getBoundingClientRect()
-      const isOver = (
+      const isOver =
         e.clientX >= rect.left &&
         e.clientX <= rect.right &&
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom
-      )
       if (!isOver) {
         setShowCursor(false)
-        document.body.style.cursor = 'auto'
+        document.body.style.cursor = "auto"
         return
       }
       const relativeX = e.clientX - rect.left
@@ -91,7 +76,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
       setCursorPos({ x: e.clientX, y: e.clientY })
       setShowCursor(true)
       document.body.style.cursor = "none"
-    };
+    }
     window.addEventListener("pointermove", handlePointerMove)
     return () => {
       window.removeEventListener("pointermove", handlePointerMove)
@@ -109,7 +94,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
   }, [active])
 
   return (
-    <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} style={{cursor : isMobile ? 'auto' : 'none'}}>
+    <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} style={{ cursor: isMobile ? "auto" : "none" }}>
       {showCursor && (
         <div className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPos.x, top: cursorPos.y }}>
           <div className="w-16 h-16 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm">
@@ -138,7 +123,7 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           resistanceRatio={0.7}
           slidesPerGroup={1}
           watchSlidesProgress={true}
-          className="team-swiper mt-50px overflow-visible"
+          className="team-swiper mt-50px overflow-visible py-10"
           onTouchStart={handleInteraction}
           onSwiper={(swiper) => {
             swiperRef.current = swiper
@@ -146,38 +131,38 @@ export default function TeamCarousel({ teamMembers, active = false }: TeamCarous
           breakpoints={{
             320: {
               slidesPerView: 1.4,
-              spaceBetween: 16
+              spaceBetween: 16,
             },
             640: {
               slidesPerView: 2,
-              spaceBetween: 16
+              spaceBetween: 16,
             },
             1024: {
-              slidesPerView: 3,
-              spaceBetween: 24
+              slidesPerView: 3.8,
+              spaceBetween: 24,
             },
             1440: {
               slidesPerView: 4.5,
-              spaceBetween: 24
+              spaceBetween: 24,
             },
             1920: {
               slidesPerView: 5.5,
-              spaceBetween: 28
+              spaceBetween: 28,
             },
           }}
         >
           {duplicatedMembers.map((member, index) => (
-            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-transform duration-300 ease-out">
-              <TeamMemberCard member={member} isMobile={isMobile}/>
+            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-all duration-300 ease-out flex items-center justify-center">
+              <TeamMemberCard member={member} isMobile={isMobile} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
     </div>
-  );
+  )
 }
 
-function TeamMemberCard({ member , isMobile}: TeamMemberCardProps) {
+function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [isTapped, setIsTapped] = useState(false)
@@ -205,7 +190,7 @@ function TeamMemberCard({ member , isMobile}: TeamMemberCardProps) {
   }
 
   const handleMouseEnter = () => {
-    if(!isMobile){
+    if (!isMobile) {
       setIsHovered(true)
       setShowPhrase(true)
       startImageCycle()
@@ -213,7 +198,7 @@ function TeamMemberCard({ member , isMobile}: TeamMemberCardProps) {
   }
 
   const handleMouseLeave = () => {
-    if(!isMobile){
+    if (!isMobile) {
       setIsHovered(false)
       setShowPhrase(false)
       stopImageCycle()
@@ -247,31 +232,34 @@ function TeamMemberCard({ member , isMobile}: TeamMemberCardProps) {
   }, [])
 
   return (
-    <div className={`flex flex-col shadow-md mt-10 mb-10 transition-all duration-300 ${isActive ? 'transform scale-[1.1] z-30' : ''}`}> 
-      <div className={`w-fit p-3 border transition-all duration-300 ${isActive ? 'border-gray-400' : 'border-transparent'}`}> 
-        <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
-          {member.image && member.image.length > 0 &&
-            <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
-              alt={member.name}
-              className="object-cover w-[240px] h-[375px] md:w-[320px] md:h-[500px]"
-              width={member.image[currentImageIndex].width}
-              height={member.image[currentImageIndex].height}
-              priority={currentImageIndex === 0}
-            />
-          }
-          {(isHovered || isTapped) && (
-            <div className="absolute inset-0 bg-black/5 pointer-events-none" />
-          )}
-        </div>
-        <div className="pt-2 font-[250]">
-          <h3 className="text-[24px]">{member.name}</h3>
-          <p className="text-[18px]">{member.ocupation}</p>
-          {showPhrase && (
-            <p className="text-[20px] italic text-white mt-1 transition-opacity duration-300 ease-in-out">
-              &ldquo;{member.phrase}&rdquo;
-            </p>
-          )}
+    <div className="flex flex-col h-168 mt-10 items-center">
+      <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
+        style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 300ms ease-in-out' }}>
+        <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-gray-400" : "border-transparent" }`}>
+          <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
+            {member.image && member.image.length > 0 && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
+                alt={member.name}
+                className="object-cover w-[240px] h-[375px] md:w-[320px] md:h-[500px]"
+                width={member.image[currentImageIndex].width}
+                height={member.image[currentImageIndex].height}
+                priority={currentImageIndex === 0}
+              />
+            )}
+            {(isHovered || isTapped) && (
+              <div className="absolute inset-0 bg-black/5 pointer-events-none" />
+            )}
+          </div>
+          <div className="pt-1 font-[250] min-h-[60px]">
+            <h3 className="text-[24px]">{member.name}</h3>
+            <p className="text-[18px]">{member.ocupation}</p>
+            {showPhrase && (
+              <p className="text-[18px] italic text-white mt-1 transition-opacity duration-300 ease-in-out">
+                &ldquo;{member.phrase}&rdquo;
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

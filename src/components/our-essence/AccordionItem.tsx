@@ -27,7 +27,7 @@ export default function AccordionItemComponent({ title, children, carousel = fal
           </div>
         </div>
         {isOpen && carousel && teamMembers && (
-          <div className="hidden md:block w-full mt-6">
+          <div className="hidden md:block w-full h-auto mt-6">
             <TeamCarousel teamMembers={teamMembers}/>
           </div>
         )}

@@ -63,3 +63,18 @@ export interface AccordionItemProps {
   onToggle?: () => void;
   teamMembers?: TeamMember[];
 }
+
+export interface TeamMember {
+  name: string;
+  ocupation: string;
+  phrase: string;
+  image: StrapiImage[];
+}
+export interface TeamCarouselProps {
+  teamMembers: TeamMember[];
+  active?: boolean;
+}
+export interface TeamMemberCardProps {
+  member: TeamMember;
+  isMobile: boolean;
+}
