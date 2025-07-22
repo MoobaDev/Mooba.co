@@ -343,11 +343,6 @@ const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, t
           }`}
           placeholder=" "
         />
-        {field.state.meta.errors.length > 0 && (
-          <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-            <span className="text-black text-xs font-bold">!</span>
-          </div>
-        )}
       </div>
       {field.state.meta.errors.length > 0 && (
         <p className="text-red-700 text-xs font-extralight">
@@ -407,11 +402,7 @@ const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label,
         </label>
       )}
       <ChevronDown className="absolute right-2 top-2 w-5 h-5 text-gray-500 pointer-events-none" />
-      {field.state.meta.errors.length > 0 && (
-        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-          <span className="text-black text-xs font-bold">!</span>
-        </div>
-      )}
+      
     </div>
     {field.state.meta.errors.length > 0 && (
       <p className="text-red-700 text-xs font-extralight">
@@ -655,13 +646,17 @@ export default function ContactForm() {
             selector={(state) => [state.canSubmit]}
           >
             {([canSubmit]) => (
-              <button
-                type="submit"
-                disabled={!canSubmit || isPending}
-                className="md:w-auto w-full bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isPending ? "Enviando..." : "Enviar"}
-              </button>
+                <button
+                  type="submit"
+                  disabled={!canSubmit || isPending}
+                  className={`md:w-auto w-full bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors ${
+                  !canSubmit || isPending
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                  }`}
+                >
+                  {isPending ? "Enviando..." : "Enviar"}
+                </button>
             )}
           </form.Subscribe>
         </div>
