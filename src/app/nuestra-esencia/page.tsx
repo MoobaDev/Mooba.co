@@ -4,6 +4,7 @@ import AccordionClient from "@/components/our-essence/AccordionClient";
 import {getTeamInfo} from "../../lib/getTeamInfo";
 import { getVideos } from "@/lib/getOurEssenceVideo";
 import { AccordionItem, TeamMember } from "@/types/Integrantes";
+import ContactUs from "@/components/layout/ContactUs";
 
 export default async function NuestraEsenciaPage() {
   const { data } = await getNosotrosInfo();
@@ -25,7 +26,9 @@ export default async function NuestraEsenciaPage() {
     <main>
       <ViewportVideo videoHero={videos} />
       <AccordionClient items={infoSections} teamMembers={TeamMembers}/>
-      <p>Contacto</p>
+      <section className="max-w-[1440px] mx-auto w-full px-8 py-8">
+        <ContactUs/>
+      </section>
     </main>
   );
 }

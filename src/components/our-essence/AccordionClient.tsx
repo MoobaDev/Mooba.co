@@ -15,7 +15,7 @@ export default function AccordionClient({ items, teamMembers } : AccordionClient
   }, [items.length])
 
   return (
-      <section className="w-full mt-10 mx-auto bg-black border-b border-white/30">
+      <section className="w-full mt-10 mx-auto ">
         {items.map((item, index) => (
           <AccordionItemComponent
             key={index}
