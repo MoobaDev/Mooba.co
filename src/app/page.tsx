@@ -1,5 +1,17 @@
 import { Metadata } from "next";
 import { getSeo } from "@/lib/getSeo";
+import ContactSection from "@/components/home/ContactUs"
+import VideoHero from "@/components/home/Hero"
+import HighlightedProjects from "@/components/home/HighlightedProjects"
+import PortafolioHome from "@/components/home/PortafolioHome"
+import ServicesHome from "@/components/home/ServicesHome"
+import TrustedBrands from "@/components/home/TrustedBrands"
+import { getFeturedProject } from "@/lib/getFeaturedProjects"
+import { getAllProjects } from "@/lib/getAllProyects"
+import { getBrands } from "@/lib/getBrands"
+import { Suspense } from "react"
+import { getServices } from "@/lib/getServices"
+import { getVideoHero } from "@/lib/getVideoHero"
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoResponse = await getSeo('home')
@@ -33,18 +45,6 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   }
 }
-import ContactSection from "@/components/home/ContactUs"
-import VideoHero from "@/components/home/Hero"
-import HighlightedProjects from "@/components/home/HighlightedProjects"
-import PortafolioHome from "@/components/home/PortafolioHome"
-import ServicesHome from "@/components/home/ServicesHome"
-import TrustedBrands from "@/components/home/TrustedBrands"
-import { getFeturedProject } from "@/lib/getFeaturedProjects"
-import { getAllProjects } from "@/lib/getAllProyects"
-import { getBrands } from "@/lib/getBrands"
-import { Suspense } from "react"
-import { getServices } from "@/lib/getServices"
-import { getVideoHero } from "@/lib/getVideoHero"
 
 export default async function HomePage() {
     
