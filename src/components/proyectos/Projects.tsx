@@ -22,12 +22,12 @@ export default function Projects({ projects }: ProjectsProps) {
 
   function getColSpan(idx: number) {
     const mod = idx % 6;
-    if (mod === 0 || mod === 5) return 'col-span-12 md:col-span-12';
-    if (mod === 1) return 'col-span-12 md:col-span-4';
-    if (mod === 2) return 'col-span-12 md:col-span-8';
-    if (mod === 3) return 'col-span-12 md:col-span-8';
-    if (mod === 4) return 'col-span-12 md:col-span-4';
-    return 'col-span-12 md:col-span-12';
+    if (mod === 0 || mod === 5) return 'md:col-span-12';
+    if (mod === 1) return 'md:col-span-4';
+    if (mod === 2) return 'md:col-span-8';
+    if (mod === 3) return 'md:col-span-8';
+    if (mod === 4) return 'md:col-span-4';
+    return 'md:col-span-12';
   }
 
   return (
