@@ -12,9 +12,9 @@ export default async function PortafolioPage() {
   const { data: categories } = await getCategories();
 
   return (
-    <div className="w-full max-w-360 mx-auto px-6 md:px-8 pt-28 pb-8">
+    <div className="w-full max-w-360 mx-auto  pt-28 pb-8">
 
-      <div className="mb-6">
+      <div className="mb-6 px-6 md:px-8">
         <h1 className="text-[28px] md:text-[52px] font-extralight">Proyectos</h1>
       </div>
 
@@ -28,9 +28,13 @@ export default async function PortafolioPage() {
         }}
       ></div>
 
-      <Categories categories={categories} />
+      <div className="px-6 md:px-8">
+        <Categories categories={categories} />
+      </div>
 
-      <Projects projects={projects} />
+      <div className="px-6 md:px-8">
+        <Projects projects={projects} />
+      </div>
 
       <div className="hidden md:block">
         <PortafolioHome projects={portfolioProjects} />
