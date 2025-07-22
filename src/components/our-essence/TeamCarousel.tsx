@@ -128,6 +128,7 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
           onSwiper={(swiper) => {
             swiperRef.current = swiper
           }}
+          
           breakpoints={{
             320: {
               slidesPerView: 1.2,
@@ -158,7 +159,7 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
               spaceBetween: 4,
             },
             1024: {
-              slidesPerView: 2.9,
+              slidesPerView: 3,
               spaceBetween: 4,
             },
             1232: {
@@ -169,7 +170,11 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
               slidesPerView: 4,
               spaceBetween: 4,
             },
-            1920: {
+            1760: {
+              slidesPerView: 5.2,
+              spaceBetween: 4,
+            },
+            1900: {
               slidesPerView: 5.4,
               spaceBetween: 4,
             },
@@ -262,7 +267,7 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
   return (
     <div className="flex flex-col w-fit h-130 md:h-158 mt-0 md:mt-5 items-center">
       <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
-        style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 300ms ease-in-out' }}>
+        style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 100ms ease-in-out' }}>
         <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-white/30" : "border-transparent" }`}>
           <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
             {member.image && member.image.length > 0 && (
