@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from "next/navigation";
 import { getProject } from "@/lib/getProject";
 import "../../globals.css";
+import SafeHtml from "@/components/proyectos/SafeHtml";
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -81,70 +82,57 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
   const project = await getProject(slug);
-  /* const cleanHtml = project ? DOMPurify.sanitize(project.desktopContent) : ""; */
 
   if (!project) {
     notFound();
   }
 
   return (
-    <div>
-      {/* <Seo
-        title={project.seo.title || project.title}
-        description={project.seo.description}
-        keywords={project.seo.keywords}
-        image={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.seo.image.url}`}
-        robots={project.seo.metaRobots}
-      /> */}
-      <div className="w-full max-w-360 mx-auto px-6 md:px-8 pt-28 pb-8" >
+    <div className="w-full max-w-360 mx-auto px-6 md:px-8 pt-28 pb-8" >
 
-        <div className="mb-16">
-          <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
-          <div className="flex flex-wrap gap-y-2">
-            {Array.isArray(project.categorias) && project.categorias.map((cat) => (
-                <div
-                    key={cat.slug}
-                    className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
-                >
-                    {cat.name}
-                </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="">
-          <div className="hidden md:block">
-            {project.desktopContent && (
-              <div className="w-full">
-                <div
-                  className="max-w-none w-full"
-                  dangerouslySetInnerHTML={{ __html: htmlReplace(project.desktopContent) }}
-                />
+      <div className="mb-16">
+        <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
+        <div className="flex flex-wrap gap-y-2">
+          {Array.isArray(project.categorias) && project.categorias.map((cat) => (
+              <div
+                  key={cat.slug}
+                  className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
+              >
+                  {cat.name}
               </div>
-            )}
-          </div>
-          <div className="block md:hidden">
-            {project.mobileContent && (
-              <div className="w-full">
-                <div
-                  className="max-w-none w-full"
-                  dangerouslySetInnerHTML={{ __html: htmlReplace(project.mobileContent) }}
-                />
-              </div>
-            )}
-          </div>
+          ))}
         </div>
-
-        {/* Debug Info */}
-        {/* <details className="mt-12 p-4rounded-lg">
-          <summary className="cursor-pointer font-medium text-sm text-gray-600 mb-2">
-            Ver información de debug
-          </summary>
-          <pre className="text-xs p-3 rounded border overflow-auto">
-            {JSON.stringify(project, null, 2)}
-          </pre>
-        </details> */}
       </div>
+      <div className="">
+        <div className="hidden md:block">
+          {project.desktopContent && (
+            <div className="w-full">
+              <div className="max-w-none w-full">
+                <SafeHtml html={htmlReplace(project.desktopContent)} />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="block md:hidden">
+          {project.mobileContent && (
+            <div className="w-full">
+              <div className="max-w-none w-full">
+                <SafeHtml html={htmlReplace(project.mobileContent)} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Debug Info */}
+      {/* <details className="mt-12 p-4rounded-lg">
+        <summary className="cursor-pointer font-medium text-sm text-gray-600 mb-2">
+          Ver información de debug
+        </summary>
+        <pre className="text-xs p-3 rounded border overflow-auto">
+          {JSON.stringify(project, null, 2)}
+        </pre>
+      </details> */}
     </div>
   );
 }
