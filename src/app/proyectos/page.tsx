@@ -3,16 +3,18 @@ import { getAllProjects } from "@/lib/getAllProyects";
 import { getCategories } from "@/lib/getCategories";
 import Categories from "@/components/proyectos/Categories";
 import Projects from "@/components/proyectos/Projects";
+import PortafolioHome from "@/components/home/PortafolioHome";
 
 export default async function PortafolioPage() {
 
   const { data: projects } = await getAllProjects();
+  const portfolioProjects = projects.slice(0, 4);
   const { data: categories } = await getCategories();
 
   return (
-    <div className="w-full px-6 pt-28 pb-8">
+    <div className="w-full max-w-360 mx-auto  pt-28 pb-8">
 
-      <div className="mb-6">
+      <div className="mb-6 px-6 md:px-8">
         <h1 className="text-[28px] md:text-[52px] font-extralight">Proyectos</h1>
       </div>
 
@@ -26,11 +28,17 @@ export default async function PortafolioPage() {
         }}
       ></div>
 
-      <Categories categories={categories} />
+      <div className="px-6 md:px-8">
+        <Categories categories={categories} />
+      </div>
 
-      <Projects projects={projects} />
+      <div className="px-6 md:px-8">
+        <Projects projects={projects} />
+      </div>
 
-      
+      <div className="hidden md:block">
+        <PortafolioHome projects={portfolioProjects} />
+      </div>
     </div>
   );
 }

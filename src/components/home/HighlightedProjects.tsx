@@ -1,22 +1,30 @@
 "use client";
 
-import { useKeenSlider } from "keen-slider/react";
+import { useKeenSlider, KeenSliderInstance } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
-import { useState} from "react";
-import { HighlightedProject } from '@/types/highlightedProjects.type';
+import { useEffect, useState } from "react";
+import { HighlightedProject } from "@/types/highlightedProjects.type";
 import { useRouter } from "next/navigation";
-import { CursorLeftArrow, CursorRightArrow, CursorViewProject } from '@/components/ui/Icons';
+import {
+  CursorLeftArrow,
+  CursorRightArrow,
+  CursorViewProject,
+} from "@/components/ui/Icons";
 
-export default function HighlightedProjects({ projects }: { projects: HighlightedProject[] | null }) {
-  
+export default function HighlightedProjects({
+  projects,
+}: {
+  projects: HighlightedProject[] | null;
+}) {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [cursorType, setCursorType] = useState<'left' | 'right' | 'default'>('default');
-  const [slider, setSlider] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const [cursorType, setCursorType] = useState<"left" | "right" | "default">(
+    "default"
+  );
+  const [slider, setSlider] = useState<KeenSliderInstance | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
 
   const [sliderRef] = useKeenSlider({
     initial: 0,
@@ -59,49 +67,64 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
     },
   });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const width = rect.width;
-    
-    // Actualizar posición del mouse
-    setMousePosition({ x: e.clientX, y: e.clientY });
-    
-    // Zona más pequeña para activar las flechas (20% en cada extremo)
-    if (x < width * 0.28) {
-      setCursorType('left');
-    } else if (x > width * 0.75) {
-      setCursorType('right');
-    } else {
-      setCursorType('default');
-    }
-  };  
+  // Listener global para seguir el mouse incluso durante el drag
+  useEffect(() => {
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!slider?.container) return;
 
-  const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 });
-    setCursorType('default');
-  };
+      const rect = slider.container.getBoundingClientRect();
+      const isInside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>, projectSlug: string) => {
+      if (!isInside) {
+        setMousePosition({ x: 0, y: 0 });
+        setCursorType("default");
+        return;
+      }
+
+      const x = e.clientX - rect.left;
+      const width = rect.width;
+
+      setMousePosition({ x: e.clientX, y: e.clientY });
+
+      if (x < width * 0.28) {
+        setCursorType("left");
+      } else if (x > width * 0.75) {
+        setCursorType("right");
+      } else {
+        setCursorType("default");
+      }
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+    };
+  }, [slider]);
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    projectSlug: string
+  ) => {
     if (!slider) return;
-    
-    // Usar el estado del cursor que ya se calculó en handleMouseMove
-    // En lugar de recalcular la posición
-    if (cursorType === 'left') {
+
+    if (cursorType === "left") {
       slider.prev();
-    } else if (cursorType === 'right') {
+    } else if (cursorType === "right") {
       slider.next();
     } else {
-      // Zona central - navegar al proyecto
       router.push(`/proyectos/${projectSlug}`);
     }
   };
 
   const renderCustomCursor = () => {
     switch (cursorType) {
-      case 'left':
+      case "left":
         return <CursorLeftArrow />;
-      case 'right':
+      case "right":
         return <CursorRightArrow />;
       default:
         return <CursorViewProject />;
@@ -130,38 +153,38 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
 
       <div className="relative overflow-hidden w-full">
         {/* Cursor personalizado */}
-        <div 
+        <div
           className="fixed z-50 pointer-events-none"
           style={{
             left: mousePosition.x - 20,
             top: mousePosition.y - 20,
-            transform: 'translate(-50%, -50%)',
-            opacity: cursorType !== 'default' || mousePosition.x !== 0 ? 1 : 0,
-            transition: 'opacity 0.2s ease'
+            transform: "translate(-50%, -50%)",
+            opacity: cursorType !== "default" || mousePosition.x !== 0 ? 1 : 0,
+            transition: "opacity 0.2s ease",
           }}
         >
           {renderCustomCursor()}
         </div>
-        
+
         <div className="w-full">
-          <div 
-            ref={sliderRef} 
+          <div
+            ref={sliderRef}
             className="keen-slider cursor-none"
-            style={{ cursor: 'none' }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            style={{ cursor: "none" }}
           >
             {projects.map(({ proyecto }, idx) => (
-              <div key={proyecto.slug} className="keen-slider__slide cursor-none">
+              <div
+                key={proyecto.slug}
+                className="keen-slider__slide cursor-none"
+                onClick={(e) => handleClick(e, proyecto.slug)}
+              >
                 <div className="flex flex-col transition-all duration-300 cursor-none">
                   <div
                     className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 aspect-[905/605] cursor-none ${
                       loaded && currentSlide % projects.length === idx
-                        ? "w-full h-auto max-w-[1440px] "
+                        ? "w-full h-auto max-w-[1440px]"
                         : "w-full h-auto max-w-[1440px] scale-[0.95]"
                     }`}
-                    style={{ cursor: 'none' }}
-                    onClick={(e) => handleClick(e, proyecto.slug)}
                   >
                     {proyecto.desktopVideo ? (
                       <video
@@ -174,7 +197,6 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                             ? "brightness-100 scale-100"
                             : "brightness-50 scale-100"
                         }`}
-                        style={{ cursor: 'none' }}
                       />
                     ) : (
                       <Image
@@ -186,7 +208,6 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                             ? "brightness-100 scale-100"
                             : "brightness-50 scale-100"
                         }`}
-                        style={{ cursor: 'none' }}
                       />
                     )}
                   </div>
@@ -197,7 +218,6 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                         ? "text-white opacity-100"
                         : "text-white opacity-50 scale-[0.95]"
                     }`}
-                    style={{ cursor: 'none' }}
                   >
                     <div className="mb-2 md:mb-3 max-w-[840px]">
                       <h5 className="text-xl font-extralight transition-opacity duration-300">
@@ -212,11 +232,7 @@ export default function HighlightedProjects({ projects }: { projects: Highlighte
                       {proyecto.categorias.map((cat, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className={`text-sm font-normal border  rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 ${
-                            loaded && currentSlide % projects.length === idx
-                              ? "text-[#7A7F89] border-[#D0D5DD]  opacity-100"
-                              : "text-[#7A7F89] border-[#D0D5DD]  opacity-100"
-                          }`}
+                          className="text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 text-[#7A7F89] border-[#D0D5DD]"
                         >
                           {cat.name}
                         </span>
