@@ -130,29 +130,45 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
           }}
           breakpoints={{
             320: {
+              slidesPerView: 1.2,
+              spaceBetween: 4,
+            },
+            375: {
               slidesPerView: 1.4,
-              spaceBetween: 16,
+              spaceBetween: 4,
+            },
+            425: {
+              slidesPerView: 1.6,
+              spaceBetween: 4,
             },
             640: {
               slidesPerView: 2,
-              spaceBetween: 16,
+              spaceBetween: 4,
+            },
+            768: {
+              slidesPerView: 2.2,
+              spaceBetween: 4,
             },
             1024: {
-              slidesPerView: 3.8,
-              spaceBetween: 24,
+              slidesPerView: 2.9,
+              spaceBetween: 4,
             },
             1440: {
-              slidesPerView: 4.5,
-              spaceBetween: 24,
+              slidesPerView: 4,
+              spaceBetween: 4,
             },
             1920: {
-              slidesPerView: 5.5,
-              spaceBetween: 28,
+              slidesPerView: 5.4,
+              spaceBetween: 4,
+            },
+            2560: {
+              slidesPerView: 7.4,
+              spaceBetween: 4,
             },
           }}
         >
           {duplicatedMembers.map((member, index) => (
-            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-all duration-300 ease-out flex items-center justify-center">
+            <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-all duration-300 ease-out flex items-center w-fit justify-center">
               <TeamMemberCard member={member} isMobile={isMobile} />
             </SwiperSlide>
           ))}
@@ -232,7 +248,7 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
   }, [])
 
   return (
-    <div className="flex flex-col h-168 mt-10 items-center">
+    <div className="flex flex-col w-fit h-130 md:h-158 mt-0 md:mt-5 items-center">
       <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
         style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 300ms ease-in-out' }}>
         <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-gray-400" : "border-transparent" }`}>

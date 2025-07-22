@@ -25,6 +25,7 @@ export default async function NuestraEsenciaPage() {
     <main>
       <ViewportVideo videoHero={videos} />
       <AccordionClient items={infoSections} teamMembers={TeamMembers}/>
+      <p>Contacto</p>
     </main>
   );
 }
