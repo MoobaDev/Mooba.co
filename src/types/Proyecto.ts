@@ -20,17 +20,14 @@ export interface Project {
   title: string;
   slug: string;
   shortDescription: string;
-  mobileImage: StrapiImage;
   desktopImage: StrapiImage;
+  desktopVideo: StrapiImage;
   desktopContent: string;
   mobileContent: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   categorias: Category[];
-  desktopVideo?: {
-    url: string;
-  };
 }
 
 export interface Category {
