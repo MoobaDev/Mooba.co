@@ -50,7 +50,8 @@ function htmlReplace(html: string) {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const project = await getProject(params.slug)
+  const { slug } = params;
+  const project = await getProject(slug);
 
   if (!project) return {}
 
@@ -85,8 +86,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
   const project = await getProject(slug);
-  const { data: projects } = await getAllProjects();
-  const portfolioProjects = projects.slice(0, 4);
+
+  const { data: allProjects } = await getAllProjects();
+  const portfolioProjects = allProjects.slice(0, 4);
 
   if (!project) {
     notFound();
@@ -108,6 +110,7 @@ export default async function projectPage({ params }: { params: { slug: string }
           ))}
         </div>
       </div>
+
       <div className="px-6 md:px-8">
         <div className="hidden md:block">
           {project.desktopContent && (

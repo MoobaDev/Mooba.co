@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
     alternates: {
-      canonical: `https://mooba.co/nosotros`,
+      canonical: `https://mooba.co/nuestra-esencia`,
     },
     openGraph: {
       title: seo?.title || "Nosotros - Mooba",
