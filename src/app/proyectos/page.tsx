@@ -3,7 +3,6 @@ import { getAllProjects } from "@/lib/getAllProyects";
 import { getCategories } from "@/lib/getCategories";
 import Categories from "@/components/proyectos/Categories";
 import Projects from "@/components/proyectos/Projects";
-import ContactSection from "@/components/home/ContactUs";
 import PortafolioHome from "@/components/home/PortafolioHome";
 
 export default async function PortafolioPage() {

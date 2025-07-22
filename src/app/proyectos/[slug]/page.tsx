@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getProject } from "@/lib/getProject";
 import "../../globals.css";
+import SafeHtml from "@/components/proyectos/SafeHtml";
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -47,7 +48,7 @@ function htmlReplace(html: string) {
 export default async function projectPage({ params }: { params: { slug: string }}) {
   const { slug } = await params;
   const project = await getProject(slug);
-  /* const cleanHtml = project ? DOMPurify.sanitize(project.desktopContent) : ""; */
+  //const cleanHtml = project ? DOMPurify.sanitize(htmlReplace(project.desktopContent)) : ""; 
 
   if (!project) {
     notFound();
@@ -76,8 +77,9 @@ export default async function projectPage({ params }: { params: { slug: string }
             <div className="w-full">
               <div
                 className="max-w-none w-full"
-                dangerouslySetInnerHTML={{ __html: htmlReplace(project.desktopContent) }}
-              />
+              >
+                <SafeHtml html={htmlReplace(project.desktopContent)} />
+              </div>
             </div>
           )}
         </div>
