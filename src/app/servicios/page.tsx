@@ -9,12 +9,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = seoResponse?.seo
 
   return {
-    title: seo?.title || "Servicios - Mooba",
+    title: seo?.title || "Mooba | Servicios",
     description: seo?.description || '',
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
     openGraph: {
-      title: seo?.title || "Servicios - Mooba",
+      title: seo?.title || "Mooba | Servicios",
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: seo?.title || "Servicios - Mooba",
+      title: seo?.title || "Mooba | Servicios",
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
