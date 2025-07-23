@@ -22,30 +22,18 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" sizes="any" />
         <Script
-          id="ld-mooba"
+          id="ld-global"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": "WebSite",
-                  "@id": "https://mooba.co/#website",
-                  name: "Mooba Studio",
-                  url: "https://mooba.co",
-                  description: "Estudio creativo de branding, diseño web y estrategia digital.",
-                  inLanguage: "es",
-                  publisher: {
-                    "@id": "https://mooba.co/#organization"
-                  }
-                },
-                {
-                  "@type": "ProfessionalService",
+                  "@type": "Organization",
                   "@id": "https://mooba.co/#organization",
-                  name: "Mooba Studio",
-                  description: "Agencia creativa especializada en branding, diseño UX/UI y desarrollo web.",
+                  name: "Mooba Agencia",
                   url: "https://mooba.co",
-                  image: "https://api.mooba.co/uploads/logo_mooba_actualizado_a614d68076.png",
+                  description: "Agencia de marketing digital en Barranquilla. Branding, diseño UX/UI, desarrollo web y redes sociales.",
                   telephone: "+57 304 333 8350",
                   address: {
                     "@type": "PostalAddress",
@@ -54,8 +42,59 @@ export default function RootLayout({
                   },
                   sameAs: [
                     "https://www.instagram.com/moobaagencia/",
-                    "https://www.linkedin.com/company/mooba-agencia/"
+                    "https://www.linkedin.com/company/mooba-agencia/",
+                    "https://www.behance.net/moobaagencia"
+                  ],
+                  logo: {
+                    "@type": "ImageObject",
+                    "@id": "https://mooba.co/#logo",
+                    url: "https://api.mooba.co/uploads/logo_mooba_actualizado_a614d68076.png",
+                    contentUrl: "https://api.mooba.co/uploads/logo_mooba_actualizado_a614d68076.png",
+                    caption: "Logo Mooba",
+                    inLanguage: "es-CO",
+                    width: "202",
+                    height: "202"
+                  },
+                  "serviceType": [
+                    "Marketing Digital",
+                    "Diseño Web",
+                    "Redes Sociales",
+                    "Branding",
+                    "Diseño Gráfico"
                   ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://mooba.co/#website",
+                  url: "https://mooba.co",
+                  name: "Mooba Agencia",
+                  inLanguage: "es-CO",
+                  publisher: {
+                    "@id": "https://mooba.co/#organization"
+                  },
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: "https://mooba.co/?s={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "WebPage",
+                  "@id": "https://mooba.co#webpage",
+                  url: "https://mooba.co",
+                  name: "Mooba Agencia | Diseño, Branding y Marketing Digital",
+                  datePublished: "2024-01-01T00:00:00-05:00",
+                  dateModified: "2025-07-28T00:00:00-05:00",
+                  about: {
+                    "@id": "https://mooba.co/#organization"
+                  },
+                  isPartOf: {
+                    "@id": "https://mooba.co/#website"
+                  },
+                  primaryImageOfPage: {
+                    "@id": "https://mooba.co/#logo"
+                  },
+                  inLanguage: "es-CO"
                 }
               ]
             })
