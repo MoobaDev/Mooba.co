@@ -1,6 +1,40 @@
 
 import ContactUs from "@/components/layout/ContactUs";
+import { getSeo } from "@/lib/getSeo";
+import { Metadata } from "next";
 
+export async function generateMetadata(): Promise<Metadata> {
+  const seoResponse = await getSeo('contactanos')
+
+  if (!seoResponse) return {}
+
+  const seo = seoResponse?.seo
+
+  return {
+    title: seo?.title || "Mooba | Contactanos",
+    description: seo?.description || '',
+    keywords: seo?.keywords,
+    robots: seo?.metaRobots || 'index, follow',
+    alternates: {
+      canonical: `https://mooba.co/contactanos`,
+    },
+    openGraph: {
+      title: seo?.title || "Mooba | Contactanos",
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.title || "Mooba | Contactanos",
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+  }
+}
 export default function ContactoPage() {
   return (
     <section className="container max-w-[1440px] mt-22 md:mt-[160px] mx-auto px-6 md:px-8 overflow-hidden">

@@ -1,7 +1,9 @@
+import { Seo } from "./Seo";
+
 interface StrapiImageFormat {
   url: string;
 }
-interface StrapiImage {
+export interface StrapiImage {
   id: number;
   url: string;
   width: number;
@@ -28,6 +30,7 @@ export interface Project {
   updatedAt: string;
   publishedAt: string;
   categorias: Category[];
+  seo: Seo;
 }
 
 export interface Category {

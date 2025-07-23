@@ -1,9 +1,9 @@
 import { Project } from "@/types/Proyecto";
 
-export async function getProject(slug: string): Promise<Project | null> {
+export async function getSeoProject(slug: string): Promise<Project | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate[seo][populate]=image`,
       { 
         cache: "no-store", 
         headers: {
