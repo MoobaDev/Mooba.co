@@ -1,5 +1,10 @@
-import VideoHero from "../../components/our-essence/ViewportVideo"
-import { Accordion } from "@/components/our-essence/AccordeonItem"
+import ViewportVideo from "../../components/home/Hero";
+import { getNosotrosInfo } from "@/lib/getNosotrosInfo";
+import AccordionClient from "@/components/our-essence/AccordionClient";
+import {getTeamInfo} from "../../lib/getTeamInfo";
+import { getVideos } from "@/lib/getOurEssenceVideo";
+import { AccordionItem, TeamMember } from "@/types/Integrantes";
+import ContactUs from "@/components/layout/ContactUs";
 import { getSeo } from "@/lib/getSeo";
 import { Metadata } from "next";
 
@@ -36,34 +41,29 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function NuestraEsenciaPage() {
-  const InfoSections = [
-    {
-      title: "Somos Mooba",
-      content: "Una agencia creativa donde el diseño, la tecnología y las ideas estratégicas se cruzan para crear marcas, productos y experiencias con impacto.",
-      carousel: false
-    },
-    {
-      title: "Pensamos con intención",
-      content: "No seguimos fórmulas. Diseñamos a conciencia, entendiendo qué mueve a las personas y cómo generar valor real para los negocios.",
-      carousel: false
-    },
-    {
-      title: "Nos mueven las ganas de hacerlo bien",
-      content: "Por eso cuidamos el detalle, cuestionamos lo obvio y trabajamos para que cada proyecto tenga sentido, consistencia y ambición",
-      carousel: false
-    },
-    {
-      title:"Somos equipo",
-      content:"Diseñadores, desarrolladores, estrategas y creadores. Personas diferentes, pero con un lenguaje común: transformar ideas en resultados.",
-      carousel: true
-    },
-     
-  ];
+export default async function NuestraEsenciaPage() {
+  const { data } = await getNosotrosInfo();
+  const {data: integrantes} = await getTeamInfo();
+  const videos = await getVideos();
+
+  const infoSections: AccordionItem[] = data.map((item) => ({
+    title: item.sectionName,
+    content: item.sectionDescription,
+    carousel: item.sectionName.toLowerCase().includes("equipo"),
+  }));
+  const TeamMembers: TeamMember[] = integrantes.map((persona) => ({
+    name: persona.name, 
+    ocupation: persona.ocupation,
+    phrase: persona.phrase,
+    image: persona.image,
+  }))
   return (
     <main>
-      <VideoHero/>
-      <Accordion items={InfoSections} />
+      <ViewportVideo videoHero={videos} />
+      <AccordionClient items={infoSections} teamMembers={TeamMembers}/>
+      <section className="max-w-[1440px] mx-auto w-full px-8 py-8">
+        <ContactUs/>
+      </section>
     </main>
   );
 }
