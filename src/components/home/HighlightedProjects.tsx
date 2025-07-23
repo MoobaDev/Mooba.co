@@ -70,7 +70,12 @@ export default function HighlightedProjects({
   // Listener global para seguir el mouse incluso durante el drag
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
-      if (!slider?.container) return;
+      // Evita que se muestre en móviles
+      if (window.innerWidth < 768 || !slider?.container) {
+        setMousePosition({ x: 0, y: 0 });
+        setCursorType("default");
+        return;
+      }
 
       const rect = slider.container.getBoundingClientRect();
       const isInside =

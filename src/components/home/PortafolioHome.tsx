@@ -193,7 +193,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
           <CursorViewProject />
         </div>
 
-        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 ${isHovering ? 'cursor-none' : ''}`}
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8 ${isHovering ? 'cursor-none' : ''}`}
              style={isHovering ? { cursor: 'none' } : {}}>
           {projects.map((project, index) => (
             <Link
