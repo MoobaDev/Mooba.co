@@ -51,7 +51,7 @@ function htmlReplace(html: string) {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const project = await getSeoProject(slug);
 
   if (!project) return {}
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function projectPage({ params }: { params: { slug: string }}) {
-  const { slug } = params;
+  const { slug } = await params;
   const project = await getProject(slug);
 
   const { data: allProjects } = await getAllProjects();
