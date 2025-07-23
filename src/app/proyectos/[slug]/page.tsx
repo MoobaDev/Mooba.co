@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getProject } from "@/lib/getProject";
 import "../../globals.css";
 import SafeHtml from "@/components/proyectos/SafeHtml";
+import ShareButtons from "@/components/ui/ShareButtons";
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -70,6 +71,11 @@ export default async function projectPage({ params }: { params: { slug: string }
           ))}
         </div>
       </div>
+
+      <ShareButtons
+        url={`https://mooba.co/proyectos/${slug}`}
+        title={project.title}
+      />
 
       <div className="">
         <div className="hidden md:block">
