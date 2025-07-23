@@ -7,6 +7,7 @@ import PortafolioHome from '@/components/home/PortafolioHome';
 import { getAllProjects } from '@/lib/getAllProyects';
 import ContactSection from '@/components/home/ContactUs';
 import { getSeoProject } from '@/lib/getSeoProject';
+import Link from 'next/link';
 
 function htmlReplace(html: string) {
   // Para <video>: quita controls, asegura autoplay, muted y loop
@@ -102,12 +103,13 @@ export default async function projectPage({ params }: { params: { slug: string }
         <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
         <div className="flex flex-wrap gap-y-2">
           {Array.isArray(project.categorias) && project.categorias.map((cat) => (
-            <div
+            <Link
                 key={cat.slug}
+                href={`/proyectos?categoria=${cat.slug}`}
                 className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
             >
                 {cat.name}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
