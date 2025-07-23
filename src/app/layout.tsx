@@ -50,16 +50,16 @@ export default function RootLayout({
                   name: "Mooba Studio",
                   description: "Agencia creativa especializada en branding, diseño UX/UI y desarrollo web.",
                   url: "https://mooba.co",
-                  image: "https://mooba.co/icon.png", //reemplazar con logo
-                  telephone: "+57 311 552 4314",
+                  image: "https://api.mooba.co/uploads/logo_mooba_actualizado_a614d68076.png",
+                  telephone: "+57 304 333 8350",
                   address: {
                     "@type": "PostalAddress",
                     addressLocality: "Barranquilla",
                     addressCountry: "CO"
                   },
                   sameAs: [
-                    "https://www.instagram.com/mooba.studio",
-                    "https://www.linkedin.com/company/moobastudio"
+                    "https://www.instagram.com/moobaagencia/",
+                    "https://www.linkedin.com/company/mooba-agencia/"
                   ]
                 }
               ]
