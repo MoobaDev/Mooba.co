@@ -5,6 +5,41 @@ import {getTeamInfo} from "../../lib/getTeamInfo";
 import { getVideos } from "@/lib/getOurEssenceVideo";
 import { AccordionItem, TeamMember } from "@/types/Integrantes";
 import ContactUs from "@/components/layout/ContactUs";
+import { getSeo } from "@/lib/getSeo";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seoResponse = await getSeo('nosotros')
+
+  if (!seoResponse) return {}
+
+  const seo = seoResponse?.seo
+
+  return {
+    title: seo?.title || "Mooba | Nuestra esencia",
+    description: seo?.description || '',
+    keywords: seo?.keywords,
+    robots: seo?.metaRobots || 'index, follow',
+    alternates: {
+      canonical: `https://mooba.co/nuestra-esencia`,
+    },
+    openGraph: {
+      title: seo?.title || "Mooba | Nuestra esencia",
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.title || "Mooba | Nuestra esencia",
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+  }
+}
 
 export default async function NuestraEsenciaPage() {
   const { data } = await getNosotrosInfo();

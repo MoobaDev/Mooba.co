@@ -1,29 +1,227 @@
 "use client";
 
+import React, { useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/useSubmitContactForm";
 import { useForm } from "@tanstack/react-form";
 
+// Estilos para prevenir el autocompletado blanco
+const autocompleteCss = `
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: white !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+`;
+
 const countries = [
+  "Afganistán",
+  "Albania",
+  "Alemania",
+  "Andorra",
+  "Angola",
+  "Antigua y Barbuda",
+  "Arabia Saudí",
+  "Argelia",
   "Argentina",
+  "Armenia",
+  "Australia",
+  "Austria",
+  "Azerbaiyán",
+  "Bahamas",
+  "Bahrein",
+  "Bangladesh",
+  "Barbados",
+  "Bielorrusia",
+  "Bélgica",
+  "Belice",
+  "Benín",
+  "Bután",
   "Bolivia",
+  "Bosnia y Herzegovina",
+  "Botsuana",
   "Brasil",
+  "Brunéi",
+  "Bulgaria",
+  "Burkina Faso",
+  "Burundi",
+  "Cabo Verde",
+  "Camboya",
+  "Camerún",
+  "Canadá",
+  "Catar",
+  "Chad",
   "Chile",
+  "China",
+  "Chipre",
   "Colombia",
+  "Comoras",
+  "Corea del Norte",
+  "Corea del Sur",
+  "Costa de Marfil",
   "Costa Rica",
+  "Croacia",
   "Cuba",
+  "Dinamarca",
+  "Dominica",
   "Ecuador",
+  "Egipto",
   "El Salvador",
+  "Emiratos Árabes Unidos",
+  "Eritrea",
+  "Eslovaquia",
+  "Eslovenia",
+  "España",
+  "Estados Unidos",
+  "Estonia",
+  "Esuatini",
+  "Etiopía",
+  "Filipinas",
+  "Finlandia",
+  "Fiyi",
+  "Francia",
+  "Gabón",
+  "Gambia",
+  "Georgia",
+  "Ghana",
+  "Granada",
+  "Grecia",
   "Guatemala",
+  "Guinea",
+  "Guinea-Bisáu",
+  "Guinea Ecuatorial",
+  "Guyana",
+  "Haití",
   "Honduras",
+  "Hungría",
+  "India",
+  "Indonesia",
+  "Irak",
+  "Irán",
+  "Irlanda",
+  "Islandia",
+  "Islas Marshall",
+  "Islas Salomón",
+  "Israel",
+  "Italia",
+  "Jamaica",
+  "Japón",
+  "Jordania",
+  "Kazajistán",
+  "Kenia",
+  "Kirguistán",
+  "Kiribati",
+  "Kuwait",
+  "Laos",
+  "Lesoto",
+  "Letonia",
+  "Líbano",
+  "Liberia",
+  "Libia",
+  "Liechtenstein",
+  "Lituania",
+  "Luxemburgo",
+  "Madagascar",
+  "Malasia",
+  "Malaui",
+  "Maldivas",
+  "Malí",
+  "Malta",
+  "Marruecos",
+  "Mauricio",
+  "Mauritania",
   "México",
+  "Micronesia",
+  "Moldavia",
+  "Mónaco",
+  "Mongolia",
+  "Montenegro",
+  "Mozambique",
+  "Birmania",
+  "Namibia",
+  "Nauru",
+  "Nepal",
   "Nicaragua",
+  "Níger",
+  "Nigeria",
+  "Noruega",
+  "Nueva Zelanda",
+  "Omán",
+  "Países Bajos",
+  "Pakistán",
+  "Palaos",
   "Panamá",
+  "Papúa Nueva Guinea",
   "Paraguay",
   "Perú",
+  "Polonia",
+  "Portugal",
+  "Reino Unido",
+  "República Centroafricana",
+  "República Checa",
+  "República del Congo",
+  "República Democrática del Congo",
   "República Dominicana",
+  "Ruanda",
+  "Rumania",
+  "Rusia",
+  "Samoa",
+  "San Cristóbal y Nieves",
+  "San Marino",
+  "San Vicente y las Granadinas",
+  "Santa Lucía",
+  "Santo Tomé y Príncipe",
+  "Senegal",
+  "Serbia",
+  "Seychelles",
+  "Sierra Leona",
+  "Singapur",
+  "Siria",
+  "Somalia",
+  "Sri Lanka",
+  "Sudáfrica",
+  "Sudán",
+  "Sudán del Sur",
+  "Suecia",
+  "Suiza",
+  "Surinam",
+  "Tailandia",
+  "Tanzania",
+  "Tayikistán",
+  "Timor Oriental",
+  "Togo",
+  "Tonga",
+  "Trinidad y Tobago",
+  "Túnez",
+  "Turkmenistán",
+  "Turquía",
+  "Tuvalu",
+  "Ucrania",
+  "Uganda",
   "Uruguay",
+  "Uzbekistán",
+  "Vanuatu",
+  "Vaticano",
   "Venezuela",
+  "Vietnam",
+  "Yemen",
+  "Yibuti",
+  "Zambia",
+  "Zimbabue"
 ];
 
 const employeeCounts = [
@@ -81,52 +279,79 @@ interface FloatingLabelInputProps {
   };
   label: string;
   type?: string;
+  pattern?: string;
+  inputMode?: "numeric" | "text" | "email" | "tel";
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text" }) => (
-  <div className="space-y-2">
-    <div className="relative">
-      <label
-        htmlFor={field.name}
-        className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
-          field.state.value || field.state.meta.isFocused
-            ? "text-xs text-white -translate-y-4"
-            : "text-base text-gray-500 translate-y-0"
-        }`}
-      >
-        {label}
-      </label>
-      <input
-        id={field.name}
-        name={field.name}
-        type={type}
-        value={field.state.value}
-        onBlur={() => {
-          field.handleBlur();
-          field.state.meta.isFocused = false;
-        }}
-        onFocus={() => (field.state.meta.isFocused = true)}
-        onChange={(e) => field.handleChange(e.target.value)}
-        className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
-          field.state.meta.errors.length > 0
-            ? "border-red-700 focus:border-red-500"
-            : "border-zinc-600 focus:border-white"
-        }`}
-        placeholder=" "
-      />
+const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, type = "text", pattern, inputMode, onKeyDown }) => {
+  const [hasAutofill, setHasAutofill] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const checkAutofill = () => {
+      const isAutofilled = input.matches?.(':-webkit-autofill') || false;
+      setHasAutofill(isAutofilled);
+    };
+
+    // Check on mount and on interval
+    checkAutofill();
+    const interval = setInterval(checkAutofill, 200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="space-y-2">
+      <div className="relative">
+        <label
+          htmlFor={field.name}
+          className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
+            field.state.value || field.state.meta.isFocused || hasAutofill
+              ? "text-xs text-white -translate-y-4"
+              : "text-base text-gray-500 translate-y-0"
+          }`}
+        >
+          {label}
+        </label>
+        <input
+          ref={inputRef}
+          id={field.name}
+          name={field.name}
+          type={type}
+          pattern={pattern}
+          inputMode={inputMode}
+          value={field.state.value}
+          onBlur={() => {
+            field.handleBlur();
+            field.state.meta.isFocused = false;
+          }}
+          onFocus={() => {
+            field.state.meta.isFocused = true;
+          }}
+          onChange={(e) => {
+            field.handleChange(e.target.value);
+          }}
+          onKeyDown={onKeyDown}
+          className={`peer w-full bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
+            field.state.meta.errors.length > 0
+              ? "border-red-700 focus:border-red-500"
+              : "border-zinc-600 focus:border-white"
+          }`}
+          placeholder=" "
+        />
+      </div>
       {field.state.meta.errors.length > 0 && (
-        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-          <span className="text-black text-xs font-bold">!</span>
-        </div>
+        <p className="text-red-700 text-xs font-extralight">
+          {field.state.meta.errors[0]}
+        </p>
       )}
     </div>
-    {field.state.meta.errors.length > 0 && (
-      <p className="text-red-700 text-xs font-extralight">
-        {field.state.meta.errors[0]}
-      </p>
-    )}
-  </div>
-);
+  );
+};
 
 interface FloatingLabelSelectProps {
   field: {
@@ -177,11 +402,7 @@ const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label,
         </label>
       )}
       <ChevronDown className="absolute right-2 top-2 w-5 h-5 text-gray-500 pointer-events-none" />
-      {field.state.meta.errors.length > 0 && (
-        <div className="absolute right-0 top-0 w-5 h-5 bg-red-700 rounded-full flex items-center justify-center">
-          <span className="text-black text-xs font-bold">!</span>
-        </div>
-      )}
+      
     </div>
     {field.state.meta.errors.length > 0 && (
       <p className="text-red-700 text-xs font-extralight">
@@ -222,7 +443,9 @@ export default function ContactForm() {
   });
 
   return (
-    <div className="container mx-auto font-normal text-base w-full">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: autocompleteCss }} />
+      <div className="container mx-auto font-normal text-base w-full">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -303,11 +526,30 @@ export default function ContactForm() {
           <form.Field
             name="phone"
             validators={{
-              onChange: ({ value }) =>
-                !value ? "Este campo es requerido" : undefined,
+              onChange: ({ value }) => {
+                if (!value) return "Este campo es requerido";
+                if (!/^\d+$/.test(value)) {
+                  return "Solo se permiten números";
+                }
+                return undefined;
+              },
             }}
           >
-            {(field) => <FloatingLabelInput field={field} label="Celular" />}
+            {(field) => (
+              <FloatingLabelInput 
+                field={field} 
+                label="Celular" 
+                type="tel"
+                pattern="[0-9]*"
+                inputMode="numeric"
+                onKeyDown={(e) => {
+                  // Solo permitir números, Backspace, Delete, Tab y flechas
+                  if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+              />
+            )}
           </form.Field>
 
           <form.Field
@@ -404,13 +646,17 @@ export default function ContactForm() {
             selector={(state) => [state.canSubmit]}
           >
             {([canSubmit]) => (
-              <button
-                type="submit"
-                disabled={!canSubmit || isPending}
-                className="md:w-auto w-full bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isPending ? "Enviando..." : "Enviar"}
-              </button>
+                <button
+                  type="submit"
+                  disabled={!canSubmit || isPending}
+                  className={`md:w-auto w-full bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors ${
+                  !canSubmit || isPending
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                  }`}
+                >
+                  {isPending ? "Enviando..." : "Enviar"}
+                </button>
             )}
           </form.Subscribe>
         </div>
@@ -429,5 +675,6 @@ export default function ContactForm() {
         )}
       </form>
     </div>
+    </>
   );
 }
