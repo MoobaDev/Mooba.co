@@ -28,201 +28,203 @@ const autocompleteCss = `
   }
 `;
 
-const countries = [
-  "Colombia",
-  "Afganistán",
-  "Albania",
-  "Alemania",
-  "Andorra",
-  "Angola",
-  "Antigua y Barbuda",
-  "Arabia Saudí",
-  "Argelia",
-  "Argentina",
-  "Armenia",
-  "Australia",
-  "Austria",
-  "Azerbaiyán",
-  "Bahamas",
-  "Bahrein",
-  "Bangladesh",
-  "Barbados",
-  "Bielorrusia",
-  "Bélgica",
-  "Belice",
-  "Benín",
-  "Bután",
-  "Bolivia",
-  "Bosnia y Herzegovina",
-  "Botsuana",
-  "Brasil",
-  "Brunéi",
-  "Bulgaria",
-  "Burkina Faso",
-  "Burundi",
-  "Cabo Verde",
-  "Camboya",
-  "Camerún",
-  "Canadá",
-  "Catar",
-  "Chad",
-  "Chile",
-  "China",
-  "Chipre",
-  "Comoras",
-  "Corea del Norte",
-  "Corea del Sur",
-  "Costa de Marfil",
-  "Costa Rica",
-  "Croacia",
-  "Cuba",
-  "Dinamarca",
-  "Dominica",
-  "Ecuador",
-  "Egipto",
-  "El Salvador",
-  "Emiratos Árabes Unidos",
-  "Eritrea",
-  "Eslovaquia",
-  "Eslovenia",
-  "España",
-  "Estados Unidos",
-  "Estonia",
-  "Esuatini",
-  "Etiopía",
-  "Filipinas",
-  "Finlandia",
-  "Fiyi",
-  "Francia",
-  "Gabón",
-  "Gambia",
-  "Georgia",
-  "Ghana",
-  "Granada",
-  "Grecia",
-  "Guatemala",
-  "Guinea",
-  "Guinea-Bisáu",
-  "Guinea Ecuatorial",
-  "Guyana",
-  "Haití",
-  "Honduras",
-  "Hungría",
-  "India",
-  "Indonesia",
-  "Irak",
-  "Irán",
-  "Irlanda",
-  "Islandia",
-  "Islas Marshall",
-  "Islas Salomón",
-  "Israel",
-  "Italia",
-  "Jamaica",
-  "Japón",
-  "Jordania",
-  "Kazajistán",
-  "Kenia",
-  "Kirguistán",
-  "Kiribati",
-  "Kuwait",
-  "Laos",
-  "Lesoto",
-  "Letonia",
-  "Líbano",
-  "Liberia",
-  "Libia",
-  "Liechtenstein",
-  "Lituania",
-  "Luxemburgo",
-  "Madagascar",
-  "Malasia",
-  "Malaui",
-  "Maldivas",
-  "Malí",
-  "Malta",
-  "Marruecos",
-  "Mauricio",
-  "Mauritania",
-  "México",
-  "Micronesia",
-  "Moldavia",
-  "Mónaco",
-  "Mongolia",
-  "Montenegro",
-  "Mozambique",
-  "Birmania",
-  "Namibia",
-  "Nauru",
-  "Nepal",
-  "Nicaragua",
-  "Níger",
-  "Nigeria",
-  "Noruega",
-  "Nueva Zelanda",
-  "Omán",
-  "Países Bajos",
-  "Pakistán",
-  "Palaos",
-  "Panamá",
-  "Papúa Nueva Guinea",
-  "Paraguay",
-  "Perú",
-  "Polonia",
-  "Portugal",
-  "Reino Unido",
-  "República Centroafricana",
-  "República Checa",
-  "República del Congo",
-  "República Democrática del Congo",
-  "República Dominicana",
-  "Ruanda",
-  "Rumania",
-  "Rusia",
-  "Samoa",
-  "San Cristóbal y Nieves",
-  "San Marino",
-  "San Vicente y las Granadinas",
-  "Santa Lucía",
-  "Santo Tomé y Príncipe",
-  "Senegal",
-  "Serbia",
-  "Seychelles",
-  "Sierra Leona",
-  "Singapur",
-  "Siria",
-  "Somalia",
-  "Sri Lanka",
-  "Sudáfrica",
-  "Sudán",
-  "Sudán del Sur",
-  "Suecia",
-  "Suiza",
-  "Surinam",
-  "Tailandia",
-  "Tanzania",
-  "Tayikistán",
-  "Timor Oriental",
-  "Togo",
-  "Tonga",
-  "Trinidad y Tobago",
-  "Túnez",
-  "Turkmenistán",
-  "Turquía",
-  "Tuvalu",
-  "Ucrania",
-  "Uganda",
-  "Uruguay",
-  "Uzbekistán",
-  "Vanuatu",
-  "Vaticano",
-  "Venezuela",
-  "Vietnam",
-  "Yemen",
-  "Yibuti",
-  "Zambia",
-  "Zimbabue"
+const countriesWithCodes = [
+  { name: "Colombia", code: "+57" },
+  { name: "Afganistán", code: "+93" },
+  { name: "Albania", code: "+355" },
+  { name: "Alemania", code: "+49" },
+  { name: "Andorra", code: "+376" },
+  { name: "Angola", code: "+244" },
+  { name: "Antigua y Barbuda", code: "+1" },
+  { name: "Arabia Saudí", code: "+966" },
+  { name: "Argelia", code: "+213" },
+  { name: "Argentina", code: "+54" },
+  { name: "Armenia", code: "+374" },
+  { name: "Australia", code: "+61" },
+  { name: "Austria", code: "+43" },
+  { name: "Azerbaiyán", code: "+994" },
+  { name: "Bahamas", code: "+1" },
+  { name: "Bahrein", code: "+973" },
+  { name: "Bangladesh", code: "+880" },
+  { name: "Barbados", code: "+1" },
+  { name: "Bielorrusia", code: "+375" },
+  { name: "Bélgica", code: "+32" },
+  { name: "Belice", code: "+501" },
+  { name: "Benín", code: "+229" },
+  { name: "Bután", code: "+975" },
+  { name: "Bolivia", code: "+591" },
+  { name: "Bosnia y Herzegovina", code: "+387" },
+  { name: "Botsuana", code: "+267" },
+  { name: "Brasil", code: "+55" },
+  { name: "Brunéi", code: "+673" },
+  { name: "Bulgaria", code: "+359" },
+  { name: "Burkina Faso", code: "+226" },
+  { name: "Burundi", code: "+257" },
+  { name: "Cabo Verde", code: "+238" },
+  { name: "Camboya", code: "+855" },
+  { name: "Camerún", code: "+237" },
+  { name: "Canadá", code: "+1" },
+  { name: "Catar", code: "+974" },
+  { name: "Chad", code: "+235" },
+  { name: "Chile", code: "+56" },
+  { name: "China", code: "+86" },
+  { name: "Chipre", code: "+357" },
+  { name: "Comoras", code: "+269" },
+  { name: "Corea del Norte", code: "+850" },
+  { name: "Corea del Sur", code: "+82" },
+  { name: "Costa de Marfil", code: "+225" },
+  { name: "Costa Rica", code: "+506" },
+  { name: "Croacia", code: "+385" },
+  { name: "Cuba", code: "+53" },
+  { name: "Dinamarca", code: "+45" },
+  { name: "Dominica", code: "+1" },
+  { name: "Ecuador", code: "+593" },
+  { name: "Egipto", code: "+20" },
+  { name: "El Salvador", code: "+503" },
+  { name: "Emiratos Árabes Unidos", code: "+971" },
+  { name: "Eritrea", code: "+291" },
+  { name: "Eslovaquia", code: "+421" },
+  { name: "Eslovenia", code: "+386" },
+  { name: "España", code: "+34" },
+  { name: "Estados Unidos", code: "+1" },
+  { name: "Estonia", code: "+372" },
+  { name: "Esuatini", code: "+268" },
+  { name: "Etiopía", code: "+251" },
+  { name: "Filipinas", code: "+63" },
+  { name: "Finlandia", code: "+358" },
+  { name: "Fiyi", code: "+679" },
+  { name: "Francia", code: "+33" },
+  { name: "Gabón", code: "+241" },
+  { name: "Gambia", code: "+220" },
+  { name: "Georgia", code: "+995" },
+  { name: "Ghana", code: "+233" },
+  { name: "Granada", code: "+1" },
+  { name: "Grecia", code: "+30" },
+  { name: "Guatemala", code: "+502" },
+  { name: "Guinea", code: "+224" },
+  { name: "Guinea-Bisáu", code: "+245" },
+  { name: "Guinea Ecuatorial", code: "+240" },
+  { name: "Guyana", code: "+592" },
+  { name: "Haití", code: "+509" },
+  { name: "Honduras", code: "+504" },
+  { name: "Hungría", code: "+36" },
+  { name: "India", code: "+91" },
+  { name: "Indonesia", code: "+62" },
+  { name: "Irak", code: "+964" },
+  { name: "Irán", code: "+98" },
+  { name: "Irlanda", code: "+353" },
+  { name: "Islandia", code: "+354" },
+  { name: "Islas Marshall", code: "+692" },
+  { name: "Islas Salomón", code: "+677" },
+  { name: "Israel", code: "+972" },
+  { name: "Italia", code: "+39" },
+  { name: "Jamaica", code: "+1" },
+  { name: "Japón", code: "+81" },
+  { name: "Jordania", code: "+962" },
+  { name: "Kazajistán", code: "+7" },
+  { name: "Kenia", code: "+254" },
+  { name: "Kirguistán", code: "+996" },
+  { name: "Kiribati", code: "+686" },
+  { name: "Kuwait", code: "+965" },
+  { name: "Laos", code: "+856" },
+  { name: "Lesoto", code: "+266" },
+  { name: "Letonia", code: "+371" },
+  { name: "Líbano", code: "+961" },
+  { name: "Liberia", code: "+231" },
+  { name: "Libia", code: "+218" },
+  { name: "Liechtenstein", code: "+423" },
+  { name: "Lituania", code: "+370" },
+  { name: "Luxemburgo", code: "+352" },
+  { name: "Madagascar", code: "+261" },
+  { name: "Malasia", code: "+60" },
+  { name: "Malaui", code: "+265" },
+  { name: "Maldivas", code: "+960" },
+  { name: "Malí", code: "+223" },
+  { name: "Malta", code: "+356" },
+  { name: "Marruecos", code: "+212" },
+  { name: "Mauricio", code: "+230" },
+  { name: "Mauritania", code: "+222" },
+  { name: "México", code: "+52" },
+  { name: "Micronesia", code: "+691" },
+  { name: "Moldavia", code: "+373" },
+  { name: "Mónaco", code: "+377" },
+  { name: "Mongolia", code: "+976" },
+  { name: "Montenegro", code: "+382" },
+  { name: "Mozambique", code: "+258" },
+  { name: "Birmania", code: "+95" },
+  { name: "Namibia", code: "+264" },
+  { name: "Nauru", code: "+674" },
+  { name: "Nepal", code: "+977" },
+  { name: "Nicaragua", code: "+505" },
+  { name: "Níger", code: "+227" },
+  { name: "Nigeria", code: "+234" },
+  { name: "Noruega", code: "+47" },
+  { name: "Nueva Zelanda", code: "+64" },
+  { name: "Omán", code: "+968" },
+  { name: "Países Bajos", code: "+31" },
+  { name: "Pakistán", code: "+92" },
+  { name: "Palaos", code: "+680" },
+  { name: "Panamá", code: "+507" },
+  { name: "Papúa Nueva Guinea", code: "+675" },
+  { name: "Paraguay", code: "+595" },
+  { name: "Perú", code: "+51" },
+  { name: "Polonia", code: "+48" },
+  { name: "Portugal", code: "+351" },
+  { name: "Reino Unido", code: "+44" },
+  { name: "República Centroafricana", code: "+236" },
+  { name: "República Checa", code: "+420" },
+  { name: "República del Congo", code: "+242" },
+  { name: "República Democrática del Congo", code: "+243" },
+  { name: "República Dominicana", code: "+1" },
+  { name: "Ruanda", code: "+250" },
+  { name: "Rumania", code: "+40" },
+  { name: "Rusia", code: "+7" },
+  { name: "Samoa", code: "+685" },
+  { name: "San Cristóbal y Nieves", code: "+1" },
+  { name: "San Marino", code: "+378" },
+  { name: "San Vicente y las Granadinas", code: "+1" },
+  { name: "Santa Lucía", code: "+1" },
+  { name: "Santo Tomé y Príncipe", code: "+239" },
+  { name: "Senegal", code: "+221" },
+  { name: "Serbia", code: "+381" },
+  { name: "Seychelles", code: "+248" },
+  { name: "Sierra Leona", code: "+232" },
+  { name: "Singapur", code: "+65" },
+  { name: "Siria", code: "+963" },
+  { name: "Somalia", code: "+252" },
+  { name: "Sri Lanka", code: "+94" },
+  { name: "Sudáfrica", code: "+27" },
+  { name: "Sudán", code: "+249" },
+  { name: "Sudán del Sur", code: "+211" },
+  { name: "Suecia", code: "+46" },
+  { name: "Suiza", code: "+41" },
+  { name: "Surinam", code: "+597" },
+  { name: "Tailandia", code: "+66" },
+  { name: "Tanzania", code: "+255" },
+  { name: "Tayikistán", code: "+992" },
+  { name: "Timor Oriental", code: "+670" },
+  { name: "Togo", code: "+228" },
+  { name: "Tonga", code: "+676" },
+  { name: "Trinidad y Tobago", code: "+1" },
+  { name: "Túnez", code: "+216" },
+  { name: "Turkmenistán", code: "+993" },
+  { name: "Turquía", code: "+90" },
+  { name: "Tuvalu", code: "+688" },
+  { name: "Ucrania", code: "+380" },
+  { name: "Uganda", code: "+256" },
+  { name: "Uruguay", code: "+598" },
+  { name: "Uzbekistán", code: "+998" },
+  { name: "Vanuatu", code: "+678" },
+  { name: "Vaticano", code: "+39" },
+  { name: "Venezuela", code: "+58" },
+  { name: "Vietnam", code: "+84" },
+  { name: "Yemen", code: "+967" },
+  { name: "Yibuti", code: "+253" },
+  { name: "Zambia", code: "+260" },
+  { name: "Zimbabue", code: "+263" }
 ];
+
+const countries = countriesWithCodes.map(country => country.name);
 
 const employeeCounts = [
   "1-30 empleados",
@@ -414,6 +416,7 @@ const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label,
 
 export default function ContactForm() {
   const { mutate, isPending, isError, isSuccess } = useSubmitContactForm();
+  const [phoneFocused, setPhoneFocused] = React.useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -528,7 +531,9 @@ export default function ContactForm() {
             validators={{
               onChange: ({ value }) => {
                 if (!value) return "Este campo es requerido";
-                if (!/^\d+$/.test(value)) {
+                // Validación simple para números
+                const cleanValue = value.replace(/\s+/g, '');
+                if (!/^(\+\d+)?\d*$/.test(cleanValue)) {
                   return "Solo se permiten números";
                 }
                 return undefined;
@@ -536,19 +541,85 @@ export default function ContactForm() {
             }}
           >
             {(field) => (
-              <FloatingLabelInput 
-                field={field} 
-                label="Celular" 
-                type="tel"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                onKeyDown={(e) => {
-                  // Solo permitir números, Backspace, Delete, Tab y flechas
-                  if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                    e.preventDefault();
-                  }
+              <form.Subscribe selector={(state) => [state.values.country]}>
+                {([selectedCountry]) => {
+                  const countryData = countriesWithCodes.find(c => c.name === selectedCountry);
+                  const countryCode = countryData?.code || '';
+                  
+                  // Función simple para obtener solo el número
+                  const getNumberPart = (value: string) => {
+                    if (!value) return '';
+                    // Si tiene código de país, extraer solo la parte numérica después del código
+                    if (value.includes('+') && countryCode && value.startsWith(countryCode)) {
+                      return value.replace(countryCode, '').trim();
+                    }
+                    // Si no tiene código o es diferente, devolver todo el valor
+                    return value.replace(/^\+\d+\s?/, '');
+                  };
+                  
+                  const displayNumber = getNumberPart(field.state.value);
+
+                  return (
+                    <div className="space-y-2">
+                      <div className="relative">
+                        <label
+                          htmlFor={field.name}
+                          className={`absolute left-0 top-2 text-gray-500 transition-all pointer-events-none ${
+                            field.state.value || phoneFocused || countryCode
+                              ? "text-xs text-white -translate-y-4"
+                              : "text-base text-gray-500 translate-y-0"
+                          }`}
+                        >
+                          Celular
+                        </label>
+                        <div className="flex">
+                          {countryCode && (
+                            <span className="text-white bg-transparent border-0 border-b border-zinc-600 pt-2 pr-2 text-base font-normal">
+                              {countryCode}
+                            </span>
+                          )}
+                          <input
+                            id={field.name}
+                            name={field.name}
+                            type="tel"
+                            pattern="[0-9]*"
+                            inputMode="numeric"
+                            value={displayNumber}
+                            onBlur={() => {
+                              field.handleBlur();
+                              setPhoneFocused(false);
+                            }}
+                            onFocus={() => setPhoneFocused(true)}
+                            onChange={(e) => {
+                              const inputValue = e.target.value;
+                              // Si hay código de país, combinarlo con el número
+                              const fullValue = countryCode ? `${countryCode} ${inputValue}` : inputValue;
+                              field.handleChange(fullValue);
+                            }}
+                            onKeyDown={(e) => {
+                              // Solo permitir números y teclas de control
+                              if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                                e.preventDefault();
+                              }
+                            }}
+                            className={`peer flex-1 bg-transparent text-white placeholder-transparent border-0 border-b pt-2 focus:outline-none transition-colors ${
+                              field.state.meta.errors.length > 0
+                                ? "border-red-700 focus:border-red-500"
+                                : "border-zinc-600 focus:border-white"
+                            } ${countryCode ? 'ml-1' : ''}`}
+                            placeholder=" "
+                          />
+                        </div>
+                      </div>
+                      {field.state.meta.errors.length > 0 && (
+                        <p className="text-[#B3261E] text-xs md:text-sm font-normal">
+                          {field.state.meta.errors[0]}
+                        </p>
+                      )}
+                    </div>
+                  );
                 }}
-              />
+              </form.Subscribe>
             )}
           </form.Field>
 
