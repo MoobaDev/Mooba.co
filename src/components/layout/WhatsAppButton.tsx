@@ -6,9 +6,20 @@ import { WhatsAppIcon, WhatsAppIconDesktop } from "../ui/Icons"
 
 export default function WhatsAppButton() {
   const [isFooterVisible, setIsFooterVisible] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
-    const footer = document.querySelector('footer');
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768)
+    }
+    checkIsDesktop()
+    window.addEventListener('resize', checkIsDesktop)
+    return () => window.removeEventListener('resize', checkIsDesktop)
+  }, [])
+
+  useEffect(() => {
+    if (!isDesktop) return
+    const footer = document.querySelector('footer')
     if (!footer) return
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -21,10 +32,10 @@ export default function WhatsAppButton() {
     )
     observer.observe(footer)
     return () => observer.disconnect()
-  }, [])
+  }, [isDesktop])
 
   return (
-    <div className={`z-50 ${isFooterVisible ? 'absolute bottom-0' : 'fixed bottom-6'} right-6`}>
+    <div className={`z-50 ${isDesktop && isFooterVisible  ? 'absolute bottom-0' : 'fixed bottom-6'} right-6`}>
       <Link
         href="https://api.whatsapp.com/send?phone=573043338350&text=%C2%A1Hola%2C%20Mooba!%20%F0%9F%91%8B%0A%F0%9F%9A%80%20Estoy%20interesado%2Fa%20en%20conocer%20m%C3%A1s%20sobre%20sus%20servicios."
         target="_blank"
