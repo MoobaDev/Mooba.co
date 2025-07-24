@@ -1,4 +1,4 @@
-import { StrapiCategoriesResponse } from "@/types/Proyecto";
+import { StrapiCategoriesResponse } from "@/types/Blog";
 
 export async function getBlogCategories(): Promise<StrapiCategoriesResponse> {
   try {

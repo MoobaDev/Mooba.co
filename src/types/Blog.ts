@@ -18,6 +18,12 @@ export interface StrapiImage {
   };
 }
 
+export interface Author {
+  id: number;
+  email: string;
+  name: string;
+}
+
 export interface Blog {
   title: string;
   slug: string;
@@ -30,6 +36,7 @@ export interface Blog {
   updatedAt: string;
   publishedAt: string;
   categorias: Category[];
+  author: Author;
   seo: Seo;
 }
 
@@ -43,7 +50,7 @@ export interface Category {
   publishedAt: string;
 }
 
-export interface StrapiProjectsResponse {
+export interface StrapiBlogsResponse {
   data: Blog[];
   meta: {
     pagination: {
@@ -65,7 +72,7 @@ export interface StrapiCategoriesResponse {
     };
   };
 }
-export interface StrapiProjectResponse {
+export interface StrapiBlogResponse {
   data: Blog[];
   meta: {
     pagination: {

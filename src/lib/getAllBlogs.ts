@@ -1,6 +1,6 @@
-import { StrapiProjectsResponse } from "@/types/Proyecto";
+import { StrapiBlogsResponse } from "@/types/Blog";
 
-export async function getAllBlogs(): Promise<StrapiProjectsResponse> {
+export async function getAllBlogs(): Promise<StrapiBlogsResponse> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?populate=*&sort=updatedAt:desc`, {
       cache: "no-store",

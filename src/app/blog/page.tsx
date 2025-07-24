@@ -4,7 +4,8 @@ import { getSeo } from '@/lib/getSeo';
 import "../globals.css";
 import { getAllBlogs } from '@/lib/getAllBlogs';
 import { getBlogCategories } from '@/lib/getBlogCategories';
-import Blogs from '@/components/blog/Blogs';
+//import Blogs from '@/components/blog/Blogs';
+import AllBlogs from '@/components/blog/AllBlogs';
 import Categories from '@/components/blog/Categories';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -69,7 +70,8 @@ export default async function blogPage() {
       </div>
 
       <div className="px-6 md:px-8">
-        <Blogs blogs={blogs} />
+        <AllBlogs blogs={blogs} />
+        {/* <Blogs blogs={blogs} /> */}
       </div>
 
       <ContactSection />
