@@ -29,6 +29,7 @@ const autocompleteCss = `
 `;
 
 const countries = [
+  "Colombia",
   "Afganistán",
   "Albania",
   "Alemania",
@@ -68,7 +69,6 @@ const countries = [
   "Chile",
   "China",
   "Chipre",
-  "Colombia",
   "Comoras",
   "Corea del Norte",
   "Corea del Sur",
@@ -345,7 +345,7 @@ const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({ field, label, t
         />
       </div>
       {field.state.meta.errors.length > 0 && (
-        <p className="text-red-700 text-xs font-extralight">
+        <p className="text-[#B3261E] text-xs md:text-sm font-normal">
           {field.state.meta.errors[0]}
         </p>
       )}
@@ -405,7 +405,7 @@ const FloatingLabelSelect: React.FC<FloatingLabelSelectProps> = ({ field, label,
       
     </div>
     {field.state.meta.errors.length > 0 && (
-      <p className="text-red-700 text-xs font-extralight">
+      <p className="text-[#B3261E] text-xs md:text-sm font-normal">
         {field.state.meta.errors[0]}
       </p>
     )}
