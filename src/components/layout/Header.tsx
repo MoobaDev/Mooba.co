@@ -130,6 +130,7 @@ export default function Header() {
                     </div>
                     <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
                     <Link href="/nuestra-esencia" className="hover:underline cursor-pointer">Nuestra esencia</Link>
+                    <Link href="/blog" className="hover:underline cursor-pointer">Blog</Link>
                     <Link href="/contactanos" className="hover:underline cursor-pointer">Contáctanos</Link>
                 </nav>
             </div>
@@ -172,6 +173,7 @@ export default function Header() {
                                 )}
                             </AnimatePresence>
                         </li>
+                        <button onClick={() => handleNavigate('/blog')} className="text-[32px] font-normal hover:cursor-pointer text-left">Blog</button>
                         <button onClick={() => handleNavigate('/nuestra-esencia')} className="text-[32px] font-normal hover:cursor-pointer text-left">Nuestra esencia</button>
                         <button onClick={() => handleNavigate('/contactanos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
                     </ul>
