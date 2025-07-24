@@ -76,6 +76,19 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
   const { sectionRef, scrollProgress } = useScrollAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    // Set initial value
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getProjectTransform = (index: number): string => {
     // First project is always visible
@@ -195,7 +208,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
 
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8 ${isHovering ? 'cursor-none' : ''}`}
              style={isHovering ? { cursor: 'none' } : {}}>
-          {projects.map((project, index) => (
+          {projects.slice(0, isMobile ? 3 : 4).map((project, index) => (
             <Link
               href={`/proyectos/${project.slug}`}
               key={project.slug}
