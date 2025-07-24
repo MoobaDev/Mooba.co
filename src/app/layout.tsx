@@ -105,10 +105,10 @@ export default function RootLayout({
         className={`${dmSans.className} antialiased bg-black text-white`}
       >
         <Header/>
-          <main className="relative z-0">
+          <main className="relative z-0 pb-8">
             <Providers>{children}</Providers>
+            <WhatsAppButton />
           </main>
-        <WhatsAppButton />
         <Footer />
       </body>
     </html>

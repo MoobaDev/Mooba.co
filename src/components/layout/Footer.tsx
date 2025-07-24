@@ -5,7 +5,7 @@ import NewsletterForm from "./InputEmail"
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white py-8">
+    <footer className="bg-black text-white pb-8">
       <div className="w-full border-t border-white/30 my-6"></div>
       
       <div className="md:hidden flex flex-col items-start gap-6 w-full mx-auto px-6 md:px-8 overflow-hidden">
@@ -20,7 +20,7 @@ export default function Footer() {
             <p>Habla con nosotros</p>
             <p>o pregúntanos lo</p>
             <p>que quieras</p>
-            <Link href="/" className="flex flex-row font-extralight mt-2  hover:underline">Contáctanos <ArrowIcon/> </Link>
+            <Link href="/contactanos" className="flex flex-row font-extralight mt-2  hover:underline">Contáctanos <ArrowIcon/> </Link>
           </div>
         </div>
         
@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
         
         <div className="flex flex-col mt-6 items-center w-full md:flex-row md:items-end md:justify-between">
-          <Link href="/"> <Image src="/logofooter.svg" alt="Logo mooba footer" width={180} height={40} className="w-[311px] h-[74px] md:w-[437px] md:h-[103]"/></Link>
+          <Link href="/"> <Image src="/logofooter.svg" alt="Logo mooba footer" width={180} height={40} className="w-[178px] h-[48px] md:w-[145px] md:h-[34px]"/></Link>
           <p className="text-[16px] font-base mt-6">© mooba 2025</p>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function Footer() {
         
         <div className="flex flex-col text-[16px] gap-1">
           <p className="text-[16px] font-normal">Habla con nosotros o pregúntanos lo que quieras</p>
-          <p className="flex flex-row font-extralight items-center gap-1 hover:underline">Contáctanos <ArrowIcon /></p>
+          <Link href="/contactanos" className="flex flex-row font-extralight items-center gap-1 hover:underline">Contáctanos <ArrowIcon /></Link>
         </div>
         
         <div className="flex flex-col text-[16px]">
@@ -74,7 +74,7 @@ export default function Footer() {
       <div className="hidden mx-auto px-6 md:px-8 overflow-hidden md:flex md:justify-end md:items-end md:mt-8">
         <div className="flex flex-row items-end justify-between w-full">
           <p className="text-[16px] font-base mt-2">© mooba 2025</p>
-          <Link href="/"> <Image src="/logofooter.svg" alt="Logo mooba footer" width={180} height={40} className="w-[311px] h-[74px] md:w-[437px] md:h-[103]"/></Link>
+          <Link href="/"> <Image src="/logofooter.svg" alt="Logo mooba footer" width={180} height={40} className="w-[178px] h-[42px] md:w-[145px] md:h-[34px]"/></Link>
         </div>
       </div>
     </footer>
