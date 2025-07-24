@@ -104,7 +104,7 @@ export async function submitNewsletterEmail(email: string): Promise<NewsletterRe
   }
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzjGI0-RAQV5s4e9DaupAnn4nLTkwer5aU5fu-zE6dsOlzKhshqsyhuMHZeilUH6K2D/exec", {
+    const res = await fetch('/api/newsletter', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ export async function submitNewsletterEmail(email: string): Promise<NewsletterRe
     console.log("Error de CORS detectado, reintentando...")
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzjGI0-RAQV5s4e9DaupAnn4nLTkwer5aU5fu-zE6dsOlzKhshqsyhuMHZeilUH6K2D/exec", {
+      await fetch('/api/newsletter', {
         method: "POST",
         mode: "no-cors",
         headers: {
