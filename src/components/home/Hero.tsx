@@ -25,7 +25,7 @@ export default function VideoHero({
   }
 
   return (
-    <section className="relative h-screen w-full overflow-hidden aspect-[16/9]">
+    <section className="relative w-full overflow-hidden h-dvh md:h-screen">
       {/* Mobile Video */}
       <video
         autoPlay

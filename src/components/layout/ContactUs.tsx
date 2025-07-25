@@ -4,7 +4,7 @@ export default function ContactUs() {
   return (
     <>
       <div className="flex flex-col mb-16 md:mb-12">
-        <h1 className="text-[28px] md:text-[52px] font-extralight">
+        <h1 className="text-[36px] md:text-[52px] font-extralight">
           ¿Tienes una idea en mente?
         </h1>
         <h2 className="text-xl  md:text-[32px] font-extralight mt-2">
