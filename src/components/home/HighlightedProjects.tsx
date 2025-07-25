@@ -77,21 +77,24 @@ export default function HighlightedProjects({
         return;
       }
 
-      const rect = slider.container.getBoundingClientRect();
-      const isInside =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
+      // Buscar específicamente las imágenes de los proyectos
+      const projectImages = Array.from(slider.container.querySelectorAll('.project-image'));
+      const hoveredImage = projectImages.find(image => {
+        const rect = image.getBoundingClientRect();
+        return e.clientX >= rect.left && e.clientX <= rect.right && 
+               e.clientY >= rect.top && e.clientY <= rect.bottom;
+      });
 
-      if (!isInside) {
+      if (!hoveredImage) {
         setMousePosition({ x: 0, y: 0 });
         setCursorType("default");
         return;
       }
 
-      const x = e.clientX - rect.left;
-      const width = rect.width;
+      // Usar las coordenadas de todo el slider para el cálculo de zonas (para drag fluido)
+      const sliderRect = slider.container.getBoundingClientRect();
+      const x = e.clientX - sliderRect.left;
+      const width = sliderRect.width;
 
       setMousePosition({ x: e.clientX, y: e.clientY });
 
@@ -123,6 +126,16 @@ export default function HighlightedProjects({
     } else {
       router.push(`/proyectos/${projectSlug}`);
     }
+  };
+
+  const handleTitleClick = (projectSlug: string) => {
+    router.push(`/proyectos/${projectSlug}`);
+  };
+
+  const handleTagClick = (e: React.MouseEvent, categorySlug: string) => {
+    e.stopPropagation();
+    // Navegar a la página de proyectos con filtro de categoría
+    router.push(`/proyectos?categoria=${encodeURIComponent(categorySlug)}`);
   };
 
   const renderCustomCursor = () => {
@@ -174,22 +187,22 @@ export default function HighlightedProjects({
         <div className="w-full">
           <div
             ref={sliderRef}
-            className="keen-slider cursor-none"
-            style={{ cursor: "none" }}
+            className="keen-slider"
           >
             {projects.map(({ proyecto }, idx) => (
               <div
                 key={proyecto.slug}
-                className="keen-slider__slide cursor-none"
-                onClick={(e) => handleClick(e, proyecto.slug)}
+                className="keen-slider__slide"
               >
-                <div className="flex flex-col transition-all duration-300 cursor-none">
+                <div className="flex flex-col transition-all duration-300">
                   <div
-                    className={`relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 aspect-[905/605] cursor-none ${
+                    className={`project-image relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 aspect-[905/605] ${
                       loaded && currentSlide % projects.length === idx
                         ? "w-full h-auto max-w-[1440px]"
                         : "w-full h-auto max-w-[1440px] scale-[0.95]"
                     }`}
+                    style={{ cursor: cursorType !== "default" ? "none" : "pointer" }}
+                    onClick={(e) => handleClick(e, proyecto.slug)}
                   >
                     {proyecto.desktopVideo ? (
                       <video
@@ -197,7 +210,7 @@ export default function HighlightedProjects({
                         autoPlay
                         loop
                         muted
-                        className={`object-cover w-full h-full transition-all duration-300 cursor-none ${
+                        className={`object-cover w-full h-full transition-all duration-300 ${
                           loaded && currentSlide % projects.length === idx
                             ? "brightness-100 scale-100"
                             : "brightness-50 scale-100"
@@ -208,7 +221,7 @@ export default function HighlightedProjects({
                         src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${proyecto.desktopImage?.url}`}
                         alt={proyecto.title}
                         fill
-                        className={`object-cover w-full h-full transition-all duration-300 cursor-none ${
+                        className={`object-cover w-full h-full transition-all duration-300 ${
                           loaded && currentSlide % projects.length === idx
                             ? "brightness-100 scale-100"
                             : "brightness-50 scale-100"
@@ -218,14 +231,17 @@ export default function HighlightedProjects({
                   </div>
 
                   <div
-                    className={`max-w-[1440px] mx-auto w-full cursor-none ${
+                    className={`max-w-[1440px] mx-auto w-full ${
                       loaded && currentSlide % projects.length === idx
                         ? "text-white opacity-100"
                         : "text-white opacity-50 scale-[0.95]"
                     }`}
                   >
                     <div className="mb-2 md:mb-3 max-w-[840px]">
-                      <h5 className="text-xl font-extralight transition-opacity duration-300">
+                      <h5 
+                        className="text-xl font-extralight transition-opacity duration-300 cursor-pointer hover:opacity-80"
+                        onClick={() => handleTitleClick(proyecto.slug)}
+                      >
                         {proyecto.title}
                       </h5>
                       <p className="text-xl text-[#ABB1BA] font-extralight transition-opacity duration-300">
@@ -237,7 +253,8 @@ export default function HighlightedProjects({
                       {proyecto.categorias.map((cat, tagIdx) => (
                         <span
                           key={tagIdx}
-                          className="text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 text-[#7A7F89] border-[#D0D5DD]"
+                          className="text-sm font-normal border rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 transition-opacity duration-300 text-[#7A7F89] border-[#D0D5DD] cursor-pointer hover:opacity-80 hover:border-white"
+                          onClick={(e) => handleTagClick(e, cat.slug)}
                         >
                           {cat.name}
                         </span>

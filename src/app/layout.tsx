@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import Cursor from "@/components/layout/Cursor"
 import Script from "next/script";
 import { CursorProvider } from "@/context/cursor-context";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -106,6 +107,7 @@ export default function RootLayout({
       <body className={`${dmSans.className} antialiased bg-black text-white cursor-none`}>
         <CursorProvider>
           <Cursor/>
+          <ScrollToTop />
           <Header/>
             <main className="relative z-0 pb-8">
               <Providers>{children}</Providers>
