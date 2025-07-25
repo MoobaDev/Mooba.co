@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Project } from "@/types/Proyecto";
 import { CursorViewProject } from '@/components/ui/Icons';
+import { useRouter } from "next/navigation";
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
@@ -73,6 +74,7 @@ const useScrollAnimation = () => {
 };
 
 export default function PortafolioHome({ projects }: { projects: Project[] }) {
+  const router = useRouter();
   const { sectionRef, scrollProgress } = useScrollAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -89,6 +91,18 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleTitleClick = (e: React.MouseEvent, projectSlug: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/proyectos/${projectSlug}`);
+  };
+
+  const handleTagClick = (e: React.MouseEvent, categorySlug: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/proyectos?categoria=${encodeURIComponent(categorySlug)}`);
+  };
 
   const getProjectTransform = (index: number): string => {
     // First project is always visible
@@ -206,68 +220,67 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
           <CursorViewProject />
         </div>
 
-        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8 ${isHovering ? 'cursor-none' : ''}`}
-             style={isHovering ? { cursor: 'none' } : {}}>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8`}>
           {projects.slice(0, isMobile ? 3 : 4).map((project, index) => (
-            <Link
-              href={`/proyectos/${project.slug}`}
+            <div
               key={project.slug}
-              className={`block group w-full ${isHovering ? 'cursor-none' : 'cursor-pointer'}`}
-              style={{
-                ...getProjectAnimationStyles(index),
-                ...(isHovering ? { cursor: 'none' } : {})
-              }}
-              onMouseEnter={handleProjectMouseEnter}
-              onMouseMove={handleProjectMouseMove}
-              onMouseLeave={handleProjectMouseLeave}
+              className="block group w-full"
+              style={getProjectAnimationStyles(index)}
             >
-              <div className={`flex flex-col h-full ${isHovering ? 'cursor-none' : ''}`}>
+              <div className="flex flex-col h-full">
                 {/* Image Container */}
-                <div className={`relative mb-4 overflow-hidden w-full aspect-[4/4] ${isHovering ? 'cursor-none' : ''}`}>
+                <Link
+                  href={`/proyectos/${project.slug}`}
+                  className={`relative mb-4 overflow-hidden w-full aspect-[4/4] block ${isHovering ? 'cursor-none' : ''}`}
+                  onMouseEnter={handleProjectMouseEnter}
+                  onMouseMove={handleProjectMouseMove}
+                  onMouseLeave={handleProjectMouseLeave}
+                >
                   {project.desktopVideo ? (
                     <video
                       src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
                       autoPlay
                       loop
                       muted
-                      className={`object-cover w-full h-full ${isHovering ? 'cursor-none' : ''}`}
-                      style={isHovering ? { cursor: 'none' } : {}}
+                      className="object-cover w-full h-full"
                     />
                   ) : (
                     <Image
                       src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage?.url}`}
                       alt={project.title}
                       fill
-                      className={`object-cover w-full h-full ${isHovering ? 'cursor-none' : ''}`}
-                      style={isHovering ? { cursor: 'none' } : {}}
+                      className="object-cover w-full h-full"
                     />
                   )}
-                </div>
+                </Link>
 
                 {/* Project Info */}
-                <div className={`mb-3 mt-2 font-extralight text-xl flex-grow ${isHovering ? 'cursor-none' : ''}`}>
-                  <h5 className={`truncate overflow-hidden whitespace-nowrap ${isHovering ? 'cursor-none' : ''}`}>
+                <div className="mb-3 mt-2 font-extralight text-xl flex-grow">
+                  <h5 
+                    className="truncate overflow-hidden whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={(e) => handleTitleClick(e, project.slug)}
+                  >
                     {project.title}
                   </h5>
-                  <p className={`text-[#ABB1BA] truncate overflow-hidden whitespace-nowrap ${isHovering ? 'cursor-none' : ''}`}>
+                  <p className="text-[#ABB1BA] truncate overflow-hidden whitespace-nowrap">
                     {project.shortDescription}
                   </p>
                 </div>
 
                 {/* Tags */}
-                <div className={`flex flex-wrap mt-auto ${isHovering ? 'cursor-none' : ''}`}>
+                <div className="flex flex-wrap gap-2 mt-auto">
                   {project.categorias.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
-                      className={`text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 ${isHovering ? 'cursor-none' : ''}`}
-                      style={isHovering ? { cursor: 'none' } : {}}
+                      className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 cursor-pointer hover:opacity-80 hover:border-gray-300 transition-all"
+                      onClick={(e) => handleTagClick(e, tag.slug)}
                     >
                       {tag.name}
                     </span>
                   ))}
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
