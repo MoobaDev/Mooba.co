@@ -48,83 +48,85 @@ export default function Projects({ projects }: ProjectsProps) {
                 : 'aspect-[16/9] md:max-h-[350px] lg:max-h-[510px] object-cover';
 
             return (
-              <Link
+              <div
                 key={project.slug}
-                href={`/proyectos/${project.slug}`}
                 className={`flex flex-col gap-y-4 md:gap-y-2 ${colSpan} h-full`}
               >
                 {/* Media (imagen o video) */}
-                <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
-                  <div className={`hidden md:block w-full h-full ${mediaClass}`}>
-                    {project.desktopVideo ? (
-                      <video
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      />
-                    ) : project.desktopImage ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
-                        alt={project.desktopImage.alternativeText || project.title}
-                        width={project.desktopImage.width}
-                        height={project.desktopImage.height}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : null}
-                  </div>
-                  
-                  <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
-                    {project.desktopVideo ? (
-                      <video
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      />
-                    ) : project.desktopImage ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
-                        alt={project.desktopImage.alternativeText || project.title}
-                        width={project.desktopImage.width}
-                        height={project.desktopImage.height}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : null}
-                  </div>
+                <Link href={`/proyectos/${project.slug}`}>
+                  <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
+                    <div className={`hidden md:block w-full h-full ${mediaClass}`}>
+                      {project.desktopVideo ? (
+                        <video
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                          className="w-full h-full object-cover"
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                        />
+                      ) : project.desktopImage ? (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
+                          alt={project.desktopImage.alternativeText || project.title}
+                          width={project.desktopImage.width}
+                          height={project.desktopImage.height}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : null}
+                    </div>
+                    
+                    <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
+                      {project.desktopVideo ? (
+                        <video
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                          className="w-full h-full object-cover"
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                        />
+                      ) : project.desktopImage ? (
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
+                          alt={project.desktopImage.alternativeText || project.title}
+                          width={project.desktopImage.width}
+                          height={project.desktopImage.height}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : null}
+                    </div>
 
-                  <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
-                </div>
+                    <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
+                  </div>
+                </Link>
 
                 {/* Contenido del proyecto */}
                 <div className="flex flex-col flex-1 gap-y-2">
-                  <div className="flex flex-col">
+                  <Link href={`/proyectos/${project.slug}`} className="flex flex-col">
                     <h2 className="text-xl font-extralight line-clamp-1 mb-1">
                       {project.title}
                     </h2>
                     <p className="text-[#ABB1BA] text-xl font-extralight line-clamp-1">
                       {project.shortDescription}
                     </p>
-                  </div>
+                  </Link>
                   <div className="flex justify-between items-center mt-auto">
                     <div className="flex flex-wrap gap-y-2">
                       {Array.isArray(project.categorias) &&
                         project.categorias.map((cat) => (
-                          <div
+                          <Link
                             key={cat.slug}
+                            href={`/proyectos?categoria=${cat.slug}`}
                             className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
                           >
                             {cat.name}
-                          </div>
+                          </Link>
                         ))}
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>
