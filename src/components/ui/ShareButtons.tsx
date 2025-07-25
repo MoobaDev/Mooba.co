@@ -19,7 +19,7 @@ export default function ShareButtons({ url, title }: Props) {
         <LinkedinIconShareDesktop />
         {/* <LinkedinIcon size={32} round /> */}
       </LinkedinShareButton>
-      <FacebookShareButton url={url} quote={title}>
+      <FacebookShareButton url={url} title={title}>
         <FacebookIconShareDesktop />
         {/* <FacebookIcon size={32} round /> */}
       </FacebookShareButton>

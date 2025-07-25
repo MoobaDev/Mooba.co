@@ -24,6 +24,11 @@ export interface Author {
   name: string;
 }
 
+export interface Tag {
+  id: number;
+  tagName: string;
+}
+
 export interface Blog {
   title: string;
   slug: string;
@@ -37,6 +42,7 @@ export interface Blog {
   publishedAt: string;
   categorias: Category[];
   author: Author;
+  blogTags: Tag[];
   seo: Seo;
 }
 

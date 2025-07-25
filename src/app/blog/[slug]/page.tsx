@@ -5,28 +5,30 @@ import SafeHtml from "@/components/proyectos/SafeHtml";
 import PortafolioHome from '@/components/home/PortafolioHome';
 import { getAllProjects } from '@/lib/getAllProyects';
 import ContactSection from '@/components/home/ContactUs';
-import { getSeoProject } from '@/lib/getSeoProject';
 import { getBlog } from '@/lib/getBlog';
 import ShareButtons from '@/components/ui/ShareButtons';
+import { getSeoBlog } from '@/lib/getSeoBlog';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getSeoProject(slug);
+  const blog = await getSeoBlog(slug);
 
-  if (!project) return {}
+  if (!blog) return {}
 
-  const seo = project.seo
+  const seo = blog.seo
+
+  console.log(process.env.NEXT_PUBLIC_STRAPI_API_URL,seo.image.url);
 
   return {
-    title: seo?.title || project.title,
+    title: seo?.title || blog.title,
     description: seo?.description || '',
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
     alternates: {
-      canonical: `https://mooba.co/proyectos/${slug}`,
+      canonical: `https://mooba.co/blog/${slug}`,
     },
     openGraph: {
-      title: seo?.title || project.title,
+      title: seo?.title || blog.title,
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
     twitter: {
       card: 'summary_large_image',
-      title: seo?.title || project.title,
+      title: seo?.title || blog.title,
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
@@ -155,6 +157,18 @@ export default async function blogPage({ params }: { params: { slug: string }}) 
             </div>
           )}
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-baseline px-6 md:px-8 mt-8 gap-x-4">
+        <h3 className="text-md md:text-lg font-extralight">Temas relacionados:</h3>
+        {Array.isArray(blog.blogTags) && blog.blogTags.map((tag) => (
+          <span
+              key={tag.id}
+              className={`text-lg text-[#7A7F89] font-light mr-2`}
+          >
+            #{tag.tagName}
+          </span>
+        ))}
       </div>
 
       <div className="flex items-baseline justify-center px-6 md:px-8 mt-8 gap-x-4">
