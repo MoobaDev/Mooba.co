@@ -120,7 +120,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                       blog.categorias.map((cat) => (
                         <Link 
                           key={cat.slug}
-                          href={`/blog?categoria=${blog.slug}`}
+                          href={`/blog?categoria=${cat.slug}`}
                           className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
                         >
                           {cat.name}
