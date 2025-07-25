@@ -101,14 +101,16 @@ export default function Projects({ projects }: ProjectsProps) {
 
                 {/* Contenido del proyecto */}
                 <div className="flex flex-col flex-1 gap-y-2">
-                  <Link href={`/proyectos/${project.slug}`} className="flex flex-col">
-                    <h2 className="text-xl font-extralight line-clamp-1 mb-1">
-                      {project.title}
-                    </h2>
+                  <div className="">
+                    <Link href={`/proyectos/${project.slug}`} className="flex flex-col">
+                      <h2 className="text-xl font-extralight line-clamp-1 mb-1 hover:opacity-90">
+                        {project.title}
+                      </h2>
+                    </Link>
                     <p className="text-[#ABB1BA] text-xl font-extralight line-clamp-1">
                       {project.shortDescription}
                     </p>
-                  </Link>
+                  </div>
                   <div className="flex justify-between items-center mt-auto">
                     <div className="flex flex-wrap gap-y-2">
                       {Array.isArray(project.categorias) &&

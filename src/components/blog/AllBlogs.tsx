@@ -108,7 +108,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                     <span className="text-sm text-[#7A7F89] font-light mt-1">
                       Por <span className="font-normal">{autor}</span> — {fecha}
                     </span>
-                    <Link href={`/blog/${blog.slug}`}><h2 className="text-xl font-extralight line-clamp-2">{blog.title}</h2></Link>
+                    <Link href={`/blog/${blog.slug}`}><h2 className="text-xl font-extralight line-clamp-2 hover:underline decoration-1">{blog.title}</h2></Link>
                     <p className="text-[#ABB1BA] text-lg font-extralight line-clamp-2">
                       {blog.shortDescription}
                     </p>
