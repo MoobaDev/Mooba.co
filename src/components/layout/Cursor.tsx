@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import { useCursor } from '@/context/cursor-context'
+
 
 export default function Cursor() {
     const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -10,6 +12,7 @@ export default function Cursor() {
     const positionRef = useRef({ x: 0, y: 0 })
     const rippleIdRef = useRef(500)
     const [isMobile, setIsMobile] = useState(false)
+    const { hidden } = useCursor()
 
 
     useEffect(() => {
@@ -62,7 +65,7 @@ export default function Cursor() {
         const isTouch = window.matchMedia('(pointer: coarse)').matches
         setIsMobile(isTouch)
     }, [])
-    if (isMobile) return null
+    if (isMobile || hidden) return null
 
 
     return (
