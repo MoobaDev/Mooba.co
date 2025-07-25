@@ -18,8 +18,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const seo = blog.seo
 
-  console.log(process.env.NEXT_PUBLIC_STRAPI_API_URL,seo.image.url);
-
   return {
     title: seo?.title || blog.title,
     description: seo?.description || '',

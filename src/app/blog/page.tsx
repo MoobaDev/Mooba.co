@@ -46,8 +46,6 @@ export default async function blogPage() {
   const { data: blogs } = await getAllBlogs();
   const { data: categories } = await getBlogCategories();
 
-  console.log(blogs);
-
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8">
 

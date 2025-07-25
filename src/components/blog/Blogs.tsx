@@ -12,7 +12,7 @@ type BlogsProps = {
 export default function Blogs({ blogs }: BlogsProps) {
   const searchParams = useSearchParams();
   const categoria = searchParams.get('categoria');
-  console.log(categoria)
+  
   const filtered =
     categoria && categoria !== 'todos'
       ? blogs.filter((blog) =>
