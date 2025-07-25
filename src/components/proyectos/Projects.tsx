@@ -53,52 +53,50 @@ export default function Projects({ projects }: ProjectsProps) {
                 className={`flex flex-col gap-y-4 md:gap-y-2 ${colSpan} h-full`}
               >
                 {/* Media (imagen o video) */}
-                <Link href={`/proyectos/${project.slug}`}>
-                  <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
-                    <div className={`hidden md:block w-full h-full ${mediaClass}`}>
-                      {project.desktopVideo ? (
-                        <video
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
-                          className="w-full h-full object-cover"
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                        />
-                      ) : project.desktopImage ? (
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
-                          alt={project.desktopImage.alternativeText || project.title}
-                          width={project.desktopImage.width}
-                          height={project.desktopImage.height}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : null}
-                    </div>
-                    
-                    <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
-                      {project.desktopVideo ? (
-                        <video
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
-                          className="w-full h-full object-cover"
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                        />
-                      ) : project.desktopImage ? (
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
-                          alt={project.desktopImage.alternativeText || project.title}
-                          width={project.desktopImage.width}
-                          height={project.desktopImage.height}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : null}
-                    </div>
-
-                    <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
+                <Link href={`/proyectos/${project.slug}`} id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
+                  <div className={`hidden md:block w-full h-full ${mediaClass}`}>
+                    {project.desktopVideo ? (
+                      <video
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : project.desktopImage ? (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
+                        alt={project.desktopImage.alternativeText || project.title}
+                        width={project.desktopImage.width}
+                        height={project.desktopImage.height}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : null}
                   </div>
+                  
+                  <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
+                    {project.desktopVideo ? (
+                      <video
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : project.desktopImage ? (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage.url}`}
+                        alt={project.desktopImage.alternativeText || project.title}
+                        width={project.desktopImage.width}
+                        height={project.desktopImage.height}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : null}
+                  </div>
+
+                  <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
                 </Link>
 
                 {/* Contenido del proyecto */}
