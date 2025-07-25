@@ -14,32 +14,36 @@ export default function Cursor() {
     const [isMobile, setIsMobile] = useState(false)
     const { hidden } = useCursor()
 
-
-    useEffect(() => {
-        const move = (e: MouseEvent) => {
+    const move = (e: MouseEvent) => {
         const newPos = { x: e.clientX, y: e.clientY }
         setPosition(newPos)
         positionRef.current = newPos
-        }
-
-        const handleMouseDown = () => {
+    }
+    
+    const handleMouseDown = () => {
         const id = rippleIdRef.current++
         const newRipple = { id, x: positionRef.current.x, y: positionRef.current.y }
         setClickRipples(prev => [...prev, newRipple])
-
+    
         setTimeout(() => {
-            setClickRipples(prev => prev.filter(r => r.id !== id))
+        setClickRipples(prev => prev.filter(r => r.id !== id))
         }, 500)
+    }
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.innerWidth) {
+        document.addEventListener('mousemove', move, { once: true })
         }
-
+    
         window.addEventListener('mousemove', move)
         window.addEventListener('mousedown', handleMouseDown)
-
+    
         return () => {
         window.removeEventListener('mousemove', move)
         window.removeEventListener('mousedown', handleMouseDown)
         }
     }, [])
+  
 
     useEffect(() => {
         const animate = () => {
