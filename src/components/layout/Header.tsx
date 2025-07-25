@@ -1,66 +1,100 @@
-'use client';
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons";
-import { useRouter } from "next/navigation";
+'use client'
+
+import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons"
+import { useRouter } from "next/navigation"
+import { AnimatePresence, motion } from "framer-motion"
+import { easeOut } from "framer-motion"
 
 export default function Header() {
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const router = useRouter();
-    const [showDropdown, setShowDropdown] = useState(false);
-    const serviciosRef = useRef<HTMLDivElement>(null);
-    const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 });
+    const [mobileOpen, setMobileOpen] = useState(false)
+    const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+    const router = useRouter()
+    const [showDropdown, setShowDropdown] = useState(false)
+    const serviciosRef = useRef<HTMLDivElement>(null)
+    const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 })
 
     const handleMouseEnter = () => {
         if (serviciosRef.current) {
-            const rect = serviciosRef.current.getBoundingClientRect();
+            const rect = serviciosRef.current.getBoundingClientRect()
             setDropdownPosition({
                 left: rect.left,
                 top: rect.bottom + 2
-            });
-            setShowDropdown(true);
+            })
+            setShowDropdown(true)
         }
     }
     const handleMouseLeave = () => {
-        setShowDropdown(false);
+        setShowDropdown(false)
     }
-    
     const handleNavigate = (url: string) => {
-        setMobileOpen(false);
-        setMobileServiciosOpen(false);
-        router.push(url);
-    };
+        setMobileOpen(false)
+        setMobileServiciosOpen(false)
+        router.push(url)
+    }
+    const listVariants = {
+        hidden: {},
+        visible: {
+        transition: {
+            staggerChildren: 0.1,
+        },
+        },
+        exit: {
+        transition: {
+            staggerChildren: 0.05,
+            staggerDirection: -1,
+        },
+        },
+    }
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.4,
+            ease: easeOut
+        },
+        },
+        exit: {
+        opacity: 0,
+        y: -10,
+        transition: {
+            duration: 0.4,
+        },
+        },
+    }
 
     useEffect(() => {
         const handleScroll = () => {
-        setScrolled(window.scrollY > 10);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+        setScrolled(window.scrollY > 10)
+        }
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     useEffect(() => {
         if (showDropdown && serviciosRef.current) {
-            const rect = serviciosRef.current.getBoundingClientRect();
+            const rect = serviciosRef.current.getBoundingClientRect()
             setDropdownPosition({
                 left: rect.left,
                 top: rect.bottom + 2
-            });
+            })
         }
-    }, [scrolled, showDropdown]);
+    }, [scrolled, showDropdown])
 
     useEffect(() => {
         if (mobileOpen) {
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'
+        document.documentElement.style.overflow = 'hidden'
         } else {
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
+        document.body.style.overflow = ''
+        document.documentElement.style.overflow = ''
         }
-    }, [mobileOpen]);
+    }, [mobileOpen])
 
     return (
         <>
@@ -119,17 +153,25 @@ export default function Header() {
                     <ul className="flex flex-col gap-2">
                         <button onClick={() => handleNavigate('/proyectos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Proyectos</button>
                         <li className="flex flex-col gap-2">
-                        <button onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)} className="text-[32px] font-normal hover:cursor-pointer text-left"> Servicios</button>
-                            {mobileServiciosOpen && (
-                                <ul className="flex flex-col text-[18px] font-extralight gap-3">
-                                    <li onClick={() => handleNavigate('/servicios/branding')} className="hover:cursor-pointer">Branding</li>
-                                    <li onClick={() => handleNavigate('/servicios/diseno-y-desarrollo')} className="hover:cursor-pointer">Diseño web & Desarrollo</li>
-                                    <li onClick={() => handleNavigate('/servicios/marketing-digital')} className="hover:cursor-pointer">Marketing Digital</li>
-                                    <li onClick={() => handleNavigate('/servicios/contenido-audiovisual')} className="hover:cursor-pointer">Contenido Audiovisual</li>
-                                    <li onClick={() => handleNavigate('/servicios/campanas-publicitarias')} className="hover:cursor-pointer">Campañas Publicitarias</li>
-                                </ul>
+                            <button onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)} className="text-[32px] font-normal hover:cursor-pointer text-left"> Servicios</button>
+                            <AnimatePresence>
+                                {mobileServiciosOpen && (
+                                    <motion.ul variants={listVariants} initial="hidden" animate="visible" exit="exit" className="flex flex-col text-[18px] font-extralight gap-3">
+                                    {[
+                                        { label: "Branding", path: "/servicios/branding" },
+                                        { label: "Diseño web & Desarrollo", path: "/servicios/diseno-y-desarrollo" },
+                                        { label: "Marketing Digital", path: "/servicios/marketing-digital" },
+                                        { label: "Contenido Audiovisual", path: "/servicios/contenido-audiovisual" },
+                                        { label: "Campañas Publicitarias", path: "/servicios/campanas-publicitarias" },
+                                    ].map((item, index) => (
+                                        <motion.li key={index} variants={itemVariants} onClick={() => handleNavigate(item.path)} className="hover:cursor-pointer">
+                                            {item.label}
+                                        </motion.li>
+                                    ))}
+                                    </motion.ul>
                                 )}
-                            </li>
+                            </AnimatePresence>
+                        </li>
                         <button onClick={() => handleNavigate('/nuestra-esencia')} className="text-[32px] font-normal hover:cursor-pointer text-left">Nuestra esencia</button>
                         <button onClick={() => handleNavigate('/contactanos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
                     </ul>
@@ -151,5 +193,5 @@ export default function Header() {
             </div>
         </section>
         </>
-    );
+    )
 }
