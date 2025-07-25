@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Providers from "./providers";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import Script from "next/script";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -65,6 +66,7 @@ export default function RootLayout({
       <body
         className={`${dmSans.className} antialiased bg-black text-white`}
       >
+        <ScrollToTop />
         <Header/>
           <main className="relative z-0">
             <Providers>{children}</Providers>
