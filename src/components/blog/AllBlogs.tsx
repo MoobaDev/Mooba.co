@@ -118,12 +118,13 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                   <div className="flex flex-wrap gap-y-2">
                     {Array.isArray(blog.categorias) &&
                       blog.categorias.map((cat) => (
-                        <div
+                        <Link 
                           key={cat.slug}
+                          href={`/blog?categoria=${blog.slug}`}
                           className="border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]"
                         >
                           {cat.name}
-                        </div>
+                        </Link>
                       ))}
                   </div>
                 </div>

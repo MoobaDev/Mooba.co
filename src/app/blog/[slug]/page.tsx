@@ -8,6 +8,7 @@ import ContactSection from '@/components/home/ContactUs';
 import { getBlog } from '@/lib/getBlog';
 import ShareButtons from '@/components/ui/ShareButtons';
 import { getSeoBlog } from '@/lib/getSeoBlog';
+import Link from 'next/link';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const { slug } = await params;
@@ -121,12 +122,13 @@ export default async function blogPage({ params }: { params: { slug: string }}) 
         </span>
         <div className="flex flex-wrap gap-y-2 mt-4">
           {Array.isArray(blog.categorias) && blog.categorias.map((cat) => (
-            <div
+            <Link
                 key={cat.slug}
+                href={`/blog?categoria=${cat.slug}`}
                 className={`border-1 rounded-[100px] px-3 py-[2px] text-sm text-[#7A7F89] bg-transparent border-[#D0D5DD]`}
             >
               {cat.name}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
