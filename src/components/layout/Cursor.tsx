@@ -44,7 +44,6 @@ export default function Cursor() {
             window.removeEventListener('mousedown', handleMouseDown)
         }
     }, [])
-  
     useEffect(() => {
         const animate = () => {
             setCirclePosition(prev => {
