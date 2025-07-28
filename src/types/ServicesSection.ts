@@ -6,6 +6,21 @@ export interface ServicesSection {
     secondSectionTitle: string;
     thirdSectionTitle: string;
     fourthSectionTitle: string;
+    firstSectionContent: SectionContent[];
+    secondSectionContent: SectionContent[];
+    thirdSectionContent: SectionContent[];
+    fourthSectionContent: SectionContent[];
+    serviceVideo: VideoSection;
+}
+export interface VideoSection {
+    id: number;
+    name: string;
+    url:string;
+  }
+export interface SectionContent{
+    title:string;
+    description:string;
+    animation: object;
 }
 export interface StrapiServicesSectionResponse {
     data: ServicesSection[];

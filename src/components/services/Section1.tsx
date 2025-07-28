@@ -1,10 +1,16 @@
-export default function Section1(){
+import { SectionContent } from "@/types/ServicesSection";
+interface Props {
+    firstSectionTitle: string;
+    firstSectionContent: SectionContent[];
+}
+export default function Section1({firstSectionTitle, firstSectionContent}:Props){
+    const sectionTitle = firstSectionTitle;
+    const sectionDescription = firstSectionContent[0].description;
     return(
         <div className="flex flex-col md:flex-row">
             <div className="flex flex-col md:flex-row justify-start">
-                <h1 className="text-[32px] md:text-[48px] font-normal">¿Qué hacemos?</h1>
-                <p>Desarrollamos marcas desde el pensamiento estratégico hasta la expresión visual.
-                Nuestro enfoque conecta la visión del negocio con la emoción de la audiencia, construyendo identidades sólidas, memorables y flexibles para escalar.</p>
+                <h1 className="text-[32px] md:text-[48px] font-normal">{sectionTitle}</h1>
+                <p>{sectionDescription}</p>
             </div>
         </div>
     )
