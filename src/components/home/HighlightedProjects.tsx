@@ -11,6 +11,7 @@ import {
   CursorRightArrow,
   CursorViewProject,
 } from "@/components/ui/Icons";
+import HideCursorOnHover from '@/components/layout/HideCursonOnHover'
 
 export default function HighlightedProjects({
   projects,
@@ -195,6 +196,7 @@ export default function HighlightedProjects({
                 className="keen-slider__slide"
               >
                 <div className="flex flex-col transition-all duration-300">
+                  <HideCursorOnHover>
                   <div
                     className={`project-image relative mb-3 md:mb-5 overflow-hidden mx-auto transition-all duration-300 aspect-[905/605] ${
                       loaded && currentSlide % projects.length === idx
@@ -229,6 +231,7 @@ export default function HighlightedProjects({
                       />
                     )}
                   </div>
+                  </HideCursorOnHover>
 
                   <div
                     className={`max-w-[1440px] mx-auto w-full ${

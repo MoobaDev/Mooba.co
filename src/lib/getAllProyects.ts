@@ -3,7 +3,7 @@ import { StrapiProjectsResponse } from "@/types/Proyecto";
 export async function getAllProjects(): Promise<StrapiProjectsResponse> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?populate=*&sort=updatedAt:desc`, {
-      cache: "no-store",
+      next: { revalidate: 3600 }, // Revalidar cada hora
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       },

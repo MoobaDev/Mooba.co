@@ -3,6 +3,7 @@
 import { DropdownDownItem, DropdownUpItem } from "../ui/Icons";
 import TeamCarousel from "@/components/our-essence/TeamCarousel";
 import {AccordionItemProps} from '@/types/Integrantes'
+import HideCursorOnHover from '@/components/layout/HideCursonOnHover'
 
 export default function AccordionItemComponent({ title, children, carousel = false, isOpen = false, onToggle, teamMembers,}: AccordionItemProps) {
   return (
@@ -28,7 +29,9 @@ export default function AccordionItemComponent({ title, children, carousel = fal
             </div>
             {isOpen && carousel && teamMembers && (
               <div className="hidden md:block w-full h-auto mt-6">
+               <HideCursorOnHover>
                 <TeamCarousel teamMembers={teamMembers}/>
+              </HideCursorOnHover>
               </div>
             )}
           </button>
@@ -40,7 +43,9 @@ export default function AccordionItemComponent({ title, children, carousel = fal
           </div>
           {isOpen && carousel && teamMembers &&(
             <div className="w-full mt-6">
-              <TeamCarousel teamMembers={teamMembers}/>
+              <HideCursorOnHover>
+                <TeamCarousel teamMembers={teamMembers}/>
+              </HideCursorOnHover>
             </div>
           )}
         </div>

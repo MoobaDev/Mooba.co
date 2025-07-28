@@ -4,6 +4,7 @@ import GlassCursor from '@/components/ui/GlassCursor';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useCursor } from '@/context/cursor-context';
 
 type ProjectsProps = {
   projects: Project[];
@@ -12,6 +13,7 @@ type ProjectsProps = {
 export default function Projects({ projects }: ProjectsProps) {
   const searchParams = useSearchParams();
   const categoria = searchParams.get('categoria');
+  const { setHidden } = useCursor()
 
   const filtered =
     categoria && categoria !== 'todos'
@@ -53,7 +55,13 @@ export default function Projects({ projects }: ProjectsProps) {
                 className={`flex flex-col gap-y-4 md:gap-y-2 ${colSpan} h-full`}
               >
                 {/* Media (imagen o video) */}
-                <Link href={`/proyectos/${project.slug}`} id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
+                <Link 
+                  href={`/proyectos/${project.slug}`} 
+                  id={`proyecto-img-${project.slug}`} 
+                  className="relative cursor-none h-full"
+                  onMouseEnter={() => setHidden(true)}
+                  onMouseLeave={() => setHidden(false)}
+                >
                   <div className={`hidden md:block w-full h-full ${mediaClass}`}>
                     {project.desktopVideo ? (
                       <video
