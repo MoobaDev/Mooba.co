@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import Categories from "@/components/proyectos/Categories";
 import Projects from "@/components/proyectos/Projects";
 import { getAllProjects } from "@/lib/getAllProyects";
@@ -63,11 +64,15 @@ export default async function PortafolioPage() {
       ></div>
 
       <div className="px-6 md:px-8">
-        <Categories categories={categories} />
+        <Suspense fallback={<div>Cargando categorías...</div>}>
+          <Categories categories={categories} />
+        </Suspense>
       </div>
 
       <div className="px-6 md:px-8">
-        <Projects projects={projects} />
+        <Suspense fallback={<div>Cargando proyectos...</div>}>
+          <Projects projects={projects} />
+        </Suspense>
       </div>
 
       <ContactSection />

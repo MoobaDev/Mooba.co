@@ -5,7 +5,7 @@ export async function getProject(slug: string): Promise<Project | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate=*`,
       { 
-        cache: "no-store", 
+        next: { revalidate: 3600 }, // Revalidar cada hora 
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         }, 

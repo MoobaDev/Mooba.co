@@ -5,7 +5,7 @@ export async function getVideoHero(): Promise<VideoHero[] | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/viewport-videos?populate=*`,
       { 
-        cache: "no-store", 
+        next: { revalidate: 3600 }, // Revalidar cada hora
         headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       }, },
