@@ -5,7 +5,7 @@ export async function getBlog(slug: string): Promise<Blog | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?filters[slug][$eq]=${slug}&populate=*`,
       {
-        next: { revalidate: 600 },
+        next: { tags: ["blog"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         },
@@ -17,7 +17,7 @@ export async function getBlog(slug: string): Promise<Blog | null> {
     const response: { data: Blog[] } = await res.json();
     return response.data[0] || null;
   } catch (error) {
-    console.error("Error fetching project:", error);
+    console.error("Error fetching blog:", error);
     return null;
   }
 }
