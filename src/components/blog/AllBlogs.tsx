@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Blog } from '@/types/Blog';
+import { useCursor } from '@/context/cursor-context';
 
 type BlogsProps = {
   blogs: Blog[];
@@ -23,6 +24,8 @@ function formatDate(dateString: string) {
 export default function AllBlogs({ blogs }: BlogsProps) {
   const searchParams = useSearchParams();
   const categoria = searchParams.get('categoria');
+
+  const { setHidden } = useCursor()
 
   const filtered =
     categoria && categoria !== 'todos'
@@ -55,7 +58,13 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                 className="flex flex-col gap-y-4 md:gap-y-2  transition-all duration-300 ease-in-out group"
               >
                 {/* Media */}
-                <Link href={`/blog/${blog.slug}`} id={`blog-img-${blog.slug}`} className="relative cursor-none overflow-hidden">
+                <Link 
+                  href={`/blog/${blog.slug}`} 
+                  id={`blog-img-${blog.slug}`} 
+                  className="relative cursor-none overflow-hidden"
+                  onMouseEnter={() => setHidden(true)}
+                  onMouseLeave={() => setHidden(false)}
+                >
                   <div className={`hidden md:block w-full aspect-[1/1] md:max-h-[350px] lg:max-h-[510px] object-cover`}>
                     {blog.desktopVideo ? (
                       <video
