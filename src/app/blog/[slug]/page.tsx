@@ -10,7 +10,7 @@ import ShareButtons from '@/components/ui/ShareButtons';
 import { getSeoBlog } from '@/lib/getSeoBlog';
 import Link from 'next/link';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const blog = await getSeoBlog(slug);
 
@@ -96,7 +96,7 @@ function formatDate(dateString: string) {
   return `${mes} ${dia}, ${anio}`;
 }
 
-export default async function blogPage({ params }: { params: { slug: string }}) {
+export default async function blogPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const blog = await getBlog(slug);
 
