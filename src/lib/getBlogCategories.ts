@@ -2,12 +2,15 @@ import { StrapiCategoriesResponse } from "@/types/Blog";
 
 export async function getBlogCategories(): Promise<StrapiCategoriesResponse> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categoria-blogs`, {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categoria-blogs`,
+      {
+        next: { revalidate: 600 },
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+        },
+      }
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch blog categories");
     }

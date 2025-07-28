@@ -7,6 +7,7 @@ import { getBlogCategories } from '@/lib/getBlogCategories';
 //import Blogs from '@/components/blog/Blogs';
 import AllBlogs from '@/components/blog/AllBlogs';
 import Categories from '@/components/blog/Categories';
+import { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoResponse = await getSeo('blog')
@@ -64,11 +65,15 @@ export default async function blogPage() {
       ></div>
 
       <div className="px-6 md:px-8">
-        <Categories categories={categories} />
+        <Suspense fallback={<div>Cargando categorías...</div>}>
+          <Categories categories={categories} />
+        </Suspense>
       </div>
 
       <div className="px-6 md:px-8">
-        <AllBlogs blogs={blogs} />
+        <Suspense fallback={<div>Cargando blogs...</div>}>
+          <AllBlogs blogs={blogs} />
+        </Suspense>
         {/* <Blogs blogs={blogs} /> */}
       </div>
 
