@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Project } from "@/types/Proyecto";
 import { CursorViewProject } from '@/components/ui/Icons';
 import { useRouter } from "next/navigation";
+import HideCursorOnHover from '@/components/layout/HideCursonOnHover'
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
@@ -229,6 +230,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
             >
               <div className="flex flex-col h-full">
                 {/* Image Container */}
+                <HideCursorOnHover>
                 <Link
                   href={`/proyectos/${project.slug}`}
                   className={`relative mb-4 overflow-hidden w-full aspect-[4/4] block ${isHovering ? 'cursor-none' : ''}`}
@@ -253,6 +255,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
                     />
                   )}
                 </Link>
+                </HideCursorOnHover>
 
                 {/* Project Info */}
                 <div className="mb-3 mt-2 font-extralight text-xl flex-grow">

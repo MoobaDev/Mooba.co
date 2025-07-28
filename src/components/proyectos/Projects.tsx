@@ -4,6 +4,7 @@ import GlassCursor from '@/components/ui/GlassCursor';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import HideCursorOnHover from '@/components/layout/HideCursonOnHover'
 
 type ProjectsProps = {
   projects: Project[];
@@ -53,6 +54,7 @@ export default function Projects({ projects }: ProjectsProps) {
                 className={`flex flex-col gap-y-4 md:gap-y-2 ${colSpan} h-full`}
               >
                 {/* Media (imagen o video) */}
+                <HideCursorOnHover>
                 <Link href={`/proyectos/${project.slug}`}>
                   <div id={`proyecto-img-${project.slug}`} className="relative cursor-none h-full">
                     <div className={`hidden md:block w-full h-full ${mediaClass}`}>
@@ -100,6 +102,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
                   </div>
                 </Link>
+                </HideCursorOnHover>
 
                 {/* Contenido del proyecto */}
                 <div className="flex flex-col flex-1 gap-y-2">
