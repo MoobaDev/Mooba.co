@@ -1,15 +1,37 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, MouseEvent, useEffect } from 'react'
 import { useCursor } from '@/context/cursor-context'
 
-export default function HideCursorOnHover({ children }: { children: ReactNode }) {
+interface HideCursorOnHoverProps {
+  children: ReactNode
+  onMouseEnter?: (e: MouseEvent<HTMLDivElement>) => void
+  onMouseLeave?: (e: MouseEvent<HTMLDivElement>) => void
+}
+
+export default function HideCursorOnHover({
+  children,
+  onMouseEnter,
+  onMouseLeave,
+}: HideCursorOnHoverProps) {
   const { setHidden } = useCursor()
+
+  useEffect(() => {
+    return () => {
+      setHidden(false)
+    }
+  }, [setHidden])
 
   return (
     <div
-      onMouseEnter={() => setHidden(true)}
-      onMouseLeave={() => setHidden(false)}
+      onMouseEnter={(e) => {
+        setHidden(true)
+        onMouseEnter?.(e)
+      }}
+      onMouseLeave={(e) => {
+        setHidden(false)
+        onMouseLeave?.(e)
+      }}
     >
       {children}
     </div>

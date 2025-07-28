@@ -13,12 +13,12 @@ export default function Cursor() {
     const [isMobile, setIsMobile] = useState(false)
     const { hidden } = useCursor()
     
-    const move = (e: MouseEvent) => {
+    const move = (e: MouseEvent | PointerEvent | DragEvent) => {
         const newPos = { x: e.clientX, y: e.clientY }
         setPosition(newPos)
         positionRef.current = newPos
-    }
-    
+      }
+      
     const handleMouseDown = () => {
         const id = rippleIdRef.current++
         const newRipple = { id, x: positionRef.current.x, y: positionRef.current.y }
@@ -33,14 +33,16 @@ export default function Cursor() {
         setMounted(true)
         
         if (typeof window !== 'undefined' && window.innerWidth) {
-            document.addEventListener('mousemove', move, { once: true })
+            document.addEventListener('pointermove', move)
         }
     
-        window.addEventListener('mousemove', move)
+        window.addEventListener('pointermove', move)
+        window.addEventListener('dragover', move)
         window.addEventListener('mousedown', handleMouseDown)
     
         return () => {
-            window.removeEventListener('mousemove', move)
+            window.removeEventListener('pointermove', move)
+            window.removeEventListener('dragover', move)
             window.removeEventListener('mousedown', handleMouseDown)
         }
     }, [])
