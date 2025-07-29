@@ -18,8 +18,8 @@ export default async function ServicesPage({ params }: { params: { slug: string 
                 <ServiceMain service={service}/>
                 <Section1 firstSectionTitle={service.firstSectionTitle} firstSectionContent={service.firstSectionContent}/>
                 <Section2 secondSectionTitle={service.secondSectionTitle} secondSectionContent={service.secondSectionContent}/>
-                <Section3/>
-                <Section4/>
+                <Section3 thirdSectionTitle={service.thirdSectionTitle} thirdSectionContent={service.thirdSectionContent} />
+                <Section4 fourthSectionTitle={service.fourthSectionTitle} fourthSectionContent={service.fourthSectionContent} />
             </div>
         </section>
     )
