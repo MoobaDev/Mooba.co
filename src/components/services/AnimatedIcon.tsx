@@ -21,13 +21,18 @@ export default function AnimatedIcon({
   }, [play])
 
   return (
-    <div className="w-32 h-32">
+    <div className="w-[26px] h-[26px]" style={{ minWidth: "26px", minHeight: "26px" }}>
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
-        loop={true}
+        loop
         autoplay={false}
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "block",
+          objectFit: "contain",
+        }}
       />
     </div>
   )

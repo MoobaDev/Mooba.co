@@ -9,12 +9,15 @@ export default function ServiceMain({service}:Props){
     const serviceContent = service.serviceDescription;
     const videoUrl = service.serviceVideo.url || "";
     return (
-        <div className="flex flex-col md:flex-row">
-            <div className="flex flex-col justify-start">
+        <div className="grid grid-cols-1  md:grid-cols-12 gap-8">
+            <div className="md:col-span-4">
+                <div className="flex flex-col">
                 <h1 className="text-[32px] md:text-[52px] font-[250]">{serviceTitle}</h1>
-                <p className="py-8 font-[250] text-[16px] md:text-[24px]">{serviceContent}</p>
+                <p className="pt-8 font-[250] text-[16px] md:text-[24px]">{serviceContent}</p>
+                </div>
             </div>
-            <div>
+            <div className="hidden md:block md:col-span-1" />
+            <div className="md:col-span-7">
                 <video autoPlay muted loop playsInline className="">
                 <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${videoUrl}`} type="video/mp4" />
                 </video>

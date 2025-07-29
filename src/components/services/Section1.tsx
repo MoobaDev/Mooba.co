@@ -7,10 +7,12 @@ export default function Section1({firstSectionTitle, firstSectionContent}:Props)
     const sectionTitle = firstSectionTitle;
     const sectionDescription = firstSectionContent[0].description;
     return(
-        <div className="flex flex-col md:flex-row">
-            <div className="flex flex-col md:flex-row justify-start">
-                <h1 className="text-[32px] md:text-[48px] font-normal">{sectionTitle}</h1>
-                <p>{sectionDescription}</p>
+        <div className="grid grid-cols-1  md:grid-cols-12 gap-8">
+            <div className="md:col-span-4">
+                <h2 className="text-[32px] md:text-[36px] font-normal">{sectionTitle}</h2>
+            </div>
+            <div className="md:col-span-5">
+                <p className="text-[16px] font-[250]">{sectionDescription}</p>
             </div>
         </div>
     )

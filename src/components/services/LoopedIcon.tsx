@@ -3,7 +3,7 @@ import Lottie from "lottie-react"
 
 export default function LoopingIcon({ animationData }: { animationData: object }) {
   return (
-    <div className="w-32 h-32">
+    <div className="w-[40px] h-[40px] md:w-[56px] md:h-[56px]">
       <Lottie
         animationData={animationData}
         loop={true}
