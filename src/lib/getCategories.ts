@@ -5,7 +5,7 @@ export async function getCategories(): Promise<StrapiCategoriesResponse> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categorias`,
       {
-        next: { revalidate: 3600 }, // Revalidar cada hora
+        next: { tags: ["categories"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         },

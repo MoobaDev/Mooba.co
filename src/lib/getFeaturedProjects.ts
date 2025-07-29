@@ -4,7 +4,7 @@ export async function getFeturedProject(): Promise<HighlightedProject[] | null> 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyecto-destacados?populate[proyecto][populate]=*`,
       { 
-        next: { revalidate: 600 }, // Revalidar cada hora
+        next: { tags: ["featuredProjects"] },
         headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       }, },

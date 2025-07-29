@@ -5,7 +5,7 @@ export async function getBrands(): Promise<Brand[] | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/marcas?populate=*`,
       { 
-        next: { revalidate: 600 }, // Revalidar cada hora
+        next: { tags: ["brands"] },
         headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       }, },

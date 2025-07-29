@@ -5,7 +5,7 @@ export async function getSeoBlog(slug: string): Promise<Blog | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?filters[slug][$eq]=${slug}&populate[seo][populate]=image`,
       { 
-        next: { revalidate: 600 }, // Revalidar cada 10 minutos
+        next: { tags: ["seoBlog"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         }, 

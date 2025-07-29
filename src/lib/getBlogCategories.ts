@@ -5,7 +5,7 @@ export async function getBlogCategories(): Promise<StrapiCategoriesResponse> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categoria-blogs`,
       {
-        next: { revalidate: 600 },
+        next: { tags: ["blogCategories"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         },
