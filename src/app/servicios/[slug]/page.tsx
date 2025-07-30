@@ -5,14 +5,17 @@ import Section3 from "@/components/services/Section3"
 import Section4 from "@/components/services/Section4"
 import { getServiceSection } from "@/lib/getServicesSection"
 import PortafolioHome from "@/components/home/PortafolioHome"
-import { getProjectByCategory } from "@/lib/getProjectByCategory"
+import { getAllProjects } from "@/lib/getAllProyects"
 import ContactSection from "@/components/home/ContactUs"
 
 export default async function ServicesPage({ params }: { params: { slug: string }}) {
     const { slug } = await params;
     const service = await getServiceSection(slug);
-    const allProjectsResponse = await getProjectByCategory(slug);
-    const allProjects = allProjectsResponse?.data ? allProjectsResponse.data.slice(0, 4) : [];
+    const allProjectsResponse = await getAllProjects();
+    const filteredProjects = allProjectsResponse?.data?.filter(project =>project.categorias?.some(cat => cat.slug === slug)) || [];
+    const additionalProjects = allProjectsResponse?.data?.filter(project =>!project.categorias?.some(cat => cat.slug === slug)) || [];
+    const combinedProjects = [...filteredProjects, ...additionalProjects].slice(0, 4);
+
     if (!service) {
         return <div>Servicio no encontrado</div>;
     }
@@ -31,7 +34,7 @@ export default async function ServicesPage({ params }: { params: { slug: string 
                     <Section4 fourthSectionTitle={service.fourthSectionTitle} fourthSectionContent={service.fourthSectionContent} />
                     <div className="w-full border-t border-white/30 my-[32px]"></div>
                 </div>
-                <PortafolioHome projects={allProjects} title={"Proyectos relacionados"} categorySlug={slug} />
+                <PortafolioHome projects={combinedProjects} title={"Proyectos relacionados"} categorySlug={slug} />
                 <ContactSection />
             </div>
         </section>

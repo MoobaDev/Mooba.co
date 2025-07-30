@@ -16,7 +16,7 @@ export default function Section2({ secondSectionTitle, secondSectionContent }: P
         <div className="md:col-span-4">
           <h2 className="text-[32px] md:text-[36px] font-normal">{secondSectionTitle}</h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-[300px_auto] gap-8 md:col-span-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-8 md:col-span-8">
           {secondSectionContent.map((item, index) => (
             <div
               key={index}
