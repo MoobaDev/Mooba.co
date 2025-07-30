@@ -136,7 +136,7 @@ export default async function projectPage({ params }: { params: { slug: string }
       </div>
 
       <div className="hidden md:block">
-        <PortafolioHome projects={portfolioProjects} />
+        <PortafolioHome projects={portfolioProjects} title={"Más ideas que se volvieron realidad"}/>
       </div>
 
       <ContactSection />

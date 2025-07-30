@@ -109,7 +109,7 @@ export default function Header() {
                 transform: 'translateY(0)'
             }}>
             <li onClick={() => handleNavigate('/servicios/branding')} className="hover:underline hover:cursor-pointer">Branding</li>
-            <li onClick={() => handleNavigate('/servicios/diseno-y-desarrollo')} className="hover:underline hover:cursor-pointer">Diseño web & Desarrollo</li>
+            <li onClick={() => handleNavigate('/servicios/diseno-y-desarrollo')} className="hover:underline hover:cursor-pointer">Diseño UX/UI & Desarrollo</li>
             <li onClick={() => handleNavigate('/servicios/marketing-digital')} className="hover:underline hover:cursor-pointer">Marketing Digital</li>
             <li onClick={() => handleNavigate('/servicios/contenido-audiovisual')} className="hover:underline hover:cursor-pointer">Contenido Audiovisual</li>
             <li onClick={() => handleNavigate('/servicios/campanas-publicitarias')} className="hover:underline hover:cursor-pointer">Campañas Publicitarias</li>

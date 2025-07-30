@@ -64,7 +64,7 @@ export default async function HomePage() {
                 <HighlightedProjects projects={featuredProjects} />
             </Suspense>
             <Suspense fallback={<div>Cargando proyectos...</div>}>
-                <PortafolioHome projects={allProjects} />
+                <PortafolioHome projects={allProjects} title={"Ideas que se volvieron realidad"} />
             </Suspense>
             <Suspense fallback={<div>Cargando marcas...</div>}>
                 <TrustedBrands brands={brandsResponse} />
