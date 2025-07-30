@@ -10,26 +10,31 @@ import { getSeoProject } from '@/lib/getSeoProject';
 import Link from 'next/link';
 
 function htmlReplace(html: string) {
-  // Para <video>: quita controls, asegura autoplay, muted y loop
+  // Corrige los atributos de <video>
   let replaceResult = html.replace(
-    /<video([^>]*)>/g,
+    /<video([^>]*)>/gi,
     (match, attrs) => {
-      let newAttrs = attrs
+      const cleanedAttrs = attrs
         .replace(/\s*controls\b/gi, "")
         .replace(/\s*autoplay\b/gi, "")
         .replace(/\s*muted\b/gi, "")
-        .replace(/\s*loop\b/gi, "");
-      // Agrega autoplay, muted y loop
-      newAttrs += " autoplay muted loop";
-      return `<video${newAttrs}>`;
+        .replace(/\s*loop\b/gi, "")
+        .replace(/\s*playsinline\b/gi, "")
+        .replace(/\s*width\s*=\s*["'][^"']*["']/gi, "")
+        .trim();
+
+      const fixedAttrs = `${cleanedAttrs} autoplay muted loop playsinline`.trim();
+
+      return `<video ${fixedAttrs} width="100%">`;
     }
   );
-  // Para <iframes> de Vimeo/YouTube: quita controles y agrega autoplay=1&loop=1
+
+  // Corrige iframes de YouTube/Vimeo
   replaceResult = replaceResult.replace(
-    /<iframe([^>]+src=["'][^"']+)(vimeo\.com|youtube\.com|youtu\.be)([^"']*)["']/g,
+    /<iframe([^>]+src=["'][^"']+)(vimeo\.com|youtube\.com|youtu\.be)([^"']*)["']/gi,
     (match) => {
-      const newMatch = match.replace(/([?&])(controls|showinfo|modestbranding|autoplay|loop)=\d+/g, "");
-      return newMatch.replace(
+      const cleaned = match.replace(/([?&])(controls|showinfo|modestbranding|autoplay|loop)=\d+/g, "");
+      return cleaned.replace(
         /(src=["'][^"']*)(["'])/,
         (srcMatch, srcUrl, quote) => {
           const separator = srcUrl.includes("?") ? "&" : "?";
@@ -38,17 +43,21 @@ function htmlReplace(html: string) {
       );
     }
   );
-  // Elimina cualquier width y height. Agrega width="100%" al final
+
+  // Arregla imágenes
   replaceResult = replaceResult.replace(
     /<img\b([^>]*)>/gi,
     (match, attrs) => {
       const newAttrs = attrs
         .replace(/\s*width\s*=\s*["'][^"']*["']/gi, "")
-        .replace(/\s*height\s*=\s*["'][^"']*["']/gi, "");
-      return `<img${newAttrs} width="100%">`;
+        .replace(/\s*height\s*=\s*["'][^"']*["']/gi, "")
+        .replace(/\s*srcset\s*=\s*["'][^"']*["']/gi, "")
+        .trim();
+      return `<img ${newAttrs} width="100%">`;
     }
   );
-  return replaceResult
+
+  return replaceResult;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -95,6 +104,8 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
   if (!project) {
     notFound();
   }
+
+  console.log(htmlReplace(project.mobileContent))
 
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >

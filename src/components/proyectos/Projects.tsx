@@ -81,6 +81,7 @@ export default function Projects({ projects }: ProjectsProps) {
                         className="w-full h-full object-cover"
                       />
                     ) : null}
+                    <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
                   </div>
                   
                   <div className={`block md:hidden w-full aspect-[1/1] overflow-hidden`}>
@@ -103,8 +104,6 @@ export default function Projects({ projects }: ProjectsProps) {
                       />
                     ) : null}
                   </div>
-
-                  <GlassCursor targetId={`proyecto-img-${project.slug}`} label="Ver Proyecto" />
                 </Link>
 
                 {/* Contenido del proyecto */}
