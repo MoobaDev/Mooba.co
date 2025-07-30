@@ -242,8 +242,9 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
                     <video
                       src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
                       autoPlay
-                      loop
                       muted
+                      loop
+                      playsInline
                       className="object-cover w-full h-full"
                     />
                   ) : (
