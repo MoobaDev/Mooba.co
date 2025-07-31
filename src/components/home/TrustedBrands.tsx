@@ -47,7 +47,7 @@ export default function TrustedBrands({ brands }: { brands: Brand[] | null }) {
           setAnimatingIndex(null);
         }, 100);
       }, 500);
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [lastChangedPosition, brands]);

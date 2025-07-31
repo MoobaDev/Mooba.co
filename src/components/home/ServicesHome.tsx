@@ -12,7 +12,7 @@ export default function ServicesShowcase({
 }) {
 
   const [selectedImage, setSelectedImage] = useState<ServiceImage | null>(
-    services && services[0]?.image[0] ? services[0].image[0] : null
+    services && services[0]?.images[0] ? services[0].images[0] : null
   );
   const [hoveredService, setHoveredService] = useState<number | null>(
     services && services[0] ? services[0].id : null
@@ -26,8 +26,8 @@ export default function ServicesShowcase({
 
     const randomService = services[Math.floor(Math.random() * services.length)];
     const randomImage =
-      randomService.image[
-        Math.floor(Math.random() * randomService.image.length)
+      randomService.images[
+        Math.floor(Math.random() * randomService.images.length)
       ];
 
     setActiveService(randomService.id);
@@ -68,7 +68,7 @@ export default function ServicesShowcase({
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
       setHoveredService(service.id);
       const randomImage =
-        service.image[Math.floor(Math.random() * service.image.length)];
+        service.images[Math.floor(Math.random() * service.images.length)];
       setSelectedImage(randomImage);
     }
   };

@@ -105,8 +105,6 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  console.log(htmlReplace(project.mobileContent))
-
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >
 
