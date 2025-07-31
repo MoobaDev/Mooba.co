@@ -128,7 +128,6 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
           onSwiper={(swiper) => {
             swiperRef.current = swiper
           }}
-          
           breakpoints={{
             320: {
               slidesPerView: 1.2,
@@ -210,7 +209,7 @@ function TeamMemberCard({ member, isMobile, swiperRef }: TeamMemberCardProps & {
   const autoplayResumeRef = useRef<NodeJS.Timeout | null>(null)
   const isActive = isHovered || isTapped
 
-  const startImageCycle = (duration: number = 200) => {
+  const startImageCycle = (duration: number = 300) => {
     if (member.image.length <= 1) return
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
