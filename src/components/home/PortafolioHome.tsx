@@ -207,7 +207,8 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
 
       {/* Projects Grid */}
       <div className="w-full">
-        {/* Cursor personalizado */}
+      {/* Cursor personalizado solo en desktop */}
+      {!isMobile && (
         <div 
           className="fixed z-50 pointer-events-none"
           style={{
@@ -220,6 +221,7 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
         >
           <CursorViewProject />
         </div>
+      )}
 
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8`}>
           {projects.slice(0, isMobile ? 3 : 4).map((project, index) => (

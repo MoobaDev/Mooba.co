@@ -10,8 +10,8 @@ import { getFeturedProject } from "@/lib/getFeaturedProjects"
 import { getAllProjects } from "@/lib/getAllProyects"
 import { getBrands } from "@/lib/getBrands"
 import { Suspense } from "react"
-import { getServices } from "@/lib/getServices"
 import { getVideoHero } from "@/lib/getVideoHero"
+import { getServices } from "@/lib/getServices";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoResponse = await getSeo('home')
@@ -53,8 +53,8 @@ export default async function HomePage() {
     const allProjectsResponse = await getAllProjects();
     const allProjects = allProjectsResponse.data.slice(0, 4);
     const brandsResponse = await getBrands();
-    const services = await getServices();
-
+    const services = await getServices()
+ 
     return (
         <>
             <Suspense fallback={<div>Cargando Demo Reel...</div>}>
