@@ -36,7 +36,6 @@ export interface Blog {
   desktopImage: StrapiImage;
   desktopVideo: StrapiImage;
   desktopContent: string;
-  mobileContent: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
