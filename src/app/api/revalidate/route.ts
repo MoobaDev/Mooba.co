@@ -27,6 +27,8 @@ export async function POST(req: Request) {
     revalidateTag('services');
     revalidateTag('team');
     revalidateTag('videoHero');
+    revalidateTag('servicesSection');
+    revalidateTag('seoServices');
 
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (error) {

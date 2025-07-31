@@ -74,7 +74,7 @@ const useScrollAnimation = () => {
   return { sectionRef, scrollProgress };
 };
 
-export default function PortafolioHome({ projects }: { projects: Project[] }) {
+export default function PortafolioHome({ projects, title, categorySlug  }: { projects: Project[]; title: string; categorySlug?: string;  }) {
   const router = useRouter();
   const { sectionRef, scrollProgress } = useScrollAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -194,11 +194,11 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
         <h1 className="text-3xl md:text-4xl font-extralight">
-          Ideas que se volvieron realidad
+          {title}
         </h1>
         {/* Desktop: Link with underline */}
         <Link
-          href="/proyectos"
+          href={categorySlug ? `/proyectos?categoria=${categorySlug}` : "/proyectos"}
           className="hidden md:block text-base font-normal  underline"
         >
           Ver todos los proyectos
@@ -293,7 +293,7 @@ export default function PortafolioHome({ projects }: { projects: Project[] }) {
         {/* Mobile: Button at the bottom */}
         <div className="flex mt-8 md:hidden">
           <Link
-            href="/portafolio"
+            href={categorySlug ? `/proyectos?categoria=${categorySlug}` : "/proyectos"}
             className="bg-gray-50 text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
           >
             Ver más proyectos
