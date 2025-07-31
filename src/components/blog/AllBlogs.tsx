@@ -84,6 +84,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                         className="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300"
                       />
                     ) : null}
+                    <GlassCursor targetId={`blog-img-${blog.slug}`} label="Ver Publicación" />
                   </div>
 
                   {/* Mobile */}
@@ -108,7 +109,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                     ) : null}
                   </div>
 
-                  <GlassCursor targetId={`blog-img-${blog.slug}`} label="Ver Publicación" />
+                  
                 </Link>
 
                 {/* Contenido */}
