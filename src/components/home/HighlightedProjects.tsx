@@ -210,8 +210,9 @@ export default function HighlightedProjects({
                       <video
                         src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${proyecto.desktopVideo.url}`}
                         autoPlay
-                        loop
                         muted
+                        loop
+                        playsInline
                         className={`object-cover w-full h-full transition-all duration-300 ${
                           loaded && currentSlide % projects.length === idx
                             ? "brightness-100 scale-100"
