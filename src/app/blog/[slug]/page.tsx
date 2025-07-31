@@ -139,20 +139,11 @@ export default async function blogPage({ params }: { params: Promise<{ slug: str
       </div> */}
 
       <div className="px-6 md:px-8">
-        <div className="hidden md:block">
+        <div className="block">
           {blog.desktopContent && (
             <div className="w-full">
               <div className="max-w-none w-full">
                 <SafeHtml html={htmlReplace(blog.desktopContent)} />
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="block md:hidden">
-          {blog.mobileContent && (
-            <div className="w-full">
-              <div className="max-w-none w-full">
-                <SafeHtml html={htmlReplace(blog.mobileContent)} />
               </div>
             </div>
           )}

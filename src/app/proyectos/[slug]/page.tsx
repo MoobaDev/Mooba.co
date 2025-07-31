@@ -105,8 +105,6 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  console.log(htmlReplace(project.mobileContent))
-
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >
 
@@ -126,20 +124,11 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
       </div>
 
       <div className="px-6 md:px-8">
-        <div className="hidden md:block">
+        <div className="block">
           {project.desktopContent && (
             <div className="w-full">
               <div className="max-w-none w-full">
                 <SafeHtml html={htmlReplace(project.desktopContent)} />
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="block md:hidden">
-          {project.mobileContent && (
-            <div className="w-full">
-              <div className="max-w-none w-full">
-                <SafeHtml html={htmlReplace(project.mobileContent)} />
               </div>
             </div>
           )}
