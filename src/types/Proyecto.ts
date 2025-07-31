@@ -25,7 +25,6 @@ export interface Project {
   desktopImage: StrapiImage;
   desktopVideo: StrapiImage;
   desktopContent: string;
-  mobileContent: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
