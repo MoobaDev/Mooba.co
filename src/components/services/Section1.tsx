@@ -12,7 +12,7 @@ export default function Section1({firstSectionTitle, firstSectionContent}:Props)
                 <h2 className="text-[32px] md:text-[36px] font-normal">{sectionTitle}</h2>
             </div>
             <div className="md:col-span-5">
-                <p className="text-[26px] font-[250]">{sectionDescription}</p>
+                <p className="text-[20px] font-[250]">{sectionDescription}</p>
             </div>
         </div>
     )
