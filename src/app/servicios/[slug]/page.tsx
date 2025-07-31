@@ -7,6 +7,42 @@ import { getServiceSection } from "@/lib/getServicesSection"
 import PortafolioHome from "@/components/home/PortafolioHome"
 import { getAllProjects } from "@/lib/getAllProyects"
 import ContactSection from "@/components/home/ContactUs"
+import type { Metadata } from 'next'
+import { getSeoServices } from '@/lib/getSeoServices';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const service = await getSeoServices(slug);
+
+  if (!service) return {}
+
+  const seo = service.seo
+
+  return {
+    title: seo?.title || service.serviceTitle,
+    description: seo?.description || '',
+    keywords: seo?.keywords,
+    robots: seo?.metaRobots || 'index, follow',
+    alternates: {
+      canonical: `https://mooba.co/servicios/${slug}`,
+    },
+    openGraph: {
+      title: seo?.title || service.serviceTitle,
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.title || service.serviceTitle,
+      description: seo?.description || '',
+      images: seo?.image?.url
+        ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
+        : [],
+    },
+  }
+}
 
 export default async function ServicesPage({ params }: { params: { slug: string }}) {
     const { slug } = await params;

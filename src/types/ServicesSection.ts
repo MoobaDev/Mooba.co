@@ -1,3 +1,5 @@
+import { Seo } from "./Seo";
+
 export interface ServicesSection {
     serviceTitle: string;
     slug: string;
@@ -11,6 +13,7 @@ export interface ServicesSection {
     thirdSectionContent: SectionContent[];
     fourthSectionContent: SectionContent[];
     serviceVideo: VideoSection;
+    seo: Seo;
 }
 export interface VideoSection {
     id: number;
