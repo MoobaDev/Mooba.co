@@ -114,7 +114,7 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
           grabCursor={isMobile}
           centeredSlides={true}
           autoplay={{
-            delay: 1500,
+            delay: 2000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
@@ -200,15 +200,14 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isTapped, setIsTapped] = useState(false)
   const [showPhrase, setShowPhrase] = useState(false)
+  const isTwoLines = member.phrase && member.phrase.length > 37
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const isActive = isHovered || isTapped
 
   const startImageCycle = (duration: number = 200) => {
     if (member.image.length <= 1) return
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current)
-    }
+    if (intervalRef.current) clearInterval(intervalRef.current)
     intervalRef.current = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % member.image.length)
     }, duration)
@@ -243,9 +242,7 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
     setIsTapped(true)
     setShowPhrase(true)
     startImageCycle(1000 / member.image.length)
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
       stopImageCycle()
       setIsTapped(false)
@@ -255,21 +252,23 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
 
   useEffect(() => {
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
   }, [])
 
   return (
-    <div className="flex flex-col w-fit h-130 md:h-158 mt-5 items-center">
-      <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
-        style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 100ms ease-in-out' }}>
-        <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-white/30" : "border-transparent" }`}>
-          <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
+    <div className="flex flex-col w-fit h-130 md:h-165 mt-8 md:mt-10 items-center">
+      <div
+        className={`flex flex-col shadow-md transition-all duration-300 ${isActive ? "z-30 -translate-y-1" : ""}`}
+        style={{ transform: showPhrase ? `translateY(${isTwoLines ? "-24px" : "-16px"})` : "translateY(0)", transition: "transform 100ms ease-in-out",}}>
+        <div className={`w-fit p-3 border transition-all duration-300 ${isActive ? "border-white/30" : "border-transparent"}`}>
+          <div
+            className="inline-flex relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+          >
             {member.image && member.image.length > 0 && (
               <Image
                 src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${member.image[currentImageIndex].url}`}
@@ -280,9 +279,7 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
                 priority={currentImageIndex === 0}
               />
             )}
-            {(isHovered || isTapped) && (
-              <div className="absolute inset-0 bg-black/5 pointer-events-none" />
-            )}
+            {(isHovered || isTapped) && <div className="absolute inset-0 bg-black/5 pointer-events-none" />}
           </div>
           <div className="pt-1 font-[250] min-h-[60px]">
             <h3 className="text-[24px]">{member.name}</h3>
