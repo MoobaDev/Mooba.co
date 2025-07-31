@@ -180,7 +180,7 @@ export default async function blogPage({ params }: { params: Promise<{ slug: str
       </div>
 
       <div className="hidden md:block">
-        <PortafolioHome projects={portfolioProjects} />
+        <PortafolioHome title={'Ideas que se volvieron realidad'} projects={portfolioProjects} />
       </div>
 
       <ContactSection />
