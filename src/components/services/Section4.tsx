@@ -18,7 +18,7 @@ export default function Section4({ fourthSectionTitle, fourthSectionContent }: P
             <div key={index} className="flex flex-col">
               <div className="flex flex-col items-start space-x-4">
                 <LoopingIcon animationData={item.animation} />
-                <h3 className="font-normal text-[16px] md:text-[32px]">{item.title}</h3>
+                <h3 className="font-normal text-[16px] md:text-[32px] tracking-tight">{item.title}</h3>
                 <p className="text-[14px] md:text-[16px] font-[250]">{item.description}</p>
               </div>
             </div>
