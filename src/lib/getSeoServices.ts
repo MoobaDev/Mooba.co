@@ -11,7 +11,6 @@ export async function getSeoServices(slug: string): Promise<ServicesSection | nu
         }, 
       },
     );
-    console.log(res)
     if (!res.ok) {
       return null;
     }
