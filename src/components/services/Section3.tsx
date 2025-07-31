@@ -11,10 +11,10 @@ export default function Section3({ thirdSectionTitle, thirdSectionContent }: Pro
                 <div className="col-span-4">
                     <h2 className="text-[32px] md:text-[36px] font-normal">{thirdSectionTitle}</h2>
                 </div>
-                    <div className="grid grid-cols-2 gap-5 md:col-span-8">
+                    <div className="grid grid-cols-2 gap-10 md:col-span-8">
                         {thirdSectionContent.map((item, index) => (
-                            <div key={index} className="flex flex-col border border-white/30">
-                                <div className="flex p-3 ">
+                            <div key={index} className="flex flex-col border border-white/15">
+                                <div className="flex p-3 md:p-4">
                                     <div className="flex flex-col md:flex-row items-start gap-4">
                                         <div className="">
                                             <h3 className="text-[32px] md:text-[64px] p-0 text-[#0062FF] leading-none">{index + 1}.</h3>

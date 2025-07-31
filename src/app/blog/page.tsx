@@ -1,30 +1,31 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
-import Categories from "@/components/proyectos/Categories";
-import Projects from "@/components/proyectos/Projects";
-import { getAllProjects } from "@/lib/getAllProyects";
-import { getCategories } from "@/lib/getCategories";
+import ContactSection from '@/components/home/ContactUs';
 import { getSeo } from '@/lib/getSeo';
 import "../globals.css";
-import ContactSection from '@/components/home/ContactUs';
+import { getAllBlogs } from '@/lib/getAllBlogs';
+import { getBlogCategories } from '@/lib/getBlogCategories';
+//import Blogs from '@/components/blog/Blogs';
+import AllBlogs from '@/components/blog/AllBlogs';
+import Categories from '@/components/blog/Categories';
+import { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoResponse = await getSeo('proyectos')
+  const seoResponse = await getSeo('blog')
 
   if (!seoResponse) return {}
 
   const seo = seoResponse?.seo
 
   return {
-    title: seo?.title || "Mooba | Proyectos",
+    title: seo?.title || "Mooba | Blog",
     description: seo?.description || '',
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
     alternates: {
-      canonical: `https://mooba.co/proyectos`,
+      canonical: `https://mooba.co/blog`,
     },
     openGraph: {
-      title: seo?.title || "Mooba | Proyectos",
+      title: seo?.title || "Mooba | Blog",
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
@@ -32,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: seo?.title || "Mooba | Proyectos",
+      title: seo?.title || "Mooba | Blog",
       description: seo?.description || '',
       images: seo?.image?.url
         ? [`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${seo.image.url}`]
@@ -41,16 +42,16 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function PortafolioPage() {
+export default async function blogPage() {
 
-  const { data: projects } = await getAllProjects();
-  const { data: categories } = await getCategories();
+  const { data: blogs } = await getAllBlogs();
+  const { data: categories } = await getBlogCategories();
 
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8">
 
       <div className="mb-6 px-6 md:px-8">
-        <h1 className="text-[28px] md:text-[52px] font-extralight">Proyectos</h1>
+        <h1 className="text-[28px] md:text-[52px] font-extralight">Blogs</h1>
       </div>
 
       <div
@@ -70,9 +71,10 @@ export default async function PortafolioPage() {
       </div>
 
       <div className="px-6 md:px-8">
-        <Suspense fallback={<div>Cargando proyectos...</div>}>
-          <Projects projects={projects} />
+        <Suspense fallback={<div>Cargando blogs...</div>}>
+          <AllBlogs blogs={blogs} />
         </Suspense>
+        {/* <Blogs blogs={blogs} /> */}
       </div>
 
       <ContactSection />

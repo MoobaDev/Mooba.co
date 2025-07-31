@@ -5,7 +5,7 @@ export async function getSeoProject(slug: string): Promise<Project | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate[seo][populate]=image`,
       { 
-        cache: "no-store", 
+        next: { tags: ["seoProject"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         }, 

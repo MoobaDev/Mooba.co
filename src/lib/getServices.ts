@@ -5,7 +5,7 @@ export async function getServices(): Promise<Service[] | null> {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/servicios?populate=*`,
       { 
-        cache: "no-store", 
+        next: { tags: ["services"] },
         headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
       }, },

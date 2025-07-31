@@ -15,26 +15,47 @@ export default function Header() {
     const router = useRouter()
     const [showDropdown, setShowDropdown] = useState(false)
     const serviciosRef = useRef<HTMLDivElement>(null)
+    const dropdownRef = useRef<HTMLUListElement>(null)
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 })
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const handleMouseEnter = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+        }
         if (serviciosRef.current) {
             const rect = serviciosRef.current.getBoundingClientRect()
             setDropdownPosition({
                 left: rect.left,
-                top: rect.bottom + 2
+                top: rect.bottom 
             })
             setShowDropdown(true)
         }
     }
+
     const handleMouseLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setShowDropdown(false)
+        }, 100)
+    }
+
+    const handleDropdownMouseEnter = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current)
+        }
+    }
+
+    const handleDropdownMouseLeave = () => {
         setShowDropdown(false)
     }
+
     const handleNavigate = (url: string) => {
         setMobileOpen(false)
         setMobileServiciosOpen(false)
+        setShowDropdown(false)
         router.push(url)
     }
+
     const listVariants = {
         hidden: {},
         visible: {
@@ -81,7 +102,7 @@ export default function Header() {
             const rect = serviciosRef.current.getBoundingClientRect()
             setDropdownPosition({
                 left: rect.left,
-                top: rect.bottom + 2
+                top: rect.bottom
             })
         }
     }, [scrolled, showDropdown])
@@ -96,13 +117,22 @@ export default function Header() {
         }
     }, [mobileOpen])
 
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+        }
+    }, [])
+
     return (
         <>
         {showDropdown && (
         <ul
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="fixed z-[99] bg-black/30 backdrop-blur-md text-white p-4 rounded-lg flex flex-col font-medium gap-2 whitespace-nowrap text-[14px] "
+            ref={dropdownRef}
+            onMouseEnter={handleDropdownMouseEnter}
+            onMouseLeave={handleDropdownMouseLeave}
+            className="fixed z-[99] bg-black/30 backdrop-blur-md text-white p-4 rounded-lg flex flex-col font-medium gap-2 whitespace-nowrap text-[14px] shadow-lg"
             style={{
                 top: `${dropdownPosition.top}px`,
                 left: `${dropdownPosition.left}px`,
@@ -124,13 +154,19 @@ export default function Header() {
                 <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
                 <HamburgerIcon />
                 </button>
-                <nav className="hidden md:flex gap-10 font-medium text-[14px]">
-                    <div className="relative flex flex-col gap-2" ref={serviciosRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <span className="hover:underline cursor-pointer">Servicios</span>
+                <nav className="hidden md:flex gap-10 font-medium text-[14px] items-center">
+                    <div 
+                        className="relative" 
+                        ref={serviciosRef} 
+                        onMouseEnter={handleMouseEnter} 
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <span className="hover:underline cursor-pointer py-2 block">Servicios</span>
                     </div>
-                    <Link href="/proyectos" className="hover:underline cursor-pointer">Proyectos</Link>
-                    <Link href="/nuestra-esencia" className="hover:underline cursor-pointer">Nuestra esencia</Link>
-                    <Link href="/contactanos" className="hover:underline cursor-pointer">Contáctanos</Link>
+                    <Link href="/proyectos" className="hover:underline cursor-pointer py-2 block">Proyectos</Link>
+                    <Link href="/nuestra-esencia" className="hover:underline cursor-pointer py-2 block">Nuestra esencia</Link>
+                    <Link href="/blog" className="hover:underline cursor-pointer py-2 block">Blog</Link>
+                    <Link href="/contactanos" className="hover:underline cursor-pointer py-2 block">Contáctanos</Link>
                 </nav>
             </div>
         </header>
@@ -152,11 +188,11 @@ export default function Header() {
                 <nav className="flex">
                     <ul className="flex flex-col gap-2">
                         <button onClick={() => handleNavigate('/proyectos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Proyectos</button>
-                        <li className="flex flex-col gap-2">
+                        <li className="flex flex-col gap-1">
                             <button onClick={() => setMobileServiciosOpen(!mobileServiciosOpen)} className="text-[32px] font-normal hover:cursor-pointer text-left"> Servicios</button>
                             <AnimatePresence>
                                 {mobileServiciosOpen && (
-                                    <motion.ul variants={listVariants} initial="hidden" animate="visible" exit="exit" className="flex flex-col text-[18px] font-extralight gap-3">
+                                    <motion.ul variants={listVariants} initial="hidden" animate="visible" exit="exit" className="flex flex-col text-[18px] font-extralight gap-1.5">
                                     {[
                                         { label: "Branding", path: "/servicios/branding" },
                                         { label: "Diseño web & Desarrollo", path: "/servicios/diseno-y-desarrollo" },
@@ -172,6 +208,7 @@ export default function Header() {
                                 )}
                             </AnimatePresence>
                         </li>
+                        <button onClick={() => handleNavigate('/blog')} className="text-[32px] font-normal hover:cursor-pointer text-left">Blog</button>
                         <button onClick={() => handleNavigate('/nuestra-esencia')} className="text-[32px] font-normal hover:cursor-pointer text-left">Nuestra esencia</button>
                         <button onClick={() => handleNavigate('/contactanos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Contáctanos</button>
                     </ul>

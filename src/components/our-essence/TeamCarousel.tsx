@@ -265,7 +265,7 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
   }, [])
 
   return (
-    <div className="flex flex-col w-fit h-130 md:h-158 mt-0 md:mt-5 items-center">
+    <div className="flex flex-col w-fit h-130 md:h-158 mt-5 items-center">
       <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
         style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 100ms ease-in-out' }}>
         <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-white/30" : "border-transparent" }`}>

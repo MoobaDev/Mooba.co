@@ -1,11 +1,11 @@
-import { Project } from "@/types/Proyecto";
+import { Blog } from "@/types/Blog";
 
-export async function getProject(slug: string): Promise<Project | null> {
+export async function getSeoBlog(slug: string): Promise<Blog | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyectos?filters[slug][$eq]=${slug}&populate=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?filters[slug][$eq]=${slug}&populate[seo][populate]=image`,
       { 
-        next: { tags: ["project"] },
+        next: { tags: ["seoBlog"] },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         }, 
@@ -14,7 +14,7 @@ export async function getProject(slug: string): Promise<Project | null> {
     if (!res.ok) {
       return null;
     }
-    const response: { data: Project[] } = await res.json();
+    const response: { data: Blog[] } = await res.json();
     return response.data[0] || null;
   } catch (error) {
     console.error("Error fetching project:", error);

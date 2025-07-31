@@ -1,5 +1,5 @@
-// ✅ Solo se añadió el prop `play` y se eliminó la lógica de hover interna
 'use client'
+
 import { useRef, useEffect } from "react"
 import Lottie, { LottieRefCurrentProps } from "lottie-react"
 
@@ -21,7 +21,7 @@ export default function AnimatedIcon({
   }, [play])
 
   return (
-    <div className="w-[26px] h-[26px]" style={{ minWidth: "26px", minHeight: "26px" }}>
+    <div className="w-[32px] h-[32px]" style={{ minWidth: "32px", minHeight: "32px" }}>
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
