@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-export default async function ServicesPage({ params }: { params: { slug: string }}) {
+export default async function ServicesPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const service = await getServiceSection(slug);
     const allProjectsResponse = await getAllProjects();
