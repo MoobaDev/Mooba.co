@@ -15,8 +15,8 @@ export default function Section3({ thirdSectionTitle, thirdSectionContent }: Pro
                         {thirdSectionContent.map((item, index) => (
                             <div key={index} className="flex flex-col border border-white/15">
                                 <div className="flex p-3 md:p-4">
-                                    <div className="flex flex-col md:flex-row items-start gap-4">
-                                        <div className="">
+                                    <div className="flex flex-col md:flex-row items-start gap-2">
+                                        <div className="w-[56px] h-[44px] flex items-start justify-start">
                                             <h3 className="text-[32px] md:text-[64px] p-0 text-[#0062FF] leading-none">{index + 1}.</h3>
                                         </div>
                                         <div className="flex flex-col">
