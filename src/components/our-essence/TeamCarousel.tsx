@@ -128,7 +128,6 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
           onSwiper={(swiper) => {
             swiperRef.current = swiper
           }}
-          
           breakpoints={{
             320: {
               slidesPerView: 1.2,
@@ -186,7 +185,11 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
         >
           {duplicatedMembers.map((member, index) => (
             <SwiperSlide key={`${member.name}-${index}`} className="cursor-none overflow-visible transition-all duration-300 ease-out flex items-center w-fit justify-center">
-              <TeamMemberCard member={member} isMobile={isMobile} />
+              <TeamMemberCard 
+                member={member} 
+                isMobile={isMobile} 
+                swiperRef={swiperRef}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -195,16 +198,18 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
   )
 }
 
-function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
+function TeamMemberCard({ member, isMobile, swiperRef }: TeamMemberCardProps & { swiperRef: React.RefObject<SwiperType | null> }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [isTapped, setIsTapped] = useState(false)
   const [showPhrase, setShowPhrase] = useState(false)
+  const isTwoLines = member.phrase && member.phrase.length > 37
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const autoplayResumeRef = useRef<NodeJS.Timeout | null>(null)
   const isActive = isHovered || isTapped
 
-  const startImageCycle = (duration: number = 200) => {
+  const startImageCycle = (duration: number = 300) => {
     if (member.image.length <= 1) return
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
@@ -240,17 +245,33 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
 
   const handleTouchStart = () => {
     if (member.image.length <= 1) return
+    if (swiperRef.current?.autoplay) {
+      swiperRef.current.autoplay.stop()
+    }
     setIsTapped(true)
     setShowPhrase(true)
-    startImageCycle(1000 / member.image.length)
+    const totalCycles = member.image.length * 2
+    const cycleDuration = 2000
+    const intervalDuration = cycleDuration / totalCycles
+
+    startImageCycle(intervalDuration)
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
+    }
+    if (autoplayResumeRef.current) {
+      clearTimeout(autoplayResumeRef.current)
     }
     timeoutRef.current = setTimeout(() => {
       stopImageCycle()
       setIsTapped(false)
       setShowPhrase(false)
-    }, 1000)
+      autoplayResumeRef.current = setTimeout(() => {
+        if (swiperRef.current?.autoplay) {
+          swiperRef.current.autoplay.start()
+        }
+      }, 500)
+    }, cycleDuration)
   }
 
   useEffect(() => {
@@ -261,13 +282,16 @@ function TeamMemberCard({ member, isMobile }: TeamMemberCardProps) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
+      if (autoplayResumeRef.current) {
+        clearTimeout(autoplayResumeRef.current)
+      }
     }
   }, [])
 
   return (
-    <div className="flex flex-col w-fit h-130 md:h-158 mt-5 items-center">
+    <div className="flex flex-col w-fit h-130 md:h-165 mt-8 md:mt-10 items-center">
       <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
-        style={{ transform: showPhrase ? 'translateY(-16px)' : 'translateY(0)', transition: 'transform 100ms ease-in-out' }}>
+        style={{ transform: showPhrase ? `translateY(${isTwoLines ? "-24px" : "-16px"})` : "translateY(0)", transition: 'transform 100ms ease-in-out' }}>
         <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-white/30" : "border-transparent" }`}>
           <div className="inline-flex relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onTouchStart={handleTouchStart}>
             {member.image && member.image.length > 0 && (

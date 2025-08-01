@@ -16,7 +16,7 @@ export default function AccordionItemComponent({ title, children, carousel = fal
                   {title}
                 </h2>
 
-                <div className={`hidden md:block flex-1 max-w-[23%] transition-all duration-700 ease-in-out ${isOpen ? "opacity-100 max-h-[1000px]" : "opacity-0 max-h-0 overflow-hidden"}`}>
+                <div className={`hidden md:block flex-1 max-w-[23%] transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 max-h-[1000px]" : "opacity-0 max-h-0 overflow-hidden"}`}>
                   <div className="font-[250] leading-relaxed text-[18px] md:text-[20px]">
                     {children}
                   </div>
