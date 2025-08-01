@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { easeOut } from "framer-motion"
 
 export default function Header() {
+    console.log("header")
     const [mobileOpen, setMobileOpen] = useState(false)
     const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
