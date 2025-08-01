@@ -56,7 +56,7 @@ export default function VideoHero({
 
       {/* Scroll Down Indicator */}
       <div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10 cursor-pointer"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10 cursor-pointer blendmode"
         onClick={scrollToNext}
       >
         {/* Desktop Mouse Indicator */}
@@ -68,7 +68,7 @@ export default function VideoHero({
         </div>
 
         {/* Mobile Chevron Down */}
-        <div className="md:hidden flex flex-col items-center">
+        <div className="md:hidden flex flex-col items-center blendmode">
           <ChevronDown className="w-6 h-6 text-white animate-bounce" />
           <span className="text-sm font-normal text-white">Desliza</span>
         </div>
