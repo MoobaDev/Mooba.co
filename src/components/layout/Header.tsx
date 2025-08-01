@@ -7,6 +7,8 @@ import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons"
 import { useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { easeOut } from "framer-motion"
+import Lottie from "lottie-react"
+import logo from '../../../public/logo.json'
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false)
@@ -149,15 +151,16 @@ export default function Header() {
         <>
         {!scrolled && (
             <div className="fixed top-0 left-0 z-[51] px-6 py-6 md:px-8 pointer-events-none">
-                <Link href="/" className="cursor-pointer pointer-events-auto">
-                    <Image 
-                        src="/logo.svg" 
-                        alt="Logo mooba" 
-                        width={130} 
-                        height={40} 
-                        className="w-[120px] h-[30] md:w-[130px] md:h-[40]" 
-                    />
-                </Link>
+                <div className="w-[120px] h-[30] md:w-[130px] md:h-[40]" >
+                    <Link href="/" className="cursor-pointer pointer-events-auto">
+                        <Lottie 
+                            animationData={logo}
+                            loop={true}
+                            autoplay={true}
+                            style={{ width: "100%", height: "100%" }}
+                        />
+                    </Link>
+                </div>
             </div>
         )}
 
