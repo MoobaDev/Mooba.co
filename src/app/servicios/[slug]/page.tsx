@@ -60,7 +60,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
             <div className="max-w-[1440px] mx-auto w-full md:pt-16">
                 <div className="px-6">
                     <ServiceMain service={service}/>
-                    <div className="w-full border-t border-white/30 my-[32px] md:my-20"></div>
+                    <div className="w-full border-t border-white/30 my-[32px] md:my-20 "></div>
                     <Section1 firstSectionTitle={service.firstSectionTitle} firstSectionContent={service.firstSectionContent}/>
                     <div className="w-full border-t border-white/30 my-[32px] md:my-20"></div>
                     <Section2 secondSectionTitle={service.secondSectionTitle} secondSectionContent={service.secondSectionContent}/>
