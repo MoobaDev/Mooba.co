@@ -61,6 +61,7 @@ export default function Projects({ projects }: ProjectsProps) {
                   className="relative cursor-none h-full"
                   onMouseEnter={() => setHidden(true)}
                   onMouseLeave={() => setHidden(false)}
+                  onClick={() => setHidden(false)}
                 >
                   <div className={`hidden md:block w-full h-full ${mediaClass}`}>
                     {project.desktopVideo ? (
