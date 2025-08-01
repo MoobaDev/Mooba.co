@@ -92,6 +92,64 @@ function htmlReplace(html: string) {
     }
   );
 
+  // Envuelve textos en un div con padding lateral
+  replaceResult = replaceResult.replace(
+    /<(h[1-6]|span)([^>]*)>(.*?)<\/\1>/gi,
+    (match, tag, attrs, content) => {
+      return `<div class="text-container"><${tag}${attrs}>${content}</${tag}></div>`;
+    }
+  );
+
+  return replaceResult;
+}
+function htmlDesktopReplace(html: string) {
+  // Corrige los atributos de <video>
+  let replaceResult = html.replace(
+    /<video([^>]*)>/gi,
+    (match, attrs) => {
+      const cleanedAttrs = attrs
+        .replace(/\s*controls\b/gi, "")
+        .replace(/\s*autoplay\b/gi, "")
+        .replace(/\s*muted\b/gi, "")
+        .replace(/\s*loop\b/gi, "")
+        .replace(/\s*playsinline\b/gi, "")
+        .replace(/\s*width\s*=\s*["'][^"']*["']/gi, "")
+        .trim();
+
+      const fixedAttrs = `${cleanedAttrs} autoplay muted loop playsinline`.trim();
+
+      return `<video ${fixedAttrs} width="100%">`;
+    }
+  );
+
+  // Corrige iframes de YouTube/Vimeo
+  replaceResult = replaceResult.replace(
+    /<iframe([^>]+src=["'][^"']+)(vimeo\.com|youtube\.com|youtu\.be)([^"']*)["']/gi,
+    (match) => {
+      const cleaned = match.replace(/([?&])(controls|showinfo|modestbranding|autoplay|loop)=\d+/g, "");
+      return cleaned.replace(
+        /(src=["'][^"']*)(["'])/,
+        (srcMatch, srcUrl, quote) => {
+          const separator = srcUrl.includes("?") ? "&" : "?";
+          return `${srcUrl}${separator}autoplay=1&loop=1${quote}`;
+        }
+      );
+    }
+  );
+
+  // Arregla imágenes
+  replaceResult = replaceResult.replace(
+    /<img\b([^>]*)>/gi,
+    (match, attrs) => {
+      const newAttrs = attrs
+        .replace(/\s*width\s*=\s*["'][^"']*["']/gi, "")
+        .replace(/\s*height\s*=\s*["'][^"']*["']/gi, "")
+        .replace(/\s*srcset\s*=\s*["'][^"']*["']/gi, "")
+        .trim();
+      return `<img ${newAttrs} width="100%">`;
+    }
+  );
+
   return replaceResult;
 }
 
@@ -147,8 +205,17 @@ export default async function blogPage({ params }: { params: Promise<{ slug: str
         />
       </div> */}
 
-      <div className="px-6 md:px-8">
-        <div className="block">
+      <div className="px-4 md:px-8">
+        <div className="hidden md:block">
+          {blog.desktopContent && (
+            <div className="w-full">
+              <div className="max-w-none w-full">
+                <SafeHtml html={htmlDesktopReplace(blog.desktopContent)} />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="block md:hidden">
           {blog.desktopContent && (
             <div className="w-full">
               <div className="max-w-none w-full">
@@ -179,7 +246,7 @@ export default async function blogPage({ params }: { params: Promise<{ slug: str
         />
       </div>
 
-      <div className="hidden md:block">
+      <div className="block">
         <PortafolioHome title={'Ideas que se volvieron realidad'} projects={portfolioProjects} />
       </div>
 

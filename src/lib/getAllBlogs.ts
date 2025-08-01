@@ -2,7 +2,7 @@ import { StrapiBlogsResponse } from "@/types/Blog";
 
 export async function getAllBlogs(): Promise<StrapiBlogsResponse> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?populate=*&sort=updatedAt:desc`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/blogs?populate=*&sort=createdAt:desc`, {
       next: { tags: ["allBlog"] },
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
