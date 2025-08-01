@@ -92,16 +92,9 @@ function htmlReplace(html: string) {
     }
   );
 
-  // Envuelve textos en un div con padding lateral
-  replaceResult = replaceResult.replace(
-    /<(h[1-6]|span)([^>]*)>(.*?)<\/\1>/gi,
-    (match, tag, attrs, content) => {
-      return `<div class="text-container"><${tag}${attrs}>${content}</${tag}></div>`;
-    }
-  );
-
   return replaceResult;
 }
+
 function htmlDesktopReplace(html: string) {
   // Corrige los atributos de <video>
   let replaceResult = html.replace(
@@ -147,6 +140,14 @@ function htmlDesktopReplace(html: string) {
         .replace(/\s*srcset\s*=\s*["'][^"']*["']/gi, "")
         .trim();
       return `<img ${newAttrs} width="100%">`;
+    }
+  );
+
+  // Envuelve textos en un div con padding lateral
+  replaceResult = replaceResult.replace(
+    /<(h[1-6]|span)([^>]*)>(.*?)<\/\1>/gi,
+    (match, tag, attrs, content) => {
+      return `<div class="text-container"><${tag}${attrs}>${content}</${tag}></div>`;
     }
   );
 
