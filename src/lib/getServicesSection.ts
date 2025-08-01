@@ -15,7 +15,6 @@ export async function getServiceSection(slug: string): Promise<ServicesSection |
       return null;
     }
     const response: { data: ServicesSection[] } = await res.json();
-    console.log(response)
     return response.data[0] || null;
   } catch (error) {
     console.error("Error fetching project:", error);
