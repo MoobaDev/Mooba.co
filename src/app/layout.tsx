@@ -8,8 +8,6 @@ import Cursor from "@/components/layout/Cursor"
 import Script from "next/script";
 import { CursorProvider } from "@/context/cursor-context";
 import ScrollToTop from "@/components/layout/ScrollToTop";
-import {getHeaderLogo} from "@/lib/getHeaderLogo";
-
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -17,12 +15,11 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-export async default function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerLogo = await getHeaderLogo();
   return (
     <html lang="es">
       <head>
@@ -111,7 +108,7 @@ export async default function RootLayout({
         <CursorProvider>
           <Cursor/>
           <ScrollToTop />
-          <Header headerLogo={headerLogo}/>
+          <Header/>
             <main className="relative z-0 pb-8">
               <Providers>{children}</Providers>
               <WhatsAppButton />
