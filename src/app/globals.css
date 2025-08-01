@@ -11,6 +11,9 @@ body {
   padding-right: 25%;
 }
 }
+.blendmode{
+  mix-blend-mode: difference;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {

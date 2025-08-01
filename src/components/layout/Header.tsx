@@ -146,14 +146,37 @@ export default function Header() {
         </ul>
         )}
 
-        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden"}`}>
-            <div id="navbar-desktop" className="flex justify-between items-center">
-                <Link href="/" className="cursor-pointer">
-                <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
+        <>
+        {!scrolled && (
+            <div className="fixed top-0 left-0 z-[51] px-6 py-6 md:px-8 pointer-events-none">
+                <Link href="/" className="cursor-pointer pointer-events-auto">
+                    <Image 
+                        src="/logo.svg" 
+                        alt="Logo mooba" 
+                        width={130} 
+                        height={40} 
+                        className="w-[120px] h-[30] md:w-[130px] md:h-[40]" 
+                    />
                 </Link>
+            </div>
+        )}
+
+        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] isolate duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden mix-blend-difference"}`}>
+            <div id="navbar-desktop" className="flex justify-between items-center">
+                <Link href="/" className={`cursor-pointer ${!scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                    <Image 
+                        src="/logo.svg" 
+                        alt="Logo mooba" 
+                        width={130} 
+                        height={40} 
+                        className="w-[120px] h-[30] md:w-[130px] md:h-[40]" 
+                    />
+                </Link>
+                
                 <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
-                <HamburgerIcon />
+                    <HamburgerIcon />
                 </button>
+                
                 <nav className="hidden md:flex gap-10 font-medium text-[14px] items-center">
                     <div 
                         className="relative" 
@@ -170,6 +193,7 @@ export default function Header() {
                 </nav>
             </div>
         </header>
+        </>
 
         <section id="mobile-menu" className={`fixed inset-0 z-[60] bg-black/30 backdrop-blur-md text-white px-6 py-6 transform transition-transform duration-500 md:hidden ${ mobileOpen ? "translate-x-0" : "translate-x-full" }`}>
             <div className="flex flex-col h-full justify-between">
@@ -185,7 +209,7 @@ export default function Header() {
                     <div className="w-full border-t border-white/30 my-6"></div>
                 </div>
 
-                <nav className="flex">
+                <nav className="flex" >
                     <ul className="flex flex-col gap-2">
                         <button onClick={() => handleNavigate('/proyectos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Proyectos</button>
                         <li className="flex flex-col gap-1">
