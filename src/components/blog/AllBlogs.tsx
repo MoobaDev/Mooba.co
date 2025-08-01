@@ -64,6 +64,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
                   className="relative cursor-none overflow-hidden"
                   onMouseEnter={() => setHidden(true)}
                   onMouseLeave={() => setHidden(false)}
+                  onClick={() => setHidden(false)}
                 >
                   <div className={`hidden md:block w-full aspect-[1/1] md:max-h-[350px] lg:max-h-[510px] object-cover`}>
                     {blog.desktopVideo ? (
