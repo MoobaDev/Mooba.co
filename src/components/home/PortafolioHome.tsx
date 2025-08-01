@@ -274,7 +274,7 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="flex flex-wrap mt-auto">
                   {project.categorias.map((tag, tagIdx) => (
                     <span
                       key={tagIdx}
