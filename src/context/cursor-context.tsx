@@ -1,5 +1,6 @@
 'use client'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 type CursorContextType = {
   hidden: boolean
@@ -10,6 +11,12 @@ const CursorContext = createContext<CursorContextType | undefined>(undefined)
 
 export function CursorProvider({ children }: { children: React.ReactNode }) {
   const [hidden, setHidden] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setHidden(false)
+  }, [pathname])
+
   return (
     <CursorContext.Provider value={{ hidden, setHidden }}>
       {children}
