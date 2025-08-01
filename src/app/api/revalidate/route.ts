@@ -29,6 +29,7 @@ export async function POST(req: Request) {
     revalidateTag('videoHero');
     revalidateTag('servicesSection');
     revalidateTag('seoServices');
+    revalidateTag('logoJson')
 
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (error) {

@@ -74,25 +74,22 @@ export default function Cursor() {
     return (
         <>
             <div 
-                className="pointer-events-none fixed z-[9999] cursor-none" 
+                className="pointer-events-none fixed z-[9999] cursor-none blendmode" 
                 style={{ 
                     top: '0px', 
                     left: '0px', 
                     transform: `translate(${position.x - 8}px, ${position.y - 8}px)`,
-                    mixBlendMode: 'difference'
                 }}
             >
                 <div className="w-2 h-2 rounded-full bg-white" />
             </div>
             
-            {/* Círculo que sigue al cursor */}
             <div 
-                className="pointer-events-none fixed z-[9998]" 
+                className="pointer-events-none fixed z-[9998] blendmode" 
                 style={{ 
                     top: '0px', 
                     left: '0px', 
                     transform: `translate(${circlePosition.x - 24}px, ${circlePosition.y - 24}px)`,
-                    mixBlendMode: 'difference'
                 }}
             >
                 <div className="w-10 h-10 rounded-full border border-white opacity-80" />
@@ -102,12 +99,11 @@ export default function Cursor() {
             {clickRipples.map(ripple => (
                 <div 
                     key={ripple.id} 
-                    className="pointer-events-none fixed z-[9997]" 
+                    className="pointer-events-none fixed z-[9997] blendmode" 
                     style={{ 
                         top: '0px', 
                         left: '0px', 
                         transform: `translate(${ripple.x - 24}px, ${ripple.y - 24}px)`,
-                        mixBlendMode: 'difference'
                     }}
                 >
                     <div 

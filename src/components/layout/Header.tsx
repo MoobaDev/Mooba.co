@@ -146,7 +146,7 @@ export default function Header() {
         </ul>
         )}
 
-        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden"}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled  ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden blendmode"}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
                 <Link href="/" className="cursor-pointer">
                 <Image src="/logo.svg" alt="Logo mooba" width={130} height={40} className="w-[120px] h-[30] md:w-[130px] md:h-[40]" />
@@ -185,7 +185,7 @@ export default function Header() {
                     <div className="w-full border-t border-white/30 my-6"></div>
                 </div>
 
-                <nav className="flex">
+                <nav className="flex" >
                     <ul className="flex flex-col gap-2">
                         <button onClick={() => handleNavigate('/proyectos')} className="text-[32px] font-normal hover:cursor-pointer text-left">Proyectos</button>
                         <li className="flex flex-col gap-1">
