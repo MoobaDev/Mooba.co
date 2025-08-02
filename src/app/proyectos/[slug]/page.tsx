@@ -57,6 +57,31 @@ function htmlReplace(html: string) {
     }
   );
 
+  // Envuelve textos en un div con padding izq
+  replaceResult = replaceResult.replace(
+    /<(ul|ol)([^>]*)>([\s\S]*?)<\/\1>/gi,
+    (match, tag, attrs, content) => {
+      if (match.includes('class="text-container"')) return match;
+      return `<div class="list-container"><${tag}${attrs}>${content}</${tag}></div>`;
+    }
+  );
+  
+  // Disminuye el font-size en 2px si está en estilo inline
+  replaceResult = replaceResult.replace(
+    /style\s*=\s*"(.*?)"/gi,
+    (match: string, styleContent: string): string => {
+      const updatedStyle = styleContent.replace(
+        /font-size\s*:\s*(\d+)px/gi,
+        (_fontSizeMatch: string, size: string): string => {
+          const newSize = Math.max(parseInt(size, 10) - 2, 1);
+          return `font-size:${newSize}px`;
+        }
+      );
+      return `style="${updatedStyle}"`;
+    }
+  );
+
+
   return replaceResult;
 }
 
