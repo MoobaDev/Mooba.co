@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const seo = blog.seo
 
   return {
-    title: seo?.title || blog.title,
+    title: seo?.title || `Mooba | ${blog.title}`,
     description: seo?.description || '',
     keywords: seo?.keywords,
     robots: seo?.metaRobots || 'index, follow',
@@ -145,9 +145,19 @@ function htmlDesktopReplace(html: string) {
 
   // Envuelve textos en un div con padding lateral
   replaceResult = replaceResult.replace(
-    /<(h[1-6]|span)([^>]*)>(.*?)<\/\1>/gi,
+    /<(h[1-6]|span|ul|ol)([^>]*)>([\s\S]*?)<\/\1>/gi,
     (match, tag, attrs, content) => {
+      if (match.includes('class="text-container"')) return match;
       return `<div class="text-container"><${tag}${attrs}>${content}</${tag}></div>`;
+    }
+  );
+
+  // Envuelve textos en un div con padding izq
+  replaceResult = replaceResult.replace(
+    /<(ul|ol)([^>]*)>([\s\S]*?)<\/\1>/gi,
+    (match, tag, attrs, content) => {
+      if (match.includes('class="text-container"')) return match;
+      return `<div class="list-container"><${tag}${attrs}>${content}</${tag}></div>`;
     }
   );
 
