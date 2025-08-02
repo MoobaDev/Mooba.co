@@ -32,6 +32,9 @@ export default function HideCursorOnHover({
         setHidden(false)
         onMouseLeave?.(e)
       }}
+      onClick={() => {
+        setHidden(false)
+      }}
     >
       {children}
     </div>
