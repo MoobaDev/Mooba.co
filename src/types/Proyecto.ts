@@ -19,6 +19,7 @@ export interface StrapiImage {
 }
 
 export interface Project {
+  id: number;
   title: string;
   slug: string;
   shortDescription: string;

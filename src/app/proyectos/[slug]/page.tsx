@@ -193,11 +193,12 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
   const project = await getProject(slug);
 
   const { data: allProjects } = await getAllProjects();
-  const portfolioProjects = allProjects.slice(0, 4);
 
   if (!project) {
     notFound();
   }
+
+  const portfolioProjects = allProjects.filter(p => p.id !== project.id).slice(0, 4);
 
   return (
     <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >
