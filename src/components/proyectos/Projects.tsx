@@ -22,14 +22,27 @@ export default function Projects({ projects }: ProjectsProps) {
         )
       : projects;
 
+  const colSpanPattern = [
+    'md:col-span-4',
+    'md:col-span-8',
+    'md:col-span-8',
+    'md:col-span-4',
+    'md:col-span-12',
+  ];
+
   function getColSpan(idx: number) {
-    const mod = idx % 6;
-    if (mod === 0 || mod === 5) return 'md:col-span-12';
-    if (mod === 1) return 'md:col-span-4';
-    if (mod === 2) return 'md:col-span-8';
-    if (mod === 3) return 'md:col-span-8';
-    if (mod === 4) return 'md:col-span-4';
-    return 'md:col-span-12';
+    if (idx === 0) return 'md:col-span-12';
+    return colSpanPattern[(idx - 1) % colSpanPattern.length];
+  }
+
+  function getMediaClass(idx: number) {
+    if (idx === 0 || getColSpan(idx) === 'md:col-span-12') {
+      return 'aspect-[16/9] md:max-h-[350px] lg:max-h-[510px] object-cover';
+    }
+    if (getColSpan(idx) === 'md:col-span-4' || getColSpan(idx) === 'md:col-span-8') {
+      return 'h-full md:max-h-[350px] md:min-h-[252px] lg:max-h-[510px] object-cover';
+    }
+    return 'aspect-[16/9] object-cover';
   }
 
   return (
@@ -42,12 +55,7 @@ export default function Projects({ projects }: ProjectsProps) {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
           {filtered.map((project, idx) => {
             const colSpan = getColSpan(idx);
-            const mod = idx % 6;
-            /* const aspectRatio = mod === 1 || mod === 5 ? 'h-full object-cover' : 'aspect-[16/9] md:max-h-[350px] lg:max-h-[510px]  overflow-hidden'; */
-            const mediaClass =
-              mod === 1 || mod === 4
-                ? 'h-full md:max-h-[350px] lg:max-h-[510px] object-cover'
-                : 'aspect-[16/9] md:max-h-[350px] lg:max-h-[510px] object-cover';
+            const mediaClass = getMediaClass(idx);
 
             return (
               <div
@@ -61,6 +69,7 @@ export default function Projects({ projects }: ProjectsProps) {
                   className="relative cursor-none h-full"
                   onMouseEnter={() => setHidden(true)}
                   onMouseLeave={() => setHidden(false)}
+                  onClick={() => setHidden(false)}
                 >
                   <div className={`hidden md:block w-full h-full ${mediaClass}`}>
                     {project.desktopVideo ? (

@@ -2,7 +2,7 @@ import { HighlightedProject } from "@/types/highlightedProjects.type";
 export async function getFeturedProject(): Promise<HighlightedProject[] | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyecto-destacados?populate[proyecto][populate]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/proyecto-destacados?populate[proyecto][populate]=*&sort=createdAt:desc`,
       { 
         next: { tags: ["featuredProjects"] },
         headers: {
