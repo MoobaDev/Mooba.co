@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons"
 import { useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
@@ -177,11 +176,11 @@ export default function Header() {
                     </Link>
                 </div>
                 
-                <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
+                <button onClick={() => setMobileOpen(true)} className="lg:hidden cursor-pointer" aria-label="Abrir menú">
                     <HamburgerIcon />
                 </button>
                 
-                <nav className="hidden md:flex gap-10 font-medium text-[14px] items-center">
+                <nav className="hidden lg:flex gap-10 font-medium text-[14px] items-center">
                     <div 
                         className="relative" 
                         ref={serviciosRef} 
@@ -199,12 +198,17 @@ export default function Header() {
         </header>
         </>
 
-        <section id="mobile-menu" className={`fixed inset-0 z-[60] bg-black/30 backdrop-blur-md text-white px-6 py-6 transform transition-transform duration-500 md:hidden ${ mobileOpen ? "translate-x-0" : "translate-x-full" }`}>
+        <section id="mobile-menu" className={`fixed inset-0 z-[60] bg-black/30 backdrop-blur-md text-white px-6 py-6 transform transition-transform duration-500 lg:hidden ${ mobileOpen ? "translate-x-0" : "translate-x-full" }`}>
             <div className="flex flex-col h-full justify-between">
                 <div className="flex flex-col">
                     <div className="flex justify-between items-center max-w-7xl">
-                        <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer">
-                            <Image src="/logo.svg" alt="Logo mooba" width={120} height={30} />
+                        <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer w-[120px] h-[30]">
+                            <Lottie 
+                                animationData={logo}
+                                loop={true}
+                                autoplay={true}
+                                style={{ width: "100%", height: "100%" }}
+                            />
                         </button>
                         <button onClick={() => setMobileOpen(false)} aria-label="Cerrar menú" className="cursor-pointer">
                             <CloseIcon />
