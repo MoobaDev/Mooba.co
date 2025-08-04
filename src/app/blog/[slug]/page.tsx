@@ -172,8 +172,8 @@ function htmlDesktopReplace(html: string) {
   replaceResult = replaceResult.replace(
     /<(h[1-6]|span|ul|ol)([^>]*)>([\s\S]*?)<\/\1>/gi,
     (match, tag, attrs, content) => {
-      if (match.includes('class="text-container"')) return match;
-      return `<div class="text-container"><${tag}${attrs}>${content}</${tag}></div>`;
+      if (match.includes('class="text-blog-container"')) return match;
+      return `<div class="text-blog-container"><${tag}${attrs}>${content}</${tag}></div>`;
     }
   );
 
@@ -181,8 +181,8 @@ function htmlDesktopReplace(html: string) {
   replaceResult = replaceResult.replace(
     /<(ul|ol)([^>]*)>([\s\S]*?)<\/\1>/gi,
     (match, tag, attrs, content) => {
-      if (match.includes('class="text-container"')) return match;
-      return `<div class="list-container"><${tag}${attrs}>${content}</${tag}></div>`;
+      if (match.includes('class="text-blog-container"')) return match;
+      return `<div class="list-blog-container"><${tag}${attrs}>${content}</${tag}></div>`;
     }
   );
 
