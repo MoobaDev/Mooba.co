@@ -21,7 +21,7 @@ export default function AnimatedIcon({
   }, [play])
 
   return (
-    <div className="w-[32px] h-[32px]" style={{ minWidth: "32px", minHeight: "32px" }}>
+    <div className="w-[32px] h-[32px] min-w-[32px] min-h-[32px] md:w-[42px] md:h-[42px] md:min-w-[42px] md:min-h-[42px]">
       <Lottie
         lottieRef={lottieRef}
         animationData={animationData}
