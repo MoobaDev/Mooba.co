@@ -1,7 +1,7 @@
 export async function POST(req: Request) {
     const body = await req.json();
   
-    const result = await fetch(`${process.env.MICROSOFT_NEWSLETTER_URL}`, {
+    const result = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/newsletter/subscribe`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
