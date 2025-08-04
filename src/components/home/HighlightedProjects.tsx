@@ -160,6 +160,8 @@ export default function HighlightedProjects({
     );
   }
 
+  console.log(projects)
+
   return (
     <section className="mt-[64px] md:mt-[120px] mx-auto overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
@@ -219,7 +221,7 @@ export default function HighlightedProjects({
                             : "brightness-50 scale-100"
                         }`}
                       />
-                    ) : (
+                    ) : proyecto.desktopImage ? (
                       <Image
                         src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${proyecto.desktopImage?.url}`}
                         alt={proyecto.title}
@@ -230,7 +232,7 @@ export default function HighlightedProjects({
                             : "brightness-50 scale-100"
                         }`}
                       />
-                    )}
+                    ) : null}
                   </div>
                   </HideCursorOnHover>
 
