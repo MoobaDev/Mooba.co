@@ -160,8 +160,6 @@ export default function HighlightedProjects({
     );
   }
 
-  console.log(projects)
-
   return (
     <section className="mt-[64px] md:mt-[120px] mx-auto overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-10">
