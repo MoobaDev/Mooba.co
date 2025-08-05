@@ -41,7 +41,7 @@ export default function AllBlogs({ blogs }: BlogsProps) {
           <h2 className="text-2xl font-semibold mb-4">No hay blogs disponibles</h2>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-15 md:gap-y-12 md:gap-x-8 items-start">
           {filtered.map((blog) => {
             /* const mod = idx % 6;
             const mediaClass =

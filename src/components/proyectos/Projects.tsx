@@ -52,7 +52,7 @@ export default function Projects({ projects }: ProjectsProps) {
           <h2 className="text-2xl font-semibold mb-4">No hay proyectos disponibles</h2>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-15 md:gap-y-12 md:gap-x-8 items-stretch">
           {filtered.map((project, idx) => {
             const colSpan = getColSpan(idx);
             const mediaClass = getMediaClass(idx);

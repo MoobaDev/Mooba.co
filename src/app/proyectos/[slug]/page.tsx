@@ -200,10 +200,15 @@ export default async function projectPage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <div className="w-full max-w-360 mx-auto  pt-28 pb-8" >
+    <div className="w-full max-w-360 mx-auto pt-28 pb-8" >
 
       <div className="mb-16 px-6 md:px-8">
         <h1 className="text-[28px] md:text-[52px] font-extralight pb-2">{project.title}</h1>
+        
+        <div className="flex text-wrap pb-4">
+          <span className="text-[12px] md:text-[14px] font-[250px] text-[#ABB1BA]">{project.shortDescription}</span>
+        </div>
+        
         <div className="flex flex-wrap gap-y-2">
           {Array.isArray(project.categorias) && project.categorias.map((cat) => (
             <Link
