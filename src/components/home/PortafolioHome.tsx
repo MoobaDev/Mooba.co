@@ -263,12 +263,12 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
                 {/* Project Info */}
                 <div className="mb-3 mt-2 font-extralight text-xl flex-grow">
                   <h5 
-                    className="truncate overflow-hidden whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity"
+                    className="truncate overflow-hidden cursor-pointer hover:opacity-80 transition-opacity break-words whitespace-pre-line line-clamp-2"
                     onClick={(e) => handleTitleClick(e, project.slug)}
                   >
                     {project.title}
                   </h5>
-                  <p className="text-[#ABB1BA] truncate overflow-hidden whitespace-nowrap">
+                  <p className="text-[#ABB1BA] truncate overflow-hidden break-words whitespace-pre-line line-clamp-2">
                     {project.shortDescription}
                   </p>
                 </div>
