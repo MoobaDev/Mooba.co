@@ -243,14 +243,14 @@ export default function HighlightedProjects({
                   >
                     <div className="mb-2 md:mb-3 max-w-[840px]">
                       <h5 
-                        className="text-xl font-extralight transition-opacity duration-300 cursor-pointer hover:opacity-80"
+                        className="text-xl font-extralight transition-opacity duration-300 cursor-pointer hover:opacity-80 break-words whitespace-pre-line line-clamp-2"
                         onClick={() => handleTitleClick(proyecto.slug)}
                       >
                         {proyecto.title}
                       </h5>
-                      <p className="text-xl text-[#ABB1BA] font-extralight transition-opacity duration-300">
+                        <p className="text-xl text-[#ABB1BA] font-extralight transition-opacity duration-300 break-words whitespace-pre-line line-clamp-2">
                         {proyecto.shortDescription}
-                      </p>
+                        </p>
                     </div>
 
                     <div className="flex flex-wrap transition-all duration-300">

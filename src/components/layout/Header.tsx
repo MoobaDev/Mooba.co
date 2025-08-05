@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons"
 import { useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { easeOut } from "framer-motion"
+import Lottie from "lottie-react"
+import logo from '../../../public/logo.json'
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false)
@@ -149,35 +150,37 @@ export default function Header() {
         <>
         {!scrolled && (
             <div className="fixed top-0 left-0 z-[51] px-6 py-6 md:px-8 pointer-events-none">
-                <Link href="/" className="cursor-pointer pointer-events-auto">
-                    <Image 
-                        src="/logo.svg" 
-                        alt="Logo mooba" 
-                        width={130} 
-                        height={40} 
-                        className="w-[120px] h-[30] md:w-[130px] md:h-[40]" 
-                    />
-                </Link>
+                <div className="w-[120px] h-[30] md:w-[130px] md:h-[40]" >
+                    <Link href="/" className="cursor-pointer pointer-events-auto">
+                        <Lottie 
+                            animationData={logo}
+                            loop={true}
+                            autoplay={true}
+                            style={{ width: "100%", height: "100%" }}
+                        />
+                    </Link>
+                </div>
             </div>
         )}
 
         <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] isolate duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden mix-blend-difference"}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
-                <Link href="/" className={`cursor-pointer ${!scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                    <Image 
-                        src="/logo.svg" 
-                        alt="Logo mooba" 
-                        width={130} 
-                        height={40} 
-                        className="w-[120px] h-[30] md:w-[130px] md:h-[40]" 
-                    />
-                </Link>
+                <div className="w-[120px] h-[30] md:w-[130px] md:h-[40]">
+                    <Link href="/" className={`cursor-pointer ${!scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                        <Lottie 
+                            animationData={logo}
+                            loop={true}
+                            autoplay={true}
+                            style={{ width: "100%", height: "100%" }}
+                        />
+                    </Link>
+                </div>
                 
-                <button onClick={() => setMobileOpen(true)} className="md:hidden cursor-pointer" aria-label="Abrir menú">
+                <button onClick={() => setMobileOpen(true)} className="lg:hidden cursor-pointer" aria-label="Abrir menú">
                     <HamburgerIcon />
                 </button>
                 
-                <nav className="hidden md:flex gap-10 font-medium text-[14px] items-center">
+                <nav className="hidden lg:flex gap-10 font-medium text-[14px] items-center">
                     <div 
                         className="relative" 
                         ref={serviciosRef} 
@@ -195,12 +198,17 @@ export default function Header() {
         </header>
         </>
 
-        <section id="mobile-menu" className={`fixed inset-0 z-[60] bg-black/30 backdrop-blur-md text-white px-6 py-6 transform transition-transform duration-500 md:hidden ${ mobileOpen ? "translate-x-0" : "translate-x-full" }`}>
+        <section id="mobile-menu" className={`fixed inset-0 z-[60] bg-black/30 backdrop-blur-md text-white px-6 py-6 transform transition-transform duration-500 lg:hidden ${ mobileOpen ? "translate-x-0" : "translate-x-full" }`}>
             <div className="flex flex-col h-full justify-between">
                 <div className="flex flex-col">
                     <div className="flex justify-between items-center max-w-7xl">
-                        <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer">
-                            <Image src="/logo.svg" alt="Logo mooba" width={120} height={30} />
+                        <button onClick={() => { setMobileOpen(false); router.push("/")}} aria-label="Ir al inicio" className="cursor-pointer w-[120px] h-[30]">
+                            <Lottie 
+                                animationData={logo}
+                                loop={true}
+                                autoplay={true}
+                                style={{ width: "100%", height: "100%" }}
+                            />
                         </button>
                         <button onClick={() => setMobileOpen(false)} aria-label="Cerrar menú" className="cursor-pointer">
                             <CloseIcon />
