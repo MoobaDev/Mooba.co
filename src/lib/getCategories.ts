@@ -3,7 +3,7 @@ import { StrapiCategoriesResponse } from "@/types/Proyecto";
 export async function getCategories(): Promise<StrapiCategoriesResponse> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categorias`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categorias?populate=*`,
       {
         next: { tags: ["categories"] },
         headers: {

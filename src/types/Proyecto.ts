@@ -41,6 +41,7 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  proyectos: Project[];
 }
 
 export interface StrapiProjectsResponse {

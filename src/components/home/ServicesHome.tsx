@@ -135,26 +135,28 @@ export default function ServicesShowcase({
           <div className="aspect-[4/3] bg-gray-100  overflow-hidden">
             {selectedImage ? (
                 <div className="relative w-full h-full">
-                {selectedImage.mime?.startsWith("video") ? (
-                  <video
-                  src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
-                  controls
-                  autoPlay
-                  loop
-                  muted
-                  className="object-cover w-full h-full absolute inset-0"
-                  >
-                  Tu navegador no soporta el tag de video.
-                  </video>
-                ) : (
-                  <Image
-                  src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
-                  alt={selectedImage.alt || selectedImage.name}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-opacity duration-500"
-                  />
-                )}
+                  {selectedImage.mime?.startsWith("video") ? (
+                    <video
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="object-cover w-full h-full absolute inset-0"
+                      preload="auto"
+                      controls={false}
+                    >
+                      Tu navegador no soporta el tag de video.
+                    </video>
+                  ) : (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${selectedImage.url}`}
+                      alt={selectedImage.alt || selectedImage.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition-opacity duration-500"
+                    />
+                  )}
                 </div>
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-400">
