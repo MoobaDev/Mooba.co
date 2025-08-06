@@ -178,8 +178,8 @@ export default function HighlightedProjects({
             left: mousePosition.x - 20,
             top: mousePosition.y - 20,
             transform: "translate(-50%, -50%)",
-            opacity: cursorType !== "default" || mousePosition.x !== 0 ? 1 : 0,
-            transition: "opacity 0.2s ease",
+            opacity: mousePosition.x !== 0 && mousePosition.y !== 0 ? 1 : 0,
+            transition: mousePosition.x !== 0 ? "opacity 0.1s ease" : "none",
           }}
         >
           {renderCustomCursor()}
@@ -205,6 +205,28 @@ export default function HighlightedProjects({
                     }`}
                     style={{ cursor: cursorType !== "default" ? "none" : "pointer" }}
                     onClick={(e) => handleClick(e, proyecto.slug)}
+                    onMouseEnter={(e) => {
+                      if (window.innerWidth < 768) return;
+                      setMousePosition({ x: e.clientX, y: e.clientY });
+                      if (!slider?.container) {
+                        setCursorType("default");
+                        return;
+                      }
+                      const sliderRect = slider.container.getBoundingClientRect();
+                      const x = e.clientX - sliderRect.left;
+                      const width = sliderRect.width;
+                      if (x < width * 0.28) {
+                        setCursorType("left");
+                      } else if (x > width * 0.75) {
+                        setCursorType("right");
+                      } else {
+                        setCursorType("default");
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      setCursorType("default");
+                      setMousePosition({ x: 0, y: 0 });
+                    }}
                   >
                     {proyecto.desktopVideo ? (
                       <video

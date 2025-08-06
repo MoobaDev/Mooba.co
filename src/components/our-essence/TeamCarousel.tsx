@@ -21,8 +21,15 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
   const [isMobile, setIsMobile] = useState(false)
   const duplicatedMembers = [ ...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers,]
 
+  const handleMouseEnter = () => {
+    setShowCursor(true)
+  }
+
+  const handleMouseLeave = () => {
+    setShowCursor(false)
+  }
+
   const handleClick = (e: React.MouseEvent) => {
-    if (isMobile) return
     e.stopPropagation()
     if (!swiperRef.current) return
     if (cursorDir === "left") {
@@ -94,7 +101,7 @@ export default function TeamCarousel({ teamMembers, active = false,}: TeamCarous
   }, [active])
 
   return (
-    <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} style={{ cursor: isMobile ? "auto" : "none" }}>
+    <div ref={carouselRef} className="relative w-full cursor-none" onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ cursor: isMobile ? "auto" : "none" }}>
       {showCursor && (
         <div className="fixed z-50 pointer-events-none transform -translate-x-1/2 -translate-y-1/2" style={{ left: cursorPos.x, top: cursorPos.y }}>
           <div className="w-16 h-16 bg-black/30 rounded-full flex items-center justify-center backdrop-blur-sm">
