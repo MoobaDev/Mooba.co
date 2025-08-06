@@ -20,6 +20,7 @@ export default function Header() {
     const dropdownRef = useRef<HTMLUListElement>(null)
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0, top: 0 })
     const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const shouldUseMixBlendMode = pathname !== '/nuestra-esencia'
 
     const handleMouseEnter = () => {
         if (timeoutRef.current) {
@@ -126,8 +127,6 @@ export default function Header() {
             }
         }
     }, [])
-
-    const shouldUseMixBlendMode = pathname !== '/nuestra-esencia'
 
     return (
         <>
