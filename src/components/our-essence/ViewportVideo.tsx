@@ -26,13 +26,13 @@ export default function ViewportVideo({ video }: { video: VideoHero  | null }) {
   }
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-[40vh] md:h-[85vh] w-full overflow-hidden">
       {isVideo(video.mobileVideo.mime) ? (
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover md:hidden">
           <source src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.mobileVideo.url}`} type="video/mp4" />
         </video>
       ) : (
-        <Image src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.mobileVideo.url}`} alt={video.mobileVideo.name} fill className="object-cover md:hidden" sizes="100vw" priority quality={85}/>
+        <Image src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.mobileVideo.url}`} alt={video.mobileVideo.name} fill className=" md:hidden" sizes="100vw" priority quality={85}/>
       )}
 
       {isVideo(video.video.mime) ? (
@@ -43,19 +43,28 @@ export default function ViewportVideo({ video }: { video: VideoHero  | null }) {
         <Image src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${video.video.url}`} alt={video.video.name} fill className="object-cover md:block" sizes="100vw" priority quality={90}/>
       )}
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10 cursor-pointer" onClick={scrollToNext}>
-        <div className="hidden md:flex flex-col items-center">
-          <div className="w-8 h-10 border-2 border-white rounded-full relative">
-            <div className="w-1 h-3 bg-white rounded-full animate-bounce absolute top-3 left-1/2 transform -translate-x-1/2"></div>
+      {isVideo(video.video.mime) && isVideo(video.mobileVideo.mime) && (
+        <div
+          className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10 cursor-pointer`}
+          onClick={scrollToNext}
+        >
+          {/* Desktop Mouse Indicator */}
+          <div className="hidden md:flex flex-col items-center">
+            <div className="w-7 h-10 border-3 border-white rounded-t-xl rounded-b-xl relative">
+              <div className="w-1 h-2 bg-white rounded-full animate-bounce absolute top-2 left-1/2 transform -translate-x-1/2"></div>
+            </div>
+            <span className="text-sm font-normal text-white mt-2">Desliza</span>
           </div>
-          <span className="text-sm font-normal text-white mt-2">Desliza</span>
-        </div>
 
-        <div className="md:hidden flex flex-col items-center">
-          <ChevronDown className="w-6 h-6 text-white animate-bounce" />
-          <span className="text-sm font-normal text-white mt-2">Desliza</span>
+          {/* Mobile Chevron Down */}
+          <div className="md:hidden flex flex-col items-center">
+            <ChevronDown className="w-6 h-6 text-white animate-bounce" />
+            <span className="text-sm font-normal text-white">Desliza</span>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Subtle overlay for better button visibility */}
       <div className="absolute inset-0 bg-black/10 pointer-events-none" />
     </section>
   )

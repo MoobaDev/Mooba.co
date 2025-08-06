@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { HamburgerIcon, ArrowIcon, CloseIcon } from "../ui/Icons"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { easeOut } from "framer-motion"
 import Lottie from "lottie-react"
@@ -14,6 +14,7 @@ export default function Header() {
     const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const router = useRouter()
+    const pathname = usePathname()
     const [showDropdown, setShowDropdown] = useState(false)
     const serviciosRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLUListElement>(null)
@@ -126,6 +127,8 @@ export default function Header() {
         }
     }, [])
 
+    const shouldUseMixBlendMode = pathname !== '/nuestra-esencia'
+
     return (
         <>
         {showDropdown && (
@@ -163,7 +166,7 @@ export default function Header() {
             </div>
         )}
 
-        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] isolate duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : "bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden mix-blend-difference"}`}>
+        <header className={`fixed top-0 left-0 right-0 z-50 px-6 transition-[background-color,backdrop-filter,padding,margin,border-radius] isolate duration-300 ${mobileOpen ? 'hidden' : ''} ${scrolled ? "bg-black/30 backdrop-blur-md px-4 py-3 my-10 rounded-full border border-neutral-400/30 mx-4 md:mx-10 md:my-15 lg:mx-30 xl:mx-50" : `bg-transparent py-6 mx-auto px-6 md:px-8 overflow-hidden ${shouldUseMixBlendMode ? 'mix-blend-difference' : ''}`}`}>
             <div id="navbar-desktop" className="flex justify-between items-center">
                 <div className="w-[120px] h-[30] md:w-[130px] md:h-[40]">
                     <Link href="/" className={`cursor-pointer ${!scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
