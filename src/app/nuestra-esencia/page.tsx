@@ -1,9 +1,9 @@
-import ViewportVideo from "../../components/home/Hero";
+import ViewportVideo from "../../components/our-essence/ViewportVideo";
 import { getNosotrosInfo } from "@/lib/getNosotrosInfo";
 import AccordionClient from "@/components/our-essence/AccordionClient";
 import {getTeamInfo} from "../../lib/getTeamInfo";
-import { getVideos } from "@/lib/getOurEssenceVideo";
 import { AccordionItem, TeamMember } from "@/types/Integrantes";
+import { getOurEssenceVideo } from "@/lib/getOurEssenceVideo";
 import ContactUs from "@/components/layout/ContactUs";
 import { getSeo } from "@/lib/getSeo";
 import { Metadata } from "next";
@@ -44,7 +44,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NuestraEsenciaPage() {
   const { data } = await getNosotrosInfo();
   const {data: integrantes} = await getTeamInfo();
-  const videos = await getVideos();
+  const videos = await getOurEssenceVideo();
+  const video = videos ? videos[0] : null;
 
   const infoSections: AccordionItem[] = data.map((item) => ({
     title: item.sectionName,
@@ -59,7 +60,7 @@ export default async function NuestraEsenciaPage() {
   }))
   return (
     <main>
-      <ViewportVideo videoHero={videos} />
+      <ViewportVideo video={video} />
       <AccordionClient items={infoSections} teamMembers={TeamMembers}/>
       <section className="max-w-[1440px] mx-auto w-full px-8 py-8">
         <ContactUs/>

@@ -15,21 +15,27 @@ export default function GlassCursor({ targetId, label = 'Ver proyecto' }: GlassC
     const cursor = cursorRef.current
 
     if (!target || !cursor) return
+    const handleEnter = (e: MouseEvent) => {
+      cursor.classList.remove('hidden')
+      cursor.style.left = `${e.clientX - cursor.offsetWidth / 2}px`
+      cursor.style.top = `${e.clientY - cursor.offsetHeight / 2}px`
+    }
 
     const handleMove = (e: MouseEvent) => {
       cursor.style.left = `${e.clientX - cursor.offsetWidth / 2}px`
       cursor.style.top = `${e.clientY - cursor.offsetHeight / 2}px`
-      cursor.classList.remove('hidden')
     }
 
     const handleLeave = () => {
       cursor.classList.add('hidden')
     }
 
+    target.addEventListener('mouseenter', handleEnter)
     target.addEventListener('mousemove', handleMove)
     target.addEventListener('mouseleave', handleLeave)
 
     return () => {
+      target.removeEventListener('mouseenter', handleEnter)
       target.removeEventListener('mousemove', handleMove)
       target.removeEventListener('mouseleave', handleLeave)
     }

@@ -1,6 +1,6 @@
 import { VideoHero } from "@/types/videoHero.type";
 
-export async function getVideos(): Promise<VideoHero[] | null> {
+export async function getOurEssenceVideo(): Promise<VideoHero[] | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/viewport-video-nosotros-seccion?populate=*`,

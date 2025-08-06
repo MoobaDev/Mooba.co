@@ -1,6 +1,7 @@
-interface StrapiVideo {
+ interface StrapiVideo {
     id: number;
     url: string;
+    mime: string;
   }
 export interface Video{
     name: string;
