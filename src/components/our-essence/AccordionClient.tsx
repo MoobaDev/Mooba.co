@@ -22,7 +22,7 @@ export default function AccordionClient({ items, teamMembers }: AccordionClientP
   }
 
   return (
-    <section className="w-full mt-10 mx-auto">
+    <section className="w-full md:mt-10 mx-auto">
       {items.map((item, index) => (
         <AccordionItemComponent
           key={index}

@@ -11,8 +11,8 @@ export default function AccordionItemComponent({ title, children, carousel = fal
         <div className={`transition-all duration-300 ease-in-out ${isOpen ? "min-h-fit" : ""}`}>
           <button className="w-full flex flex-col text-left font-light text-white transition-all duration-200 hover:cursor-pointer" onClick={onToggle} aria-expanded={isOpen}>
             <div className="flex flex-col max-w-[1440px] mx-auto w-full">
-              <div className="flex justify-between px-8 py-8 gap-4">
-                <h2 className="text-[36px] md:text-[40px] font-[250] md:max-w-[31%] leading-tight tracking-tight flex-1">
+              <div className="flex justify-between px-8 py-6 md:py-8 gap-4">
+                <h2 className="text-[30px] md:text-[40px] font-[250] md:max-w-[31%] leading-tight tracking-tight flex-1">
                   {title}
                 </h2>
 
