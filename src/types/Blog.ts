@@ -53,6 +53,7 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  blogs: Blog[];
 }
 
 export interface StrapiBlogsResponse {
