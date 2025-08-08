@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+Allow: /images/
+Allow: /img/
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /img/
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /temp/
+
+Sitemap: https://mooba.co/sitemap.xml
