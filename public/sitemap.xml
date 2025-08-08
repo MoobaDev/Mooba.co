@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <!-- Página Principal -->
+    <url>
+        <loc>https://mooba.co/</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Logo de Mooba Agencia</image:title>
+            <image:caption>Logo principal de Mooba - Agencia de Marketing Digital</image:caption>
+        </image:image>
+    </url>
+
+        <!-- Servicios -->
+    <url>
+        <loc>https://mooba.co/servicios/branding</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/SEO_2_05a85b7dc0.webp</image:loc>
+            <image:title>Diseño Web Responsivo</image:title>
+            <image:caption>Sitios web profesionales y optimizados para todos los dispositivos</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/servicios/diseno-y-desarrollo</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/SEO_2_05a85b7dc0.webp</image:loc>
+            <image:title>Diseño UX/UI y Desarrollo Web</image:title>
+            <image:caption>Servicios profesionales para el diseño UX/UI y desarrollo web.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/servicios/marketing-digital</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/SEO_2_05a85b7dc0.webp</image:loc>
+            <image:title>Estrategias de Marketing Digital</image:title>
+            <image:caption>Campañas publicitarias y estrategias digitales que generan resultados</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/servicios/contenido-audiovisual</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/SEO_2_05a85b7dc0.webp</image:loc>
+            <image:title>Contenido Audiovisual</image:title>
+            <image:caption>Creamos contenido audiovisual para tu empresa</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/servicios/campanas-publicitarias</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/SEO_2_05a85b7dc0.webp</image:loc>
+            <image:title>Campanas publicitarias</image:title>
+            <image:caption>Creamos campanas publicitarias para hace crecer tu negocio</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Páginas Principales -->
+
+    <url>
+        <loc>https://mooba.co/proyectos</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Portfolio de Proyectos Mooba</image:title>
+            <image:caption>Casos de éxito en diseño web y marketing digital</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/nuestra-esencia</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Equipo Mooba Agencia</image:title>
+            <image:caption>Nuestro equipo especializado en marketing digital y diseño web en Barranquilla</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/contactanos</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Contacto Mooba Agencia</image:title>
+            <image:caption>Contáctanos para transformar tu presencia digital</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/blog</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Blogs mooba</image:title>
+            <image:caption>Artículos y consejos sobre marketing digital, diseño web y tendencias</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Proyectos Individuales -->
+    <url>
+        <loc>https://mooba.co/proyectos/bee-active-branding</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/03_88419492f7.webp</image:loc>
+            <image:title>Proyecto de marca Bee Active</image:title>
+            <image:caption>Transformamos la identidad de Bee Active con branding vibrante.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/proyectos/ecommerce-eticos</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/mockup_portada_11fec33223.webp</image:loc>
+            <image:title>Proyecto eCommerce Eticos</image:title>
+            <image:caption>Diseñamos un eCommerce B2B intuitivo y robusto para Eticos</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/proyectos/sr-julio-drogueria-la-economia</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/BEHANCE_MR_JULIO_01_82b4e1d042.webp</image:loc></image:loc>
+            <image:title>Proyecto Sr Julio, drogueria la economia</image:title>
+            <image:caption>Descubre la campaña creativa que impulsó ventas y fortaleció la recordación de marca. </image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/proyectos/la-economia-app</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/PORTADA_96a0ce5152.webp</image:loc>
+            <image:title>Proyecto La Economia App</image:title>
+            <image:caption>Rediseñamos La Economía App para ofrecer una compra fluida</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/proyectos/luxwave-brand-identity</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/proyecto_luxwave_2_desktop_3dda762ac8.png</image:loc>
+            <image:title>Proyecto Luxave</image:title>
+            <image:caption>Construimos la identidad visual de Luxwave, un estudio de interiorismo dinámico y elegante.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/proyectos/club-vida-sana-landing</loc>
+        <lastmod>2025-08-08</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/2_cd860e803d.webp</image:loc>
+            <image:title>Proyecto Club Vida Sana</image:title>
+            <image:caption>Creamos el landing del Club Vida Sana para fidelizar, informar y convertir usuarios.</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Artículos de Blog -->
+    <url>
+        <loc>https://mooba.co/blog/diseno-web-y-ux-ui-como-lograr-que-tu-sitio-convierta-y-conecte-con-tus-usuarios</loc>
+        <lastmod>2025-08-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/1_59d67964e4.webp</image:loc>
+            <image:title>Diseño web y UX/UI</image:title>
+            <image:caption>Descubre cómo UX/UI puede hacer crecer tu negocio desde la primera visita.</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/blog/que-es-el-branding-y-por-que-tu-empresa-lo-necesita-para-crecer</loc>
+        <lastmod>2025-08-05</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/LUXWAVE_BEHANCE_6_97ee38d7ad.gif</image:loc>
+            <image:title>Importancia del Branding para Empresas</image:title>
+            <image:caption>Cómo una identidad sólida impulsa el crecimiento empresarial</image:caption>
+        </image:image>
+    </url>
+
+    <url>
+        <loc>https://mooba.co/blog/estrategias-de-marketing-efectivas-como-escalar-tu-marca-con-foco-y-resultados</loc>
+        <lastmod>2025-08-03</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://api.mooba.co/uploads/Logo_SEO_c841cc6e65.webp</image:loc>
+            <image:title>Estrategias de marketing efectivas</image:title>
+            <image:caption>En este artículo te mostramos qué hace que una estrategia de marketing sea realmente efectiva.</image:caption>
+        </image:image>
+    </url>
+</urlset>
