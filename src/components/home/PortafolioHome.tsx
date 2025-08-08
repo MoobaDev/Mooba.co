@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Project } from "@/types/Proyecto";
-import { CursorViewProject } from '@/components/ui/Icons';
+import { CursorViewProject } from "@/components/ui/Icons";
 import { useRouter } from "next/navigation";
-import HideCursorOnHover from '@/components/layout/HideCursonOnHover'
+import HideCursorOnHover from "@/components/layout/HideCursonOnHover";
 
 // Animation configuration constants
 const ANIMATION_CONFIG = {
@@ -74,7 +74,15 @@ const useScrollAnimation = () => {
   return { sectionRef, scrollProgress };
 };
 
-export default function PortafolioHome({ projects, title, categorySlug  }: { projects: Project[]; title: string; categorySlug?: string;  }) {
+export default function PortafolioHome({
+  projects,
+  title,
+  categorySlug,
+}: {
+  projects: Project[];
+  title: string;
+  categorySlug?: string;
+}) {
   const router = useRouter();
   const { sectionRef, scrollProgress } = useScrollAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -89,8 +97,8 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
     // Set initial value
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleTitleClick = (e: React.MouseEvent, projectSlug: string) => {
@@ -193,12 +201,12 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
     >
       {/* Header Section */}
       <div className="w-full mb-10 flex justify-between items-center">
-        <h1 className="text-3xl md:text-4xl font-extralight">
-          {title}
-        </h1>
+        <h1 className="text-3xl md:text-4xl font-extralight">{title}</h1>
         {/* Desktop: Link with underline */}
         <Link
-          href={categorySlug ? `/proyectos?categoria=${categorySlug}` : "/proyectos"}
+          href={
+            categorySlug ? `/proyectos?categoria=${categorySlug}` : "/proyectos"
+          }
           className="hidden md:block text-base font-normal  underline"
         >
           Ver todos los proyectos
@@ -207,23 +215,25 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
 
       {/* Projects Grid */}
       <div className="w-full">
-      {/* Cursor personalizado solo en desktop */}
-      {!isMobile && (
-        <div 
-          className="fixed z-50 pointer-events-none"
-          style={{
-            left: mousePosition.x,
-            top: mousePosition.y - 20,
-            transform: 'translate(-50%, -50%)',
-            opacity: isHovering && mousePosition.x !== 0 ? 1 : 0,
-            transition: 'opacity 0.2s ease'
-          }}
-        >
-          <CursorViewProject />
-        </div>
-      )}
+        {/* Cursor personalizado solo en desktop */}
+        {!isMobile && (
+          <div
+            className="fixed z-50 pointer-events-none"
+            style={{
+              left: mousePosition.x,
+              top: mousePosition.y - 20,
+              transform: "translate(-50%, -50%)",
+              opacity: isHovering && mousePosition.x !== 0 ? 1 : 0,
+              transition: "opacity 0.2s ease",
+            }}
+          >
+            <CursorViewProject />
+          </div>
+        )}
 
-        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8`}>
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-8`}
+        >
           {projects.slice(0, isMobile ? 3 : 4).map((project, index) => (
             <div
               key={project.slug}
@@ -233,36 +243,38 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
               <div className="flex flex-col h-full">
                 {/* Image Container */}
                 <HideCursorOnHover>
-                <Link
-                  href={`/proyectos/${project.slug}`}
-                  className={`relative mb-4 overflow-hidden w-full aspect-[4/4] block ${isHovering ? 'cursor-none' : ''}`}
-                  onMouseEnter={handleProjectMouseEnter}
-                  onMouseMove={handleProjectMouseMove}
-                  onMouseLeave={handleProjectMouseLeave}
-                >
-                  {project.desktopVideo ? (
-                    <video
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage?.url}`}
-                      alt={project.title}
-                      fill
-                      className="object-cover w-full h-full"
-                    />
-                  )}
-                </Link>
+                  <Link
+                    href={`/proyectos/${project.slug}`}
+                    className={`relative mb-4 overflow-hidden w-full aspect-[4/4] block ${
+                      isHovering ? "cursor-none" : ""
+                    }`}
+                    onMouseEnter={handleProjectMouseEnter}
+                    onMouseMove={handleProjectMouseMove}
+                    onMouseLeave={handleProjectMouseLeave}
+                  >
+                    {project.desktopVideo ? (
+                      <video
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopVideo.url}`}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${project.desktopImage?.url}`}
+                        alt={project.title}
+                        fill
+                        className="object-cover w-full h-full"
+                      />
+                    )}
+                  </Link>
                 </HideCursorOnHover>
 
                 {/* Project Info */}
                 <div className="mb-3 mt-2 font-extralight text-xl flex-grow">
-                  <h5 
+                  <h5
                     className="truncate overflow-hidden cursor-pointer hover:opacity-80 transition-opacity break-words whitespace-pre-line line-clamp-2"
                     onClick={(e) => handleTitleClick(e, project.slug)}
                   >
@@ -274,16 +286,18 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap mt-auto">
-                  {project.categorias.map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 cursor-pointer hover:opacity-80 hover:border-gray-300 transition-all"
-                      onClick={(e) => handleTagClick(e, tag.slug)}
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
+                <div>
+                  <div className="flex flex-wrap gap-y-2">
+                    {project.categorias.map((tag, tagIdx) => (
+                      <span
+                        key={tagIdx}
+                        className="text-sm font-normal text-gray-500 border border-white rounded-full bg-transparent inline-flex items-center justify-center whitespace-nowrap px-3 py-0.5 cursor-pointer hover:opacity-80 hover:border-gray-300 transition-all"
+                        onClick={(e) => handleTagClick(e, tag.slug)}
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -293,7 +307,11 @@ export default function PortafolioHome({ projects, title, categorySlug  }: { pro
         {/* Mobile: Button at the bottom */}
         <div className="flex mt-8 md:hidden">
           <Link
-            href={categorySlug ? `/proyectos?categoria=${categorySlug}` : "/proyectos"}
+            href={
+              categorySlug
+                ? `/proyectos?categoria=${categorySlug}`
+                : "/proyectos"
+            }
             className="bg-gray-50 text-black px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors"
           >
             Ver más proyectos
