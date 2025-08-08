@@ -24,7 +24,7 @@ export default function Section2({ secondSectionTitle, secondSectionContent }: P
               onMouseEnter={() => setHoveredIndex(index)} 
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className="flex flex-row items-center gap-2">
+              <div className="flex flex-row items-start md:items-center gap-2">
                 <AnimatedIcon
                   animationData={item.animation}
                   play={hoveredIndex === index}
