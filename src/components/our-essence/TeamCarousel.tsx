@@ -296,7 +296,7 @@ function TeamMemberCard({ member, isMobile, swiperRef }: TeamMemberCardProps & {
   }, [])
 
   return (
-    <div className="flex flex-col w-fit h-130 md:h-165 mt-8 md:mt-10 items-center">
+    <div className="flex flex-col w-fit h-130 md:h-165 mt-8 md:mt-10 items-center mb-6">
       <div className={`flex flex-col shadow-md transition-all duration-300 ${ isActive ? "z-30 -translate-y-1" : ""}`}
         style={{ transform: showPhrase ? `translateY(${isTwoLines ? "-24px" : "-16px"})` : "translateY(0)", transition: 'transform 100ms ease-in-out' }}>
         <div className={`w-fit p-3 border transition-all duration-300 ${ isActive ? "border-white/30" : "border-transparent" }`}>
@@ -319,7 +319,7 @@ function TeamMemberCard({ member, isMobile, swiperRef }: TeamMemberCardProps & {
             <h3 className="text-[24px]">{member.name}</h3>
             <p className="text-[18px]">{member.ocupation}</p>
             {showPhrase && (
-              <p className="text-[18px] italic text-white mt-1 transition-opacity duration-300 ease-in-out">
+              <p className="text-[18px] italic text-white mt-1 transition-opacity duration-300 ease-in-out  w-[240px] md:w-[320px]">
                 &ldquo;{member.phrase}&rdquo;
               </p>
             )}
